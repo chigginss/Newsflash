@@ -42,7 +42,7 @@
         return {x: angle*Math.cos(angle)+(w/2), y: angle*Math.sin(angle)+(h/2)};
     });
     var d3_geom_voronoi = d3.geom.voronoi().x(function(d) { return d.x; }).y(function(d) { return d.y; })
-    var prevEventScale = 1;
+    var prevEventScale = 10;
     var zoom = d3.behavior.zoom().on("zoom", function(d,i) {
         if (zoomToAdd){
           if (d3.event.scale > prevEventScale) {
