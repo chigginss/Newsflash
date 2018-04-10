@@ -3,7 +3,6 @@ import time
 
 db = SQLAlchemy()
 
-
 ##############################################################################
 # Model definitions
 
@@ -25,7 +24,6 @@ class User(db.Model):
 
         return "<User: user_id={}, email={}>".format(self.user_id, self.email)
 
-#many users can have many searches
 
 class Search(db.Model):
     """Search by User on website."""
@@ -49,11 +47,8 @@ class User_Search(db.Model):
 
     search_id = db.Column(db.Integer, db.ForeignKey('searches.search_id'),
                          nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.users_id'),
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'),
                          nullable=False)
-
-    users = db.relationship('User')
-    searches = db.relationship('Search')
 
     def __repr__(self):
         """Representation of User instance"""
@@ -75,14 +70,20 @@ class Outlet(db.Model):
 
         return "<Outlet: outlet_id={}, outlet_name={}, outlet_popularity={}, outlet_bias={}>".format(self.outlet_id, self.outlet_name, self.outlet_popularity, self.outlet_bias)
 
+##############################################################################
+# Model definitions
 
-# def example_data():
-# """Sample test data for database."""
+def connect_to_db(app):
+    """ Connect database to Flask app"""
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///test1'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    # app.config['SQLALCHEMY_ECHO'] = True
+    db.app = app
+    db.init_app(app)
 
-#   user_1 = User(email="hello@gmail.com", password="1234")
-#   search_1 = Search(search_term="Google")
-#   outlet_1 = Outlet(name='Best News', outlet_popularity='10', outlet_bias='Leaning Conservative')
+if __name__ == "__main__":
 
-#   db.session.add_all([user_1, search_1, outlet_1])
-#   db.session.commit()
+    from server import app
+    connect_to_db(app)
+    print "Connected to DB."
 

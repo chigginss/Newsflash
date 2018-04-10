@@ -7,51 +7,33 @@ from datetime import datetime
 
 # =============================================================================
 
-def load_users():
-    """Load users into database from HTML form"""
+def example_data():
+    """Sample test data for database."""
 
-    print "Users"
+    user_1 = User(email="hello@gmail.com", password="1234")
+    search_1 = Search(search_term="Google")
+    outlet_1 = Outlet(outlet_name='Best News', outlet_popularity=10, outlet_bias='Leaning Conservative')
+    user_search_1 = User_Search(user_id=1, search_id=1)
 
-    email = request.form.get('email')
-    password = request.form.get('password')
-
-    user = User(email=email,
-                password=password)
-
-    db.session.add(user)
-
-  db.session.commit()
-
-def load_searches():
-    """Load users into database from HTML form"""
-
-    print "Searches"
-
-    search_term = request.form.get('search')
-      
-    search = Search(search_term=search_term)
-
-    db.session.add(search)
-
-  db.session.commit()
+    db.session.add_all([user_1, search_1, outlet_1])
+    db.session.commit()
 
 def load_outlets():
     """Load outlet and information into database from data folder"""
 
     print "Media Outlets"
 
-
-    for line in open("media_outlets.txt"):
+    for line in open("Data/media_outlets.txt"):
         line = line.rstrip()
         name, popularity, bias = line.split('|')
 
-    outlet =  Outlet(name=name,
-                     popularity=popularity,
-                     bias=bias)
+    outlet = Outlet(outlet_name=name,
+                     outlet_popularity=popularity,
+                     outlet_bias=bias)
 
     db.session.add(outlet)
 
-  db.session.commit()
+    db.session.commit()
 
 # def increment_user_id():
 #     """Set value for the next user_id after seeding database"""
@@ -73,3 +55,12 @@ def load_outlets():
 #     query = "SELECT setval('searches_search_id_seq', :new_id)"
 #     db.session.execute(query, {'new_id': max_id + 1})
 #     db.session.commit()
+
+if __name__ == "__main__":
+    connect_to_db(app)
+
+    db.create_all()
+
+    example_data()
+    load_outlets()
+    print "Connected to DB."
