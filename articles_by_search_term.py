@@ -3,7 +3,7 @@ import requests
 
 API_KEY = os.environ['API_KEY']
 
-url = ('https://newsapi.org/v2/top-headlines?q=Apple&from=2018-04-09&sortBy=popularity&apiKey={}'.format(API_KEY))
+url = ('https://newsapi.org/v2/top-headlines?q=Apple&sortBy=relevancy&apiKey={}'.format(API_KEY))
 response = requests.get(url)
 data = response.json()
 

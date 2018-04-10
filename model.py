@@ -1,12 +1,8 @@
-# from flask_sqlalchemy import SQLAlchemy
-# import correlation
-# import time
+from flask_sqlalchemy import SQLAlchemy
+import correlation
+import time
 
-# This is the connection to the PostgreSQL database; we're getting this through
-# the Flask-SQLAlchemy helper library. On this, we can find the `session`
-# object, where we do most of our interactions (like committing, etc.)
-
-# db = SQLAlchemy()
+db = SQLAlchemy()
 
 
 ##############################################################################
@@ -20,8 +16,6 @@ class User(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String(64))
     password = db.Column(db.String(64))
-    
-    searches = db.relationship('Search')
 
     def __repr__(self):
         """Representation of User instance"""
@@ -38,14 +32,12 @@ class Search(db.Model):
     search_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     search_term = db.Column(db.String(64))
 
-    users = db.relationship('User')
-
     def __repr__(self):
         """Representation of Search instance"""
 
         return "<Search: search_id={}, search_term={}>".format(self.search_id, self.search_term)
 
-class Outlets(db.Model):
+class Outlet(db.Model):
     """Adds popularity and bias values to outlet"""
 
     __tablename__ = "outlets"
@@ -66,8 +58,8 @@ class User_Search(db.Model):
     __tablename__ = "user_search"
 
     user_search_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    outlet_id = db.Column(db.Integer, db.ForeignKey('outlets.outlet_id'),
-                         nullable=False)
+    # outlet_id = db.Column(db.Integer, db.ForeignKey('outlets.outlet_id'),
+    #                      nullable=False)
     search_id = db.Column(db.Integer, db.ForeignKey('searches.search_id'),
                          nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.users_id'),
@@ -75,7 +67,7 @@ class User_Search(db.Model):
 
      users = db.relationship('User')
      searches = db.relationship('Search')
-     outlets = db.relationship('Outlet')
+     # outlets = db.relationship('Outlet')
 
     def __repr__(self):
         """Representation of User instance"""

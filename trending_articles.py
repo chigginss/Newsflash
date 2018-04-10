@@ -14,7 +14,10 @@ API_KEY = os.environ['API_KEY']
 #                                    language='en')
 # print top_headlines
 
-url = ('https://newsapi.org/v2/top-headlines?language=en&from=2018-04-09&sortBy=popularity&apiKey={}'.format(API_KEY))
+# url = ('https://newsapi.org/v2/top-headlines?language=en&from=2018-04-09&sortBy=popularity&apiKey={}'.format(API_KEY))
+# url = ('https://newsapi.org/v2/top-headlines?language=en&pageSize=50&from=2018-04-09&sortBy=popularity&apiKey={}'.format(API_KEY))
+# url = ('https://newsapi.org/v2/top-headlines?language=en&pageSize=50&apiKey={}'.format(API_KEY))
+url = ('https://newsapi.org/v2/top-headlines?language=en&category=general&apiKey={}'.format(API_KEY))
 response = requests.get(url)
 data = response.json()
 
@@ -27,6 +30,8 @@ for article in data['articles']:
     author = (article['author'] or " ").encode('utf-8') 
     publishedAt = (article['publishedAt'] or " ").encode('utf-8')
     source = (article['source']['name'] or " ").encode('utf-8')
+    # bias = 
+    # popularity =
     urlToImage = (article['urlToImage'] or " ").encode('utf-8')
     print "{}, {}, {}, {}, {}, {}, {}".format(title, url, author, publishedAt, source, description, urlToImage)
 

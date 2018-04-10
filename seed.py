@@ -12,23 +12,20 @@ def load_users():
 
     print "Article"
 
-    User.query.delete()
 
-    # for row in open("seed_data/u.item"):
-    #     row = row.rstrip().split('|')
+    for row in open("top_trending_articles"):
+        row = row.rstrip().split(' ')
 
         title= 
         media_outlet = 
-        date_published = datetime.strptime(row[2], "%d-%b-%Y")
+        date_published = datetime.strptime(, "%d-%b-%Y")
         url = 
 
-        article = Article(,
-                      title=title,
+        article = Article(title=title,
                       media_outlet=media_outlet,
                       author=author,
                       date_published=date_published,
-                      url= ?? 
-                      )
+                      url=url)
 
         db.session.add(article)
 
