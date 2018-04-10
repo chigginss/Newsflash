@@ -1,7 +1,7 @@
 
 
 # Home Route 
-from jinja2 import StrictUndefined
+import jinja2
 
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
@@ -17,21 +17,61 @@ app.jinja_env.undefined = StrictUndefined
 
 
 # =============================================================================
-# User Login / Register New User
+# User Login / User Logout / Register New User
 
 
 @app.route('/login') or @app.route('/') ? 
 def user_login():
-    """Login new user"""
+    """Login user"""
+
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    user = User.query.filter_by(email=email).first()
+    if user is None:
+        flash('User not found')
+        return redirect('/login')
+
+    if password == user.password:
+        session['email'] = email
+        flash('Logged in as {}'.format(email))
+        return redirect('/')
+
+    flash('Invalid password')
+    return redirect('/login')
 
 #     users = User.query.all()
-    return render_template('login.html', users=users)
+    return render_template('login.html')
+
+@app.route('/logout')
+def user_logout():
+    """Logout user"""
+
+    if 'email' in session:
+        del session['email']
+        flash ('Logged out')
+
+    return redirect('/login')
 
 @app.route('/register')
 def register_user():
     """ Register New User """
 
-    return render_template('register_user.html', users=users)
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    if User.query.filter(User.email == email).first() is None:
+        user = User(email=email, password=password)
+        db.session.add(user)
+        db.session.commit()
+        session['email'] = email
+        flash('Logged in')
+        return redirect('/')
+
+    flash('User already exists')
+    return redirect('/login')
+
+    return render_template('register_user.html')
 
 # =============================================================================
 # Homepage and Search View
@@ -55,11 +95,4 @@ def search_term():
 def about_us():
     """list a brief description about Newsflash"""
 
-     return render_template('about.html', users=users)
-
-# =============================================================================
-# Favorites
-
-# @app.route('/favorites')
-# def favorite_searches():
-#     """ Show list of favorite searches for user"""
+     return render_template('about.html')

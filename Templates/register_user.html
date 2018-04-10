@@ -1,7 +1,16 @@
 {% extends 'base.html' %}
+
 {% block content %}
 
-welcome image
-Register New User form 
-
+<center>
+<!-- welcome image
+    
+Register New User form  -->
+<h1>Welcome to Newsflash!</h1></br>
+<form action="/register" method="POST">
+        <label>Email:</label><input type="text" name="email" required><br>
+        <label>Password:</label><input type="password" name="password" required><br>
+        <input type="submit">
+</form>
+</center>
 {% endblock %}

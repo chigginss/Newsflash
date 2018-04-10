@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
+
 {% block content %}
 
-Logo 
-Login form 
-  
+<center>
+<!-- Logo 
+Login form  -->
+<h1>Account Login</h1><br>
+<form action="/login" method="POST">
+        <label>Email: </label><input type="text" name="email" required><br>
+        <label>Password: </label><input type="password" name="password" required><br>
+        <input type="submit" name="Login">
+</form>
+
+<a href="/register">New User? Create Account</a>
+</center>
 {% endblock %}

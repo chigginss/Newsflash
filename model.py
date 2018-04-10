@@ -14,8 +14,12 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    email = db.Column(db.String(64))
+    email = db.Column(db.String(64), unique=True)
     password = db.Column(db.String(64))
+
+    searches = db.relationship("Search",
+                            secondary = "user_searches",
+                            backref="users")
 
     def __repr__(self):
         """Representation of User instance"""
@@ -37,6 +41,26 @@ class Search(db.Model):
 
         return "<Search: search_id={}, search_term={}>".format(self.search_id, self.search_term)
 
+class User_Search(db.Model):
+    """ Tracks User Search """
+
+    __tablename__ = "user_searches"
+
+    user_search_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+
+    search_id = db.Column(db.Integer, db.ForeignKey('searches.search_id'),
+                         nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.users_id'),
+                         nullable=False)
+
+     users = db.relationship('User')
+     searches = db.relationship('Search')
+
+    def __repr__(self):
+        """Representation of User instance"""
+
+        return "<Outlet: user_search_id={}, search_id={}, user_id={}>".format(self.user_search_id, self.search_id, self.user_id)
+
 class Outlet(db.Model):
     """Adds popularity and bias values to outlet"""
 
@@ -45,33 +69,21 @@ class Outlet(db.Model):
     outlet_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     outlet_name = db.Column(db.String(64))
     outlet_popularity = db.Column(db.Integer)
-    outlet_bias = db.Column(db.Integer)
+    outlet_bias = db.Column(db.String(64))
 
     def __repr__(self):
         """Representation of Search instance"""
 
         return "<Outlet: outlet_id={}, outlet_name={}, outlet_popularity={}, outlet_bias={}>".format(self.outlet_id, self.outlet_name, self.outlet_popularity, self.outlet_bias)
 
-class User_Search(db.Model):
-    """ Tracks User Search """
 
-    __tablename__ = "user_search"
+def example_data():
+"""Sample test data for database."""
 
-    user_search_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    # outlet_id = db.Column(db.Integer, db.ForeignKey('outlets.outlet_id'),
-    #                      nullable=False)
-    search_id = db.Column(db.Integer, db.ForeignKey('searches.search_id'),
-                         nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.users_id'),
-                         nullable=False)
+  user_1 = User(email="hello@gmail.com", password="1234")
+  search_1 = Search(search_term="Google")
+  outlet_1 = Outlet(name='Best News', outlet_popularity='10', outlet_bias='Leaning Conservative')
 
-     users = db.relationship('User')
-     searches = db.relationship('Search')
-     # outlets = db.relationship('Outlet')
-
-    def __repr__(self):
-        """Representation of User instance"""
-
-        return "<Outlet: user_search_id={}, outlet_id={}, search_id={}, user_id={}>".format(self.user_search_id, self.outlet_id, self.search_id, self.user_id)
-
+  db.session.add_all([user_1, search_1, outlet_1])
+  db.session.commit()
 
