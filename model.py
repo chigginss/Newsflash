@@ -1,5 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-import correlation
 import time
 
 db = SQLAlchemy()
@@ -53,8 +52,8 @@ class User_Search(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.users_id'),
                          nullable=False)
 
-     users = db.relationship('User')
-     searches = db.relationship('Search')
+    users = db.relationship('User')
+    searches = db.relationship('Search')
 
     def __repr__(self):
         """Representation of User instance"""
@@ -77,13 +76,13 @@ class Outlet(db.Model):
         return "<Outlet: outlet_id={}, outlet_name={}, outlet_popularity={}, outlet_bias={}>".format(self.outlet_id, self.outlet_name, self.outlet_popularity, self.outlet_bias)
 
 
-def example_data():
-"""Sample test data for database."""
+# def example_data():
+# """Sample test data for database."""
 
-  user_1 = User(email="hello@gmail.com", password="1234")
-  search_1 = Search(search_term="Google")
-  outlet_1 = Outlet(name='Best News', outlet_popularity='10', outlet_bias='Leaning Conservative')
+#   user_1 = User(email="hello@gmail.com", password="1234")
+#   search_1 = Search(search_term="Google")
+#   outlet_1 = Outlet(name='Best News', outlet_popularity='10', outlet_bias='Leaning Conservative')
 
-  db.session.add_all([user_1, search_1, outlet_1])
-  db.session.commit()
+#   db.session.add_all([user_1, search_1, outlet_1])
+#   db.session.commit()
 

@@ -8,50 +8,50 @@ from datetime import datetime
 # =============================================================================
 
 def load_users():
-    """Load users into database from data in data folder"""
+    """Load users into database from HTML form"""
 
     print "Users"
 
+    email = request.form.get('email')
+    password = request.form.get('password')
 
-    # for line in open(" "):
-    #     line = line.rstrip().split(' ')
+    user = User(email=email,
+                password=password)
 
-    
+    db.session.add(user)
 
-        db.session.add(user)
-
-    db.session.commit()
+  db.session.commit()
 
 def load_searches():
-    """Load users into database from data in data folder"""
+    """Load users into database from HTML form"""
 
     print "Searches"
 
+    search_term = request.form.get('search')
+      
+    search = Search(search_term=search_term)
 
-    # for line in open(" "):
-    #     line = line.rstrip().split(' ')
+    db.session.add(search)
 
-    
-
-        db.session.add(search)
-
-    db.session.commit()
+  db.session.commit()
 
 def load_outlets():
-    """Load users into database from data in data folder"""
+    """Load outlet and information into database from data folder"""
 
     print "Media Outlets"
 
 
-    # for line in open("media_outlets.txt"):
-    #     line = line.rstrip().split('|')
+    for line in open("media_outlets.txt"):
+        line = line.rstrip()
+        name, popularity, bias = line.split('|')
 
+    outlet =  Outlet(name=name,
+                     popularity=popularity,
+                     bias=bias)
 
-        db.session.add(outlet)
+    db.session.add(outlet)
 
-    db.session.commit()
-
-
+  db.session.commit()
 
 # def increment_user_id():
 #     """Set value for the next user_id after seeding database"""
@@ -65,7 +65,7 @@ def load_outlets():
 
 
 # def increment_search_id():
-#     """Set value for the next movie_id after seeding database"""
+#     """Set value for the next search_id after seeding database"""
 
 #     result = db.session.query(func.max(Search.search_id)).one()
 #     max_id = int(result[0])

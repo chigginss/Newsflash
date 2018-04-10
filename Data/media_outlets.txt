@@ -1,1 +1,3 @@
-The New York Times|The Washington Post|
+The New York Times | 10 | Left Bias
+The Washington Post | 9 | Left Bias
+Breitbart | 8 | Right Bias

@@ -1,13 +1,11 @@
 
 
 # Home Route 
-import jinja2
-
+from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import User, Movie, Rating, connect_to_db, db
-
+from model import User, Search, Outlet, connect_to_db, db
 
 app = Flask(__name__)
 
@@ -15,12 +13,11 @@ app.secret_key = 'ABC123'
 
 app.jinja_env.undefined = StrictUndefined
 
-
 # =============================================================================
 # User Login / User Logout / Register New User
 
-
-@app.route('/login') or @app.route('/') ? 
+@app.route('/login') 
+# or @app.route('/') ? 
 def user_login():
     """Login user"""
 
@@ -78,15 +75,18 @@ def register_user():
 
 @app.route('/')
 def default_view():
-    """ Default top trending coverage """
+    """ Default top trending coverage - possible also search term? """
 
     return render_template('homepage.html')
 
-@app.route('/<search-term>')
-def search_term():
-    """ Update visual to show new coverage for search term """
+# @app.route('/<search-term>')
+# def search_term():
+#     """ Update visual to show new coverage for search term """
 
-    return redirect ("/")
+#     search = request.form.get('search')
+
+#     # render visual for that term?
+#     return redirect ("/")
 
 # =============================================================================
 # About
@@ -95,4 +95,4 @@ def search_term():
 def about_us():
     """list a brief description about Newsflash"""
 
-     return render_template('about.html')
+    return render_template('about.html')
