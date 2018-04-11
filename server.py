@@ -1,22 +1,52 @@
 
-# Home Route 
 from jinja2 import StrictUndefined
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-
 from model import User, Search, Outlet, connect_to_db, db
 
 app = Flask(__name__)
 
-app.secret_key = 'ABC123'
+app.secret_key = 'ABC'
 
 app.jinja_env.undefined = StrictUndefined
 
 # =============================================================================
+# Homepage and Search View
+
+@app.route('/', methods=['GET'])
+def default_view():
+    """ Default top trending coverage - possibly also combine with search term? """
+
+    return render_template('homepage.html')
+
+# @app.route('/', methods=['POST'])
+# def search_term():
+#     """ Update visual to show new coverage for search term """
+
+    # search = request.form.get('fav_keyword')
+
+    # if email in session:
+    #     if User.query.filter(User.email == session['email']).first() && Search.query.filter(Search.search_term == fav_keyword).all() is None:
+    #     search_term = Search(search_term=fav_keyword)
+    #     db.session.add(search_term)
+    #     db.session.commit()
+    #     return redirect('/')
+
+#     return redirect ("/")
+
+# =============================================================================
 # User Login / User Logout / Register New User
 
-@app.route('/login') 
-# or @app.route('/') ? 
+@app.route('/login', methods=['GET']) 
+def login_form():
+    """Displays Login Form"""
+
+    if 'email' in session:
+        del session['email']
+
+    return render_template('login_form.html')
+
+@app.route('/login', methods=['POST']) 
 def user_login():
     """Login user"""
 
@@ -36,7 +66,7 @@ def user_login():
     flash('Invalid password')
     return redirect('/login')
 
-#     users = User.query.all()
+    users = User.query.all()
     return render_template('login.html')
 
 @app.route('/logout')
@@ -49,7 +79,13 @@ def user_logout():
 
     return redirect('/login')
 
-@app.route('/register')
+@app.route('/register', methods=['GET'])
+def register_form():
+    """Display register form"""
+
+    return render_template('register_user.html')
+
+@app.route('/register', methods=['POST'])
 def register_user():
     """ Register New User """
 
@@ -67,26 +103,6 @@ def register_user():
     flash('User already exists')
     return redirect('/login')
 
-    return render_template('register_user.html')
-
-# =============================================================================
-# Homepage and Search View
-
-@app.route('/')
-def default_view():
-    """ Default top trending coverage - possible also search term? """
-
-    return render_template('homepage.html')
-
-# @app.route('/<search-term>')
-# def search_term():
-#     """ Update visual to show new coverage for search term """
-
-#     search = request.form.get('search')
-
-#     # render visual for that term?
-#     return redirect ("/")
-
 # =============================================================================
 # About
 
@@ -95,3 +111,10 @@ def about_us():
     """list a brief description about Newsflash"""
 
     return render_template('about.html')
+
+if __name__ == "__main__":
+    app.debug = True
+    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+    DebugToolbarExtension(app)
+    connect_to_db(app)
+    app.run()
