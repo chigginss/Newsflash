@@ -3,7 +3,8 @@
 import unittest
 
 # from party import app
-from model import db, example_data, connect_to_db
+from model import db, connect_to_db
+from seed import example_data
 
 
 class NewsflashTests(unittest.TestCase):
@@ -31,21 +32,21 @@ class NewsflashTests(unittest.TestCase):
         self.assertIn("Login Here",result.data)
         self.assertNotIn("Logged In", result.data)
 
-    def test_favorite_search(self):
-        result = self.client.get("/")
-        self.assertIn("Google", result.data)
+    # def test_favorite_search(self):
+    #     result = self.client.get("/")
+    #     self.assertIn("Google", result.data)
 
     def test_login(self):
         result = self.client.post("/login",
-                                  data={"email": "cierramhiggins@gmail.com"},
+                                  data={"email": "chiggins@lclark.edu"},
                                   follow_redirects=True)
 
         self.assertNotIn("Login Here",result.data)
         self.assertIn("Logged In", result.data)
 
-    def test_login(self):
+    def test_logout(self):
         result = self.client.post("/logout",
-                                  data={"email": "cierramhiggins@gmail.com"},
+                                  data={"email": "chiggins@lclark.edu"},
                                   follow_redirects=True)
 
         self.assertNotIn("Logged In",result.data)

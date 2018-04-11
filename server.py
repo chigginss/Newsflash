@@ -1,6 +1,6 @@
 
 from jinja2 import StrictUndefined
-from flask import Flask, render_template, redirect, flash, session
+from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from model import User, Search, Outlet, connect_to_db, db
 
@@ -23,14 +23,14 @@ def default_view():
 # def search_term():
 #     """ Update visual to show new coverage for search term """
 
-    # search = request.form.get('fav_keyword')
+#     search = request.form.get('fav_keyword')
 
-    # if email in session:
-    #     if User.query.filter(User.email == session['email']).first() && Search.query.filter(Search.search_term == fav_keyword).all() is None:
-    #     search_term = Search(search_term=fav_keyword)
-    #     db.session.add(search_term)
-    #     db.session.commit()
-    #     return redirect('/')
+#     if email in session:
+#         if User.query.filter(User.email == session['email']).first() && Search.query.filter(Search.search_term == fav_keyword).all() is None:
+#         search_term = Search(search_term=fav_keyword)
+#         db.session.add(search_term)
+#         db.session.commit()
+#         return redirect('/')
 
 #     return redirect ("/")
 
@@ -44,7 +44,7 @@ def login_form():
     if 'email' in session:
         del session['email']
 
-    return render_template('login_form.html')
+    return render_template('login.html')
 
 @app.route('/login', methods=['POST']) 
 def user_login():
@@ -77,7 +77,7 @@ def user_logout():
         del session['email']
         flash ('Logged out')
 
-    return redirect('/login')
+    return redirect('/')
 
 @app.route('/register', methods=['GET'])
 def register_form():
@@ -117,4 +117,4 @@ if __name__ == "__main__":
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
     DebugToolbarExtension(app)
     connect_to_db(app)
-    app.run()
+    app.run(host='0.0.0.0')

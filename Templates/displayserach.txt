@@ -1,0 +1,9 @@
+<!--     {% if user.user_searches %}
+        <ul>
+            {% for search in user.user_searches %}
+                <li>
+                    Favorite Searches:
+                    </a> {{ search.search_name }}
+                </li>
+            {% endfor %}
+    {% endif %} -->

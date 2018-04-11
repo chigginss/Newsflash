@@ -1,26 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Hello Bubble Chart</title>
-  <meta charset="utf-8">
-  <script src="http://d3js.org/d3.v3.min.js"></script>
-  <style>
-    .bubbleChart {
-      min-width: 100px;
-      max-width: 700px;
-      height: 700px;
-      margin: 0 auto;
-    }
-    .bubbleChart svg{
-      background: #000000;
-    }
-  </style>
-</head>
-<body style="background: #000000">
-<div class="bubbleChart">
-</div>
-<script type="text/javascript">
-$(document).ready(function () {
+  $(document).ready(function () {
   var bubbleChart = new d3.svg.BubbleChart({
     supportResponsive: true,
     //container: => use @default
@@ -116,6 +94,3 @@ $(document).ready(function () {
       }]
   });
 });
-</script>
-</body>
-</html>

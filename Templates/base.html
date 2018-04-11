@@ -7,7 +7,25 @@ Navigation Bar  -->
         <title>NewsFlash</title>
     </head>
     <body>
-        <h1>NewsFlash</h1>
-    </body>
+    <header>
+        <nav>
+            <h1>Newsflash</h1>
 
+            <a href='/'>Home</a>
+            <a href='/aboutnewsflash'>About</a>
+
+            <!-- User login / logout -->
+            {% if 'email' in session %}
+                <a href='/logout'>Logout</a>
+            {% else %}
+                <a href='/login'>Login</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <hr>
+      
+    {% block content %}{% endblock %}
+
+    </body>
 </html>
