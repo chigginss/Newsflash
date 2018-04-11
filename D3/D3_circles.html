@@ -1,0 +1,15 @@
+<script src="https://d3js.org/d3.v5.js"></script>
+
+<svg width="720" height="120">
+  <circle cx="513.9615472244086" cy="60" r="30" style="fill:steelblue;"></circle>
+  <circle cx="445.3433551774405" cy="60" r="30" style="fill:steelblue;"></circle>
+  <circle cx="586.0831691243144" cy="60" r="30" style="fill:steelblue;"></circle>
+</svg>
+
+<script> 
+var circle = d3.selectAll("circle");
+    .style("fill", "steelblue");
+    .attr("r", 30);
+    .attr("cx", function() { return Math.random() * 720; });
+
+</script>
