@@ -1,6 +1,6 @@
 
 from jinja2 import StrictUndefined
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, request, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from model import User, Search, Outlet, connect_to_db, db
 
@@ -19,9 +19,10 @@ def default_view():
 
     return render_template('homepage.html')
 
-# @app.route('/', methods=['POST'])
-# def search_term():
-#     """ Update visual to show new coverage for search term """
+@app.route('/newsbykeyword')
+def search_term():
+    # methods=['POST']
+    """ Update visual to show new coverage for search term """
 
 #     search = request.form.get('fav_keyword')
 
@@ -32,7 +33,7 @@ def default_view():
 #         db.session.commit()
 #         return redirect('/')
 
-#     return redirect ("/")
+    return render_template("search_view.html")
 
 # =============================================================================
 # User Login / User Logout / Register New User
@@ -41,8 +42,8 @@ def default_view():
 def login_form():
     """Displays Login Form"""
 
-    if 'email' in session:
-        del session['email']
+    # if 'email' in session:
+    #     del session['email']
 
     return render_template('login.html')
 
@@ -97,11 +98,22 @@ def register_user():
         db.session.add(user)
         db.session.commit()
         session['email'] = email
-        flash('Logged in')
+        flash('Registered as {}'.format(email))
         return redirect('/')
 
     flash('User already exists')
     return redirect('/login')
+
+# =============================================================================
+# User
+
+@app.route('/users')
+def view_all_users():
+    """Display users for test"""
+
+    users = User.query.all()
+
+    return render_template('user.html', users=users)
 
 # =============================================================================
 # About

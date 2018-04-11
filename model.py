@@ -73,9 +73,9 @@ class Outlet(db.Model):
 ##############################################################################
 # Model definitions
 
-def connect_to_db(app):
+def connect_to_db(app, db_url='postgresql:///test1'):
     """ Connect database to Flask app"""
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///test1'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # app.config['SQLALCHEMY_ECHO'] = True
     db.app = app

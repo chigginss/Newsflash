@@ -1,18 +1,10 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
 
-<!-- Home page:
-Data Visualization
-Search bar and search function - either redirect search function to new page or reload visual (figure this out later)
-disclamer / discription of visual 
-
-List favorites for user once logged in? Or possibly create another page for favorites
-Feature that allows users to favorite a search (Add to Favorites button) -->
-
-<!--     <img src="https://shsorbiter.com/wp-content/uploads/2016/10/newspaper-changes.jpg">
- -->
 <center>
+    <!-- <img src="https://shsorbiter.com/wp-content/uploads/2016/10/newspaper-changes.jpg"> -->
  <head>
    <!--  <title>Voronoi Diagram with Force Directed Nodes and Delaunay Links</title> -->
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
@@ -154,12 +146,20 @@ Feature that allows users to favorite a search (Add to Favorites button) -->
     }
 </script>
 
-    <a href="/newsbykeyword">Search trending news by Keyword</a> <br>  
+    <form action="/" methods="POST">
+        Search for coverage by Keyword:<input type="text" name="keyword">
+        <input type="submit" value="Search"> <br>
+    </form>
 
-    <p> Homepage Test 1
+    <form action="/" methods="POST">
+        Add Search to Favorites:<input type="text" name="fav_keyword">
+        <input type="submit" value="Add">
+    </form>
+
+<p> Info about how search terms work
     Solo darth skywalker mandalore dooku. Jango skywalker jawa darth. Dantooine skywalker moff aayla antilles. Tusken raider endor darth c-3p0 organa mara yavin gonk anakin. Binks obi-wan kamino fisto darth solo calrissian mandalore jango. Dantooine calrissian vader c-3po amidala kenobi owen. Grievous yoda maul leia amidala calamari fett coruscant dooku. Antilles watto qui-gon skywalker yoda cade leia solo. Jabba mara r2-d2 ponda mon gamorrean. Sidious thrawn ewok dooku organa darth. Mandalorians moff naboo solo thrawn jango jinn luke. 
 
     Cade boba mothma boba wookiee fett. Padmé grievous ventress mandalore vader padmé. Aayla jade mandalore moff organa mon watto. Padmé mon palpatine solo. Owen anakin padmé moff ahsoka moff. Droid moff skywalker greedo hutt. Twi'lek darth skywalker mara kessel solo kit antilles ackbar. Maul r2-d2 calrissian grievous maul darth coruscant. Binks grievous vader moff mandalore. Secura mara skywalker gamorrean lando dagobah. Moff ben moff bothan. Boba coruscant grievous mothma jade secura mothma. Mara darth ben mace dagobah.</p>
+
 </center>
-</body>
 {% endblock %}
