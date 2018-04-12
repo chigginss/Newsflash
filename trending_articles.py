@@ -11,14 +11,18 @@ API_KEY = os.environ['API_KEY']
 
 # top_headlines = api.get_everything(q='bitcoin',
 #                                    language='en')
-# print top_headlines
-def return_top_headlines():
-    """Pull top trending articles from News API"""
+
 # url = ('https://newsapi.org/v2/top-headlines?language=en&from=2018-04-09&sortBy=popularity&apiKey={}'.format(API_KEY))
 # url = ('https://newsapi.org/v2/top-headlines?language=en&pageSize=50&from=2018-04-09&sortBy=popularity&apiKey={}'.format(API_KEY))
 # url = ('https://newsapi.org/v2/top-headlines?language=en&pageSize=50&apiKey={}'.format(API_KEY))
-url = ('https://newsapi.org/v2/top-headlines?language=en&sources=google-news&apiKey={}'.format(API_KEY))
+# url = ('https://newsapi.org/v2/top-headlines?language=en&sources=google-news&apiKey={}'.format(API_KEY))
 # url = ('https://newsapi.org/v2/top-headlines?language=en&sortBy=popularity&apiKey={}'.format(API_KEY))
+
+# print top_headlines
+def return_top_headlines():
+    """Pull top trending articles from News API"""
+url = ('https://newsapi.org/v2/top-headlines?language=en&sources=google-news&apiKey={}'.format(API_KEY))
+# url = ('https://newsapi.org/v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,bbc-news&apiKey={}'.format(API_KEY))
 response = requests.get(url)
 data = response.json()
 
