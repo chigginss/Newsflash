@@ -1,8 +1,7 @@
 
-<!--     
-<!-- <!--     data = d3.csv('/test_for_visual.csv', makeForceGraph)
+data = d3.csv('/test_for_visual.csv', whateverMyVisualIsCalled)
 
-    function makeForceGraph(error, data) {
+    function whateverMyVisualIsCalled(error, data) {
     
     } -->
 
@@ -13,8 +12,6 @@
     // } else if d.popularity > 6 < 8 { 
     //     d.color =  "light red";
     // } --> 
-
-
 
 
 Would have to either use a saved file (not live) or figure out a way to have standard output constantly override file
