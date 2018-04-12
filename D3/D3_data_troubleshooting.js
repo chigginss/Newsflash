@@ -1,4 +1,18 @@
 
+<!--     
+<!-- <!--     data = d3.csv('/test_for_visual.csv', makeForceGraph)
+
+    function makeForceGraph(error, data) {
+    
+    } -->
+
+    // if d.popularity > 9 {
+    //     d.color = "red";
+    // } else if d.popularity > 8 < 9 {
+    //     d.color =  "medium red";
+    // } else if d.popularity > 6 < 8 { 
+    //     d.color =  "light red";
+    // } --> 
 
 
 

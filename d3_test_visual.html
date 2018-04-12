@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <head>
+      <link href='style.css' rel='stylesheet'>
+    </head>
+    <h1>Top Trending Articles</h1>
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script>
+
+        let data = [
+                {art_title: 'Senators Urge Pompeo', news_source: 'The New York Times', popularity: 10},
+                {art_title: 'test test test', news_source: 'Politico', popularity: 7},
+                {art_title: 'Fears of a U.S.', news_source: 'Washington Post',popularity: 8},
+
+        ];
+
+    let minData = d3.min(data,(d) => d.popularity);
+    let maxData = d3.max(data, (d) => d.popularity);
+
+    let sizeScale = d3.scaleLinear()
+        .domain([minData, maxData])
+        .range([30, 100]);
+
+    let colorScale = d3.scaleOrdinal('blue','green']);
+
+    let xScale = d3.scaleLinear()
+        .domain([minData, maxData])
+        .range([0, 700]);
+
+    let svgContainer = d3.select("body")
+        .append("svg")
+        .attr("width", 800)
+        .attr("height", 1000);
+
+    let groups = svgContainer.selectAll('.news-node')
+                     .data(data)
+                     .enter()
+                     .append('g')
+                     .attr("class", "news-node");
+
+
+       groups.append('circle')
+             .attr('r', (d) => sizeScale(d.popularity))
+             .attr('cx', (d) => xScale(d.popularity))
+             .attr('cy', 100)
+             .style('fill', (d) => colorScale(d.art_title));
+
+       groups.append('text')
+             .attr('x', (d) => xScale(d.popularity))
+             .attr('y', 100)
+             .text((d) => d.art_title);
+
+    let xAxis = d3.axisBottom(xScale);
+
+    svgContainer.append('g').call(xAxis)
+        .attr("transform", "translate(0,300)");
+
+    function handleMouseover(d){
+        svgContainer.append('text')
+           .attr('x', xScale(d.popularity))
+           .attr('y', (d) => 150)
+           .text("here is a news_description"+d.news_source)
+           .attr('id', 'tooltip'+d.news_source);
+      }
+
+      function handleMouseout(d){
+        d3.select('#tooltip'+d.news_source).remove();
+      }
+
+      groups.on('mouseover', handleMouseover);
+      groups.on('mouseout', handleMouseout);
+
+
+    </script>
+
+</body>
+</html>
