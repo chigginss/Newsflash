@@ -1,0 +1,115 @@
+html, body{
+	width: 99%;
+	background-color: #fff;
+	/*overflow-x: hidden;*/
+}
+
+.container {
+	margin:10px auto;
+	width: 1300px;
+}
+
+.showcase {
+	margin: auto;
+	display: block;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+svg text {
+	font-family: Verdana, arial;
+}
+
+#tooltip{
+	padding: 10px 20px;
+	font-family: Verdana, arial;
+	width: 240px;
+	height: auto;
+	position: absolute;
+	border: 1px solid black; 
+	background-color: white;
+	border-radius: 5px;
+	opacity: 0.0;
+	left: 0;
+	top: 0;
+}
+
+#tooltip h2 {
+	font-size: 22px;
+	padding-bottom: 5px;
+ }
+
+#tooltip p {
+	font-size: 14px;
+ }
+
+
+
+.container_info {
+	margin:10px auto;
+	width: 800px;
+}
+
+
+ .show-header{
+	width: 100%;
+	height: 40px;
+	margin: 20px auto 30px;
+	display: block;
+}
+
+.show-header .show-header-left{
+	width: 360px;
+	height: 100%;
+	float: left;
+	font-family: Arial, sans-serif;
+	font-size: 42px;
+}
+
+.show-header .show-header-right{
+	box-sizing: border-box;
+	width: 360px;
+	height: 100%;
+	float: right;
+	text-align: right;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	padding: 10px 10px 2px 0px;
+}
+
+
+.show-info {
+	width: 100%;
+	padding: 5px 20px;
+	display: block;
+	font-size: 16px;
+	font-family: Arial, "Microsoft Yahei", simsun;
+	line-height: 24px;
+}
+
+.show-info h2 {
+	font-family: Arial, "Microsoft Yahei", simhei, simsun;
+	font-size: 20px;
+	margin-top: 1.5em;
+	margin-bottom: 1em;
+}
+
+
+.show-footer {
+	width: 100%;
+	margin: 20px auto 0px;
+	padding: 10px 0px;
+	text-align: center;
+	padding: 20px auto;
+	font-size: 14px;
+	font-family: arial, sans-serif, simsun;
+}
+
+a.link_studio {
+	color: blue;
+	text-decoration: none;
+}
+
+a.link_studio:hover {
+	text-decoration: underline;
+}

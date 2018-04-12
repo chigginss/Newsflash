@@ -36,7 +36,7 @@
         // color = d3.scale.quantize().domain([10000, 7250]).range(["#dadaeb","#bcbddc","#9e9ac8","#807dba","#6a51a3","#54278f","#3f007d"])
         color = d3.scale.quantize().domain([10000, 7250]).range(["#00BFFF","#00BFFF","#00BFFF","#00BFFF","#00BFFF","#00BFFF","#00BFFF"])
 
-    var numVertices = (w*h) / 3000;
+    var numVertices = (w*h) / 1000;
     var vertices = d3.range(numVertices).map(function(i) {
         angle = radius * (i+10);
         return {x: angle*Math.cos(angle)+(w/2), y: angle*Math.sin(angle)+(h/2)};
@@ -67,26 +67,26 @@
         prevEventScale = d3.event.scale;
     });
 
-    d3.select(window)
-      .on("keydown", function() {
-        // shift
-        if(d3.event.keyCode == 16) {
-          zoomToAdd = false
-        }
+    // d3.select(window)
+    //   .on("keydown", function() {
+    //     // shift
+    //     if(d3.event.keyCode == 16) {
+    //       zoomToAdd = false
+    //     }
 
-        // s
-        if(d3.event.keyCode == 83) {
-          simulate = !simulate
-          if(simulate) {
-            force.start()
-          } else {
-            force.stop()
-          }
-        }
-      })
-      .on("keyup", function() {
-        zoomToAdd = true
-      })
+    //     // s
+    //     if(d3.event.keyCode == 83) {
+    //       simulate = !simulate
+    //       if(simulate) {
+    //         force.start()
+    //       } else {
+    //         force.stop()
+    //       }
+    //     }
+    //   })
+    //   .on("keyup", function() {
+    //     zoomToAdd = true
+    //   })
 
     var svg = d3.select("#chart")
             .append("svg")
@@ -95,13 +95,13 @@
             .call(zoom)
 
     var force = d3.layout.force()
-            .charge(-300)
+            .charge(-1000)
             .size([w, h])
             .on("tick", update);
 
     force.nodes(vertices).start();
 
-    var circle = svg.selectAll("circle");
+    // var circle = svg.selectAll("circle");
     var path = svg.selectAll("path");
     var link = svg.selectAll("line");
 
