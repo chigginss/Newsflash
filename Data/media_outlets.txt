@@ -1,3 +1,83 @@
-The New York Times | 10 | Left Bias
-The Washington Post | 9 | Left Bias
-Breitbart | 8 | Right Bias
+CNN|10|Left Bias
+The New York Times|10|Left-Center Bias
+The Washington Post|10|Left-Center Bias
+Wired|9|Left-Center Bias
+BBC News|9|Left-Center Bias
+The Wall Street Journal|9|Right Center Bias
+TechRadar|8|NULL
+TechCrunch|8|Left-Center Bias
+The Guardian|8|NULL
+Fox News|8|Right Bias
+The Huffington Post|8|Left Bias
+Bloomberg|8|Left-Center Bias
+USA Today|8|No Bias
+Time|8|No Bias
+Forbes|8|Right Center Bias
+Fortune|7|Right Center Bias
+NBC News|7|Left-Center Bias
+The Atlantic|6|Left-Center Bias
+ABC News|6|Left-Center Bias
+Al Jazeera English|6|Left-Center Bias
+Breitbart News|6|Right Bias
+Buzzfeed|6|Bias
+Vice News|6|Bias
+Associated Press|6|No Bias
+Business Insider|6|Left-Center Bias
+Crypto Coins News|NULL|NULL
+Entertainment Weekly|NULL|NULL
+Financial Times|NULL|Center
+Focus|NULL|NULL
+FourFourTwo|NULL|NULL
+Hacker News|NULL|NULL
+Independent|NULL|NULL
+InfoMoney|NULL|NULL
+New Scientist|NULL|NULL
+New York Magazine|NULL|Left Bias
+New York Daily News|NULL|NULL   
+Next Big Future|NULL|NULL
+NFL News|NULL|NULL
+NHL News|NULL|NULL
+RBC|NULL|NULL
+Reddit|NULL|NULL
+TalkSport|NULL|NULL
+The Irish Times|NULL|Left-Center Bias
+The Lad Bible|2|NULL
+The Sport Bible|2|NULL
+The Telegraph|NULL|NULL
+The Times of India|NULL|NULL
+Google News|9|NULL
+Google News (Australia)|9|NULL
+Google News (Canada)|9|NULL
+Google News (India)|9|NULL
+Google News (UK)|9|NULL
+Yahoo|9|NULL
+Business Insider (UK)|9|Left-Center Bias
+ESPN|8|NULL
+ESPN Cric Info|8|NULL
+Reuters|8|Center
+Fox Sports|7|Right Bias
+CBS News|7|Left-Center Bias
+ABC News (AU)|7|Left-Center Bias
+NPR|7|Left Bias
+CNBC|7|Left-Center Bias
+Ars Technica|7|NULL
+New York Post|6|NULL  
+LA Times|6|Left Bias
+CBC News|6|Left-Center Bias
+Daily Mail|6|Right Bias
+IGN|6|NULL
+Politico|6|Left-Center Bias
+New Zealand Herald|6|Center
+News.com.au|6|Left-Center Bias
+Engadget|6|Left-Center Bias
+The Verge|5|NULL
+Mashable|5|Left Bias
+Bleacher Report|4|NULL
+Australian Financial Review|4|Center
+Axios|4|Left-Center Bias
+Polygon|4|NULL
+News24|4|NULL
+Newsweek|3|Left-Center Bias
+The Next Web|3|NULL
+Financial Post|3|NULL
+Recode|3|Center

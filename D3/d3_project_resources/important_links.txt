@@ -1,0 +1,16 @@
+IMPORTANT LINKS:
+text wrap:
+https://bl.ocks.org/mbostock/7555321
+https://stackoverflow.com/questions/24784302/wrapping-text-in-d3
+
+tooltips:
+https://github.com/nbremer/exoplanets/tree/gh-pages/js
+https://codepen.io/marxtseng/pen/OWqMoM
+
+add JSON/test to cluster Force:
+https://plnkr.co/edit/t6MsTWpWwI4VG1shqU2M?p=preview
+https://plnkr.co/edit/cOrNokVYm9O5NXOKhYhF?p=previewS
+https://stackoverflow.com/questions/39382497/how-to-add-text-to-cluster-force-layout-bubbles
+https://bl.ocks.org/mcgovey/e59b5542b628fab4c356223b3505f0c0
+https://plnkr.co/edit/qnx7CQox0ge89zBL9jxc?p=preview
+http://blockbuilder.org/pmia2/028815204d5e30fd221355a8e3b46c1e

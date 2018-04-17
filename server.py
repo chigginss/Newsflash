@@ -1,9 +1,12 @@
 
 from jinja2 import StrictUndefined
-from flask import Flask, render_template, request, redirect, flash, session
+from flask import Flask, render_template, request, redirect, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from model import User, Search, Outlet, connect_to_db, db
+import os
+import requests
 
+API_KEY = os.environ['API_KEY']
 
 app = Flask(__name__)
 
@@ -106,7 +109,29 @@ def register_user():
     return redirect('/login')
 
 # =============================================================================
-# User
+# Json Route
+
+# @app.route('/trending_info.json')
+# def return_trending_json_from_api():
+
+#     """Pull top trending articles from News API"""
+#     url = ('https://newsapi.org/v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey={}'.format(API_KEY))
+#     response = requests.get(url)
+
+#     return jsonify(response.json())
+
+# @app.route('/search_info.json')
+# def return_search_json_from_api():
+
+#     """Pull top trending articles from News API"""
+#     url = ('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy&apiKey={}'.format({{ keyword }}, API_KEY))
+#     response = requests.get(url)
+
+#     return jsonify(response.json())
+
+
+# =============================================================================
+# User 
 
 @app.route('/users')
 def view_all_users():

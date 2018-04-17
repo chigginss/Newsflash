@@ -1,0 +1,293 @@
+
+cierr@DESKTOP-2OAIE7F MINGW64 ~
+$ cd vagrant
+
+cierr@DESKTOP-2OAIE7F MINGW64 ~/vagrant (master)
+$ vagrant up
+==> vagrant: A new version of Vagrant is available: 2.0.3!
+==> vagrant: To upgrade visit: https://www.vagrantup.com/downloads.html
+
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Clearing any previously set forwarded ports...
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+==> default: Forwarding ports...
+    default: 5000 (guest) => 5000 (host) (adapter 1)
+    default: 5001 (guest) => 5001 (host) (adapter 1)
+    default: 5432 (guest) => 5432 (host) (adapter 1)
+    default: 8888 (guest) => 8888 (host) (adapter 1)
+    default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Running 'pre-boot' VM customizations...
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default: Warning: Connection reset. Retrying...
+    default: Warning: Connection aborted. Retrying...
+    default: Warning: Connection reset. Retrying...
+    default: Warning: Connection aborted. Retrying...
+    default: Warning: Connection reset. Retrying...
+    default: Warning: Connection aborted. Retrying...
+    default: Warning: Connection reset. Retrying...
+    default: Warning: Connection aborted. Retrying...
+    default: Warning: Remote connection disconnect. Retrying...
+==> default: Machine booted and ready!
+==> default: Checking for guest additions in VM...
+==> default: Mounting shared folders...
+    default: /vagrant => C:/Users/cierr/vagrant
+    default: /home/vagrant/src => C:/Users/cierr/src
+==> default: Machine already provisioned. Run `vagrant provision` or use the `--provision`
+==> default: flag to force provisioning. Provisioners marked to run always will still run.
+
+cierr@DESKTOP-2OAIE7F MINGW64 ~/vagrant (master)
+$ vagrant ssh
+Welcome to Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-87-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+Last login: Thu Apr 12 19:06:43 2018 from 10.0.2.2
+vagrant@vagrant:~$ cd ~/src
+vagrant@vagrant:~/src$ ls
+Assessments and Homework  d3-demo  Newsflash
+vagrant@vagrant:~/src$ cd Newsflash
+vagrant@vagrant:~/src/Newsflash$ ls
+D3  Newsflash_App
+vagrant@vagrant:~/src/Newsflash$ cd Newsflash_App
+vagrant@vagrant:~/src/Newsflash/Newsflash_App$ source env/bin/activate
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 9, in <module>
+    API_KEY = os.environ['API_KEY']
+  File "/home/vagrant/src/Newsflash/Newsflash_App/env/lib/python2.7/UserDict.py", line 40, in __getitem__
+    raise KeyError(key)
+KeyError: 'API_KEY'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ source secrets.sh
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 31, in <module>
+    for article in data['articles']:
+KeyError: 'articles'
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets.txt
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles.py > all_top_outlets2.txt
+Traceback (most recent call last):
+  File "trending_articles.py", line 26, in <module>
+    response = requests.get(url)
+  File "/home/vagrant/src/Newsflash/Newsflash_App/env/lib/python2.7/site-packages/requests/api.py", line 70, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/vagrant/src/Newsflash/Newsflash_App/env/lib/python2.7/site-packages/requests/api.py", line 56, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/vagrant/src/Newsflash/Newsflash_App/env/lib/python2.7/site-packages/requests/sessions.py", line 488, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/vagrant/src/Newsflash/Newsflash_App/env/lib/python2.7/site-packages/requests/sessions.py", line 609, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/vagrant/src/Newsflash/Newsflash_App/env/lib/python2.7/site-packages/requests/adapters.py", line 487, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='newsapi.org', port=443): Max retries exceeded with url: /v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey=b033aef85417499e96a7cd8148b0e7d4 (Caused by NewConnectionError('<requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x7f55c0752990>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ logout
+Connection to 127.0.0.1 closed.
+
+cierr@DESKTOP-2OAIE7F MINGW64 ~/vagrant (master)
+$ vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Machine already provisioned. Run `vagrant provision` or use the `--provision`
+==> default: flag to force provisioning. Provisioners marked to run always will still run.
+
+cierr@DESKTOP-2OAIE7F MINGW64 ~/vagrant (master)
+$ vagrant ssh
+Welcome to Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-87-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+Last login: Fri Apr 13 22:17:32 2018 from 10.0.2.2
+vagrant@vagrant:~$ cd ~/src
+vagrant@vagrant:~/src$ ls
+Assessments and Homework  d3-demo  Newsflash
+vagrant@vagrant:~/src$ cd Newsflash
+vagrant@vagrant:~/src/Newsflash$ ls
+D3  Newsflash_App
+vagrant@vagrant:~/src/Newsflash$ cd Newsflash_App
+vagrant@vagrant:~/src/Newsflash/Newsflash_App$ ls
+all_top_outlets2.txt        seed.py
+all_top_outlets.txt         seed.pyc
+articles_by_search_term.py  server.py
+D3                          server.pyc
+Data                        Static
+env                         style.css
+model.py                    Templates
+model.pyc                   test.py
+News_API                    trending_articles.py
+requirements.txt            trending_articles.pyc
+secrets.sh                  trending_articles_returning_json.py
+vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles_returning_json.py > all_top_outlets.json
+Traceback (most recent call last):
+  File "trending_articles_returning_json.py", line 9, in <module>
+    API_KEY = os.environ['API_KEY']
+  File "/usr/lib/python2.7/UserDict.py", line 40, in __getitem__
+    raise KeyError(key)
+KeyError: 'API_KEY'
+vagrant@vagrant:~/src/Newsflash/Newsflash_App$ source sh
+-bash: source: /bin/sh: cannot execute binary file
+vagrant@vagrant:~/src/Newsflash/Newsflash_App$ source secrets.sh
+vagrant@vagrant:~/src/Newsflash/Newsflash_App$ source secrets.sh
+vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles_returning_json.py > all_top_outlets.json
+Traceback (most recent call last):
+  File "trending_articles_returning_json.py", line 26, in <module>
+    response = requests.get(url)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 508, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 618, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='newsapi.org', port=443): Max retries exceeded with url: /v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey=b033aef85417499e96a7cd8148b0e7d4 (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f1815f58510>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
+vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles_returning_json.py > all_top_outlets.json
+Traceback (most recent call last):
+  File "trending_articles_returning_json.py", line 26, in <module>
+    response = requests.get(url)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 508, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 618, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='newsapi.org', port=443): Max retries exceeded with url: /v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey=b033aef85417499e96a7cd8148b0e7d4 (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f7e80e27510>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
+vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python trending_articles_returning_json.py > all_top_outlets.json
+Traceback (most recent call last):
+  File "trending_articles_returning_json.py", line 26, in <module>
+    response = requests.get(url)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 508, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 618, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='newsapi.org', port=443): Max retries exceeded with url: /v2/top-headlines?language=en&sources=google-news&apiKey=b033aef85417499e96a7cd8148b0e7d4 (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f70458a7510>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
+vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python articles_by_search_term.py > all_top_outlets.json
+Traceback (most recent call last):
+  File "articles_by_search_term.py", line 10, in <module>
+    response = requests.get(url)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 508, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 618, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='newsapi.org', port=443): Max retries exceeded with url: /v2/top-headlines?language=en&q=Google&sources=google-news&sortBy=relevancy&apiKey=b033aef85417499e96a7cd8148b0e7d4 (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7fa63ffde610>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
+vagrant@vagrant:~/src/Newsflash/Newsflash_App$

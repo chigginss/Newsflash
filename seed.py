@@ -21,15 +21,13 @@ def example_data():
 def load_outlets():
     """Load outlet and information into database from data folder"""
 
-    print "Media Outlets"
-
     for line in open("Data/media_outlets.txt"):
         line = line.rstrip()
         name, popularity, bias = line.split('|')
 
     outlet = Outlet(outlet_name=name,
-                     outlet_popularity=popularity,
-                     outlet_bias=bias)
+                    outlet_popularity=popularity,
+                    outlet_bias=bias)
 
     db.session.add(outlet)
 

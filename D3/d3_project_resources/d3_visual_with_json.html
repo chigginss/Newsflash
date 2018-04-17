@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+</head>
+<body>
+    <script src="http://code.jquery.com/jquery.js" type="text/javascript"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+
+    <script>
+    'use strict';
+    // var width = 2000,
+    //     height = 600,
+    //     padding = 1.5, // separation between same-color nodes
+    //     clusterPadding = 6, // separation between different-color nodes
+    //     maxRadius = 12;
+
+    // var tooltip = d3.select("body").append("div")   
+    //     .attr("class", "tooltip");
+
+    // var n = 20, // total number of nodes
+    //     m = 5; // number of distinct clusters
+
+    // var color = d3.scale.category10()
+    //     .domain(d3.range(m));
+
+    // var clusters = new Array(m);
+
+    // d3.json("error_test.json", function(error, data) {
+    //     console.log(data);
+    //     console.log(error);
+    //   })
+
+    $.getJSON("r.json", {format: "json"})
+    .done(function(json){ console.log(json); })
+    .fail(function(jqxhr, textStatus, error){
+        let err = textStatus + error;
+        console.log(err);
+    });
+    
+    </script>
+</body>
+</html>

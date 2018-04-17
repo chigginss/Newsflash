@@ -11,12 +11,12 @@
     <script>
 
        let data = [
-                {art_title: 'test test test', news_source: 'The New York Times', popularity: 10, bias: 'left'},
-                {art_title: 'test test test', news_source: 'Politico', popularity: 5, bias: 'left'},
-                {art_title: 'test test test', news_source: 'Breitbart', popularity: 1, bias: 'right'},
-                // {art_title: 'test test test', news_source: 'The Wall Street Journal', popularity: 7, bias:' left'},
-                {art_title: 'test test test', news_source: 'NBC news', popularity: 3, bias: 'left'},
-                {art_title: 'test test test', news_source: 'Politico', popularity: 2, bias: 'left'},
+                {art_title: 'test test test test test test test test test', news_source: 'The New York Times', popularity: 10, bias: 'left'},
+                // {art_title: 'test test test', news_source: 'Politico', popularity: 5, bias: 'left'},
+                // {art_title: 'test test test', news_source: 'Breitbart', popularity: 1, bias: 'right'},
+                // // {art_title: 'test test test', news_source: 'The Wall Street Journal', popularity: 7, bias:' left'},
+                // {art_title: 'test test test', news_source: 'NBC news', popularity: 3, bias: 'left'},
+                // {art_title: 'test test test', news_source: 'Politico', popularity: 2, bias: 'left'},
        ];
 
        let minData = d3.min(data, (d) => d.popularity);
@@ -55,6 +55,10 @@
              .attr('y', 100)
              .attr('text-anchor', 'middle')
              .text((d) => d.art_title+d.news_source);
+          // .selectAll("text", "width")
+          //   .call(wrap, x.rangeBand());
+
+
 
       let xAxis = d3.axisBottom(xScale);
 
