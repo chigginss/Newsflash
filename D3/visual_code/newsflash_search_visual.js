@@ -1,45 +1,4 @@
-{% extends 'base.html' %}
-
-{% block content %}
-
-<!-- Home page:
-Data Visualization
-Search bar and search function - either redirect search function to new page or reload visual (figure this out later)
-disclamer / discription of visual 
-
-List favorites for user once logged in? Or possibly create another page for favorites
-Feature that allows users to favorite a search (Add to Favorites button) -->
-
-<!--     <img src="https://shsorbiter.com/wp-content/uploads/2016/10/newspaper-changes.jpg">
- -->
-<center>
- <head>
-   <!--  <title>Voronoi Diagram with Force Directed Nodes and Delaunay Links</title> -->
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <script src="http://d3js.org/d3.v4.min.js"></script>
-    <style type="text/css">
-        circle {
-            stroke: #F;
-            fill: #EFEDF5;
-            pointer-events: none;
-        }
-        line {
-            pointer-events: none;
-            stroke: #EFEDF5;
-            stroke-width: 2px;
-            opacity: .05;
-        }
-        path{
-            stroke: #EFEDF5;
-            stroke-width: 4px;
-        }
-    </style>
-</head>
-<body>
-<div id="chart">
-</div>
-<script>
-    "use strict";
+"use strict";
 
   var outlets = new Map([
       ['CNN', {popularity: 10, bias: 'Left'}],
@@ -70,7 +29,8 @@ Feature that allows users to favorite a search (Add to Favorites button) -->
       ['Left-Center', 1],
       ['Center', 2],
       ['Right-Center', 3],
-      ['Right', 4]
+      ['Right', 4],
+      ['NULL', 5]
       ]);
 
 let endPoint = "https://newsapi.org/v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey=";
@@ -86,7 +46,7 @@ var width = 2000,
   maxRadius = 100;
 
 var n = 20, 
-    m = 5; 
+    m = 6; 
 
 var z = d3.scaleOrdinal(d3.schemeCategory20);
     // clusters = new Array(m);
@@ -102,6 +62,7 @@ let radiusScale = d3.scaleLinear()
 function makeCircles(response) {
   let data = response.articles;
   let nodes = data.map((d) => { 
+    // Outlet.query.filter(Outlet.outlet_popularity if Outlet.outlet_name == d.source.name).first()
     let scaledRadius = radiusScale(outlets.get(d.source.name).popularity);
   d = {
     title: d.title,
@@ -109,8 +70,11 @@ function makeCircles(response) {
     author: d.author,
     description: d.description,
     url: d.url,
+    // Outlet.query.filter(Outlet.outlet_popularity if Outlet.outlet_name == d.source.name).first()
     popularity: outlets.get(d.source.name).popularity,
+    // Outlet.query.filter(Outlet.outlet_bias if Outlet.outlet_name == d.source.name).first()
     bias: outlets.get(d.source.name).bias,
+    // Outlet.query.filter(Outlet.outlet_bias_key if Outlet.outlet_name == d.source.name && (Outlet.query.filter(Outlet.outlet_bias if Outlet.outlet_name == d.source.name).first())).first()
     cluster: bias_key.get(outlets.get(d.source.name).bias),
     radius: scaledRadius
   };
@@ -141,8 +105,6 @@ function makeCircles(response) {
         .enter().append('circle')
             .attr('r', (d) => d.radius)
             .attr('fill', (d) => z(d.cluster))
-            .attr('stroke', 'black')
-            .attr('stroke-width', 1)
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
@@ -159,7 +121,8 @@ function makeCircles(response) {
             div.transition()    
                 .duration(500)    
                 .style("opacity", 0); 
-        });   
+        });  
+
 
   let simulation = d3.forceSimulation(nodes)
         .velocityDecay(0.2)
@@ -168,29 +131,7 @@ function makeCircles(response) {
         .force("collide", collide)
         .force("cluster", clustering)
         .on("tick", ticked);
-
-  node.append("text")
-    .text(function(d) {
-      return d.title;
-    })
-    .attr("dx", -10)
-    .text(function(d) {
-      return d.title
-    })
-    .style("stroke", "black");
-
-
-  node.selectAll("circle").transition()
-    .duration(750)
-    .delay(function(d, i) {
-      return i * 5;
-    })
-    .attrTween("r", function(d) {
-      var i = d3.interpolate(0, d.radius);
-      return function(t) {
-        return d.radius = i(t);
-      };
-    });
+        // .on("tick");
 
   function ticked() {
       circles
@@ -268,14 +209,4 @@ function makeCircles(response) {
 }
 
 $.getJSON(url, makeCircles);
-</script>
 
-    <a href="/newsbykeyword">Search trending news by Keyword</a> <br>  
-
-    <p> Homepage Test 1
-    Solo darth skywalker mandalore dooku. Jango skywalker jawa darth. Dantooine skywalker moff aayla antilles. Tusken raider endor darth c-3p0 organa mara yavin gonk anakin. Binks obi-wan kamino fisto darth solo calrissian mandalore jango. Dantooine calrissian vader c-3po amidala kenobi owen. Grievous yoda maul leia amidala calamari fett coruscant dooku. Antilles watto qui-gon skywalker yoda cade leia solo. Jabba mara r2-d2 ponda mon gamorrean. Sidious thrawn ewok dooku organa darth. Mandalorians moff naboo solo thrawn jango jinn luke. 
-
-    Cade boba mothma boba wookiee fett. Padmé grievous ventress mandalore vader padmé. Aayla jade mandalore moff organa mon watto. Padmé mon palpatine solo. Owen anakin padmé moff ahsoka moff. Droid moff skywalker greedo hutt. Twi'lek darth skywalker mara kessel solo kit antilles ackbar. Maul r2-d2 calrissian grievous maul darth coruscant. Binks grievous vader moff mandalore. Secura mara skywalker gamorrean lando dagobah. Moff ben moff bothan. Boba coruscant grievous mothma jade secura mothma. Mara darth ben mace dagobah.</p>
-</center>
-</body>
-{% endblock %}

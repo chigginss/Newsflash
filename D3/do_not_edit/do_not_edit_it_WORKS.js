@@ -15,7 +15,7 @@
       ['Engadget', {popularity: 6,bias: 'Left-Center'}],
       ['Politico', {popularity: 6,bias: 'Left-Center'}],
       ['Fortune', {popularity: 7,bias: 'Right-Center'}],
-      ['NBC News', {popularity: 7,bias: 'Right-Center'}],
+      ['NBC News', {popularity: 7,bias: 'Left-Center'}],
       ['ABC News', {popularity: 7,bias: 'Left-Center'}],
       ['CNBC', {popularity: 7,bias: 'Left-Center'}],
       ['CBS News', {popularity: 7,bias: 'Left-Center'}],
@@ -39,10 +39,10 @@ let url = endPoint + apiKey;
 let margin = {top: 100, right: 100, bottom: 100, left: 100};
 
 var width = 2000,
-  height = 600,
-  padding = 100, 
-  clusterPadding = 150, 
-  maxRadius = 15;
+  height = 700,
+  padding = 10, 
+  clusterPadding = 15, 
+  maxRadius = 100;
 
 var n = 20, 
     m = 5; 
@@ -54,7 +54,7 @@ var clusters = new Array(m);
 
 let radiusScale = d3.scaleLinear()
   .domain([1, 10])
-  .range([4, maxRadius]);
+  .range([60, maxRadius]);
 
   console.log(radiusScale(10));
 
@@ -110,7 +110,7 @@ function makeCircles(response) {
             div.transition()    
                 .duration(200)    
                 .style("opacity", .9);    
-            div .html( "Title " + d.title+ "<br/>Author" + d.author +"<br/>Description:" + d.description + "<br/>Source:" + d.source)  
+            div .html( "TITLE: " + d.title+ "<br/>AUTHOR:" + d.author +"<br/>SUMMARY:" + d.description + "<br/>SOURCE:" + d.source + "<br/>BIAS:" + d.bias)  
                 .style("left", (d3.event.pageX) + "px")   
                 .style("top", (d3.event.pageY - 28) + "px");  
             })          
@@ -118,7 +118,7 @@ function makeCircles(response) {
             div.transition()    
                 .duration(500)    
                 .style("opacity", 0); 
-        });             
+        });   
 
   let simulation = d3.forceSimulation(nodes)
         .velocityDecay(0.2)
@@ -127,6 +127,29 @@ function makeCircles(response) {
         .force("collide", collide)
         .force("cluster", clustering)
         .on("tick", ticked);
+
+  node.append("text")
+    .text(function(d) {
+      return d.title;
+    })
+    .attr("dx", -10)
+    .text(function(d) {
+      return d.title
+    })
+    .style("stroke", "black");
+
+
+  node.selectAll("circle").transition()
+    .duration(750)
+    .delay(function(d, i) {
+      return i * 5;
+    })
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(0, d.radius);
+      return function(t) {
+        return d.radius = i(t);
+      };
+    });
 
   function ticked() {
       circles
@@ -170,7 +193,7 @@ function makeCircles(response) {
   }
 
   function collide(alpha) {
-    var quadtree = d3.quadtree()
+    var quadtree = d3.quadtree(nodes)
         .x((d) => d.x)
         .y((d) => d.y)
         .addAll(nodes);
@@ -187,7 +210,7 @@ function makeCircles(response) {
           var x = d.x - quad.data.x,
               y = d.y - quad.data.y,
               l = Math.sqrt(x * x + y * y),
-              r = d.r + quad.data.r + (d.cluster === quad.data.cluster ? padding : clusterPadding);
+              r = d.radius + quad.data.radius + (d.cluster === quad.data.cluster ? padding : clusterPadding);
           if (l < r) {
             l = (l - r) / l * alpha;
             d.x -= x *= l;

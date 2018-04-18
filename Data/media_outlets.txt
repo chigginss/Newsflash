@@ -1,83 +1,83 @@
-CNN|10|Left Bias
-The New York Times|10|Left-Center Bias
-The Washington Post|10|Left-Center Bias
-Wired|9|Left-Center Bias
-BBC News|9|Left-Center Bias
-The Wall Street Journal|9|Right Center Bias
-TechRadar|8|NULL
-TechCrunch|8|Left-Center Bias
-The Guardian|8|NULL
-Fox News|8|Right Bias
-The Huffington Post|8|Left Bias
-Bloomberg|8|Left-Center Bias
-USA Today|8|No Bias
-Time|8|No Bias
-Forbes|8|Right Center Bias
-Fortune|7|Right Center Bias
-NBC News|7|Left-Center Bias
-The Atlantic|6|Left-Center Bias
-ABC News|6|Left-Center Bias
-Al Jazeera English|6|Left-Center Bias
-Breitbart News|6|Right Bias
-Buzzfeed|6|Bias
-Vice News|6|Bias
-Associated Press|6|No Bias
-Business Insider|6|Left-Center Bias
-Crypto Coins News|NULL|NULL
-Entertainment Weekly|NULL|NULL
-Financial Times|NULL|Center
-Focus|NULL|NULL
-FourFourTwo|NULL|NULL
-Hacker News|NULL|NULL
-Independent|NULL|NULL
-InfoMoney|NULL|NULL
-New Scientist|NULL|NULL
-New York Magazine|NULL|Left Bias
-New York Daily News|NULL|NULL   
-Next Big Future|NULL|NULL
-NFL News|NULL|NULL
-NHL News|NULL|NULL
-RBC|NULL|NULL
-Reddit|NULL|NULL
-TalkSport|NULL|NULL
-The Irish Times|NULL|Left-Center Bias
-The Lad Bible|2|NULL
-The Sport Bible|2|NULL
-The Telegraph|NULL|NULL
-The Times of India|NULL|NULL
-Google News|9|NULL
-Google News (Australia)|9|NULL
-Google News (Canada)|9|NULL
-Google News (India)|9|NULL
-Google News (UK)|9|NULL
-Yahoo|9|NULL
-Business Insider (UK)|9|Left-Center Bias
-ESPN|8|NULL
-ESPN Cric Info|8|NULL
-Reuters|8|Center
-Fox Sports|7|Right Bias
-CBS News|7|Left-Center Bias
-ABC News (AU)|7|Left-Center Bias
-NPR|7|Left Bias
-CNBC|7|Left-Center Bias
-Ars Technica|7|NULL
-New York Post|6|NULL  
-LA Times|6|Left Bias
-CBC News|6|Left-Center Bias
-Daily Mail|6|Right Bias
-IGN|6|NULL
-Politico|6|Left-Center Bias
-New Zealand Herald|6|Center
-News.com.au|6|Left-Center Bias
-Engadget|6|Left-Center Bias
-The Verge|5|NULL
-Mashable|5|Left Bias
-Bleacher Report|4|NULL
-Australian Financial Review|4|Center
-Axios|4|Left-Center Bias
-Polygon|4|NULL
-News24|4|NULL
-Newsweek|3|Left-Center Bias
-The Next Web|3|NULL
-Financial Post|3|NULL
-Recode|3|Center
+CNN|10|Left|0
+The New York Times|10|Left-Center|1
+The Washington Post|10|Left-Center |1
+Wired|9|Left-Center|1
+BBC News|9|Left-Center|1
+The Wall Street Journal|9|Right-Center|3
+TechRadar|8|NULL|5
+TechCrunch|8|Left-Center|1
+The Guardian|8|NULL|5
+Fox News|8|Right|4
+The Huffington Post|8|Left|0
+Bloomberg|8|Left-Center|1
+USA Today|8|Center|2
+Time|8|Center|2
+Forbes|8|Right-Center|3
+Fortune|7|Right-Center|3
+NBC News|7|Left-Center|1
+The Atlantic|6|Left-Center|1
+ABC News|6|Left-Center|1
+Al Jazeera English|6|Left-Center|1
+Breitbart News|6|Right|4
+Buzzfeed|6|Left-Center|1
+Vice News|6|Left-Center|1
+Associated Press|6|Center|2
+Business Insider|6|Left-Center|1
+Crypto Coins News|NULL|NULL|5
+Entertainment Weekly|NULL|NULL|5
+Financial Times|NULL|Center|2
+Focus|NULL|NULL|5
+FourFourTwo|NULL|NULL|5
+Hacker News|NULL|NULL|5
+Independent|NULL|NULL|5
+InfoMoney|NULL|NULL|5
+New Scientist|NULL|NULL|5
+New York Magazine|NULL|Left|0
+New York Daily News|NULL|NULL|5
+Next Big Future|NULL|NULL|5
+NFL News|NULL|NULL|5
+NHL News|NULL|NULL|5
+RBC|NULL|NULL|5
+Reddit|NULL|NULL|5
+TalkSport|NULL|NULL|5
+The Irish Times|NULL|Left-Center|1
+The Lad Bible|2|NULL|5
+The Sport Bible|2|NULL|5
+The Telegraph|NULL|NULL|5
+The Times of India|NULL|NULL|5
+Google News|9|NULL|5
+Google News (Australia)|9|NULL|5
+Google News (Canada)|9|NULL|5
+Google News (India)|9|NULL|5
+Google News (UK)|9|NULL|5
+Yahoo|9|NULL|5
+Business Insider (UK)|9|Left-Center|1
+ESPN|8|NULL|5
+ESPN Cric Info|8|NULL|5
+Reuters|8|Center|2
+Fox Sports|7|Right|4
+CBS News|7|Left-Center|1
+ABC News (AU)|7|Left-Center|1
+NPR|7|Left|0
+CNBC|7|Left-Center|1
+Ars Technica|7|NULL|5
+New York Post|6|NULL|5 
+LA Times|6|Left|0
+CBC News|6|Left-Center|1
+Daily Mail|6|Right|4
+IGN|6|NULL|5
+Politico|6|Left-Center|1
+New Zealand Herald|6|Center|2
+News.com.au|6|Left-Center|1
+Engadget|6|Left-Center|1
+The Verge|5|NULL|5
+Mashable|5|Left|0
+Bleacher Report|4|NULL|5
+Australian Financial Review|4|Center|2
+Axios|4|Left-Center|1
+Polygon|4|NULL|5
+News24|4|NULL|5
+Newsweek|3|Left-Center|1
+The Next Web|3|NULL|5
+Financial Post|3|NULL|5
+Recode|3|Center|2

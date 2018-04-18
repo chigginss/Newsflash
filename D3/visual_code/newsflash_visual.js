@@ -29,7 +29,8 @@
       ['Left-Center', 1],
       ['Center', 2],
       ['Right-Center', 3],
-      ['Right', 4]
+      ['Right', 4],
+      ['NULL', 5]
       ]);
 
 let endPoint = "https://newsapi.org/v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey=";
@@ -39,13 +40,13 @@ let url = endPoint + apiKey;
 let margin = {top: 100, right: 100, bottom: 100, left: 100};
 
 var width = 2000,
-  height = 800,
+  height = 700,
   padding = 10, 
   clusterPadding = 15, 
-  maxRadius = 90;
+  maxRadius = 100;
 
 var n = 20, 
-    m = 5; 
+    m = 6; 
 
 var z = d3.scaleOrdinal(d3.schemeCategory20);
     // clusters = new Array(m);
@@ -54,13 +55,14 @@ var clusters = new Array(m);
 
 let radiusScale = d3.scaleLinear()
   .domain([1, 10])
-  .range([4, maxRadius]);
+  .range([60, maxRadius]);
 
   console.log(radiusScale(10));
 
 function makeCircles(response) {
   let data = response.articles;
   let nodes = data.map((d) => { 
+
     let scaledRadius = radiusScale(outlets.get(d.source.name).popularity);
   d = {
     title: d.title,
@@ -100,8 +102,16 @@ function makeCircles(response) {
         .enter().append('circle')
             .attr('r', (d) => d.radius)
             .attr('fill', (d) => z(d.cluster))
-            .attr('stroke', 'black')
-            .attr('stroke-width', 1)
+        // .append("text")
+        //     .text(function (d) {
+        //     return d.title;
+        //   })
+        //     .attr("dx", -10)
+        //     .attr("dy", ".35em")
+        //     .text(function (d) {
+        //     return d.title
+        //   })
+        // .style("stroke", "gray")
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
@@ -118,7 +128,8 @@ function makeCircles(response) {
             div.transition()    
                 .duration(500)    
                 .style("opacity", 0); 
-        });             
+        });  
+
 
   let simulation = d3.forceSimulation(nodes)
         .velocityDecay(0.2)
@@ -127,12 +138,24 @@ function makeCircles(response) {
         .force("collide", collide)
         .force("cluster", clustering)
         .on("tick", ticked);
+        // .on("tick");
 
   function ticked() {
       circles
         .attr('cx', (d) => d.x)
         .attr('cy', (d) => d.y);
   }
+
+  // function tick(e) {
+  //   circles.each(cluster(10 * e.alpha * e.alpha))
+  //       .each(collide(.5))
+  //   //.attr("transform", functon(d) {});
+  //   .attr("transform", function (d) {
+  //       var k = "translate(" + d.x + "," + d.y + ")";
+  //       return k;
+  //   })
+
+  // }
 
   function dragstarted(d) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();

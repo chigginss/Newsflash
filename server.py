@@ -6,7 +6,7 @@ from model import User, Search, Outlet, connect_to_db, db
 import os
 import requests
 
-API_KEY = os.environ['API_KEY']
+# API_KEY = os.environ['API_KEY']
 
 app = Flask(__name__)
 
@@ -21,23 +21,37 @@ app.jinja_env.undefined = StrictUndefined
 def default_view():
     """ Default top trending coverage - possibly also combine with search term? """
 
+
     return render_template('homepage.html')
 
-@app.route('/newsbykeyword')
-def search_term():
-    # methods=['POST']
-    """ Update visual to show new coverage for search term """
+# @app.route('/usernews')
+# def search_term():
+#     # methods=['POST']
+#     """ Update visual to show new coverage for search term """
 
-#     search = request.form.get('fav_keyword')
+# #     search = request.form.get('fav_keyword')
 
-#     if email in session:
-#         if User.query.filter(User.email == session['email']).first() && Search.query.filter(Search.search_term == fav_keyword).all() is None:
-#         search_term = Search(search_term=fav_keyword)
-#         db.session.add(search_term)
-#         db.session.commit()
-#         return redirect('/')
+# #     if email in session:
+# #         if User.query.filter(User.email == session['email']).first() && Search.query.filter(Search.search_term == fav_keyword).all() is None:
+# #         search_term = Search(search_term=fav_keyword)
+# #         db.session.add(search_term)
+# #         db.session.commit()
 
-    return render_template("search_view.html")
+        # flash("You've already favorited that term")
+
+#     return render_template("search_view.html")
+
+@app.route('/toptrendingjson')
+def json_data():
+    """Combine News API and database data"""
+
+    let endPoint = "https://newsapi.org/v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey="
+    let apiKey = "1ec5e2d27afa46efaf95cfb4c8938f37"
+    top_trending = endPoint + apiKey
+
+    data = Outlet.query.filter(Outlet.outlet_popularity, Outlet.outlet_bias  Outlet.outlet_name == top_trending['source']['name']).first()
+    top_trending[bias] = data[1]
+    top_trending[popularity] = data[0]
 
 # =============================================================================
 # User Login / User Logout / Register New User
@@ -108,38 +122,17 @@ def register_user():
     flash('User already exists')
     return redirect('/login')
 
-# =============================================================================
-# Json Route
-
-# @app.route('/trending_info.json')
-# def return_trending_json_from_api():
-
-#     """Pull top trending articles from News API"""
-#     url = ('https://newsapi.org/v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey={}'.format(API_KEY))
-#     response = requests.get(url)
-
-#     return jsonify(response.json())
-
-# @app.route('/search_info.json')
-# def return_search_json_from_api():
-
-#     """Pull top trending articles from News API"""
-#     url = ('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy&apiKey={}'.format({{ keyword }}, API_KEY))
-#     response = requests.get(url)
-
-#     return jsonify(response.json())
-
 
 # =============================================================================
 # User 
 
-@app.route('/users')
-def view_all_users():
-    """Display users for test"""
+# @app.route('/users')
+# def view_all_users():
+#     """Display users for test"""
 
-    users = User.query.all()
+#     users = User.query.all()
 
-    return render_template('user.html', users=users)
+#     return render_template('user.html', users=users)
 
 # =============================================================================
 # About

@@ -12,7 +12,7 @@ def example_data():
 
     user_1 = User(email="hello@gmail.com", password="1234")
     search_1 = Search(search_term="Google")
-    outlet_1 = Outlet(outlet_name='Best News', outlet_popularity=10, outlet_bias='Leaning Conservative')
+    outlet_1 = Outlet(outlet_name='Best News', outlet_popularity=10, outlet_bias='Right-Center')
     user_search_1 = User_Search(user_id=1, search_id=1)
 
     db.session.add_all([user_1, search_1, outlet_1])
@@ -23,15 +23,23 @@ def load_outlets():
 
     for line in open("Data/media_outlets.txt"):
         line = line.rstrip()
-        name, popularity, bias = line.split('|')
+        name, popularity, bias, _ = line.split('|')
 
-    outlet = Outlet(outlet_name=name,
-                    outlet_popularity=popularity,
-                    outlet_bias=bias)
+        if popularity == 'NULL': 
+            popularity = None
+        else:
+            popularity == int(popularity)
 
-    db.session.add(outlet)
+        if bias == 'NULL':
+            bias = None
 
-    db.session.commit()
+        outlet = Outlet(outlet_name=name,
+                        outlet_popularity=popularity,
+                        outlet_bias=bias)
+
+        db.session.add(outlet)
+
+        db.session.commit()
 
 # def increment_user_id():
 #     """Set value for the next user_id after seeding database"""
