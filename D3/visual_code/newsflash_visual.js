@@ -49,7 +49,6 @@ var n = 20,
     m = 6; 
 
 var z = d3.scaleOrdinal(d3.schemeCategory20);
-    // clusters = new Array(m);
 
 var clusters = new Array(m);  
 

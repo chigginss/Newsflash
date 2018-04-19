@@ -1,29 +1,5 @@
 "use strict";
 
-  // var outlets = new Map([
-  //     ['CNN', {popularity: 10, bias: 'Left'}],
-  //     ['The New York Times', {popularity: 10, bias: 'Left-Center'}],
-  //     ['The Washington Post', {popularity: 10,bias: 'Left-Center'}],
-  //     ['Wired', {popularity: 9,bias: 'Left-Center'}],
-  //     ['BBC News', {popularity: 9,bias: 'Left-Center'}],
-  //     ['The Wall Street Journal', {popularity: 9,bias: 'Right-Center'}],
-  //     ['TechCrunch', {popularity: 8,bias:'Left-Center'}],
-  //     ['Fox News', {popularity: 8,bias: 'Right'}],
-  //     ['Bloomberg', {popularity: 8,bias: 'Left-Center'}],
-  //     ['USA Today', {popularity: 8,bias: 'Center'}],
-  //     ['Time', {popularity: 8,bias: 'Center'}],
-  //     ['Engadget', {popularity: 6,bias: 'Left-Center'}],
-  //     ['Politico', {popularity: 6,bias: 'Left-Center'}],
-  //     ['Fortune', {popularity: 7,bias: 'Right-Center'}],
-  //     ['NBC News', {popularity: 7,bias: 'Left-Center'}],
-  //     ['ABC News', {popularity: 7,bias: 'Left-Center'}],
-  //     ['CNBC', {popularity: 7,bias: 'Left-Center'}],
-  //     ['CBS News', {popularity: 7,bias: 'Left-Center'}],
-  //     ['Breitbart News', {popularity: 6,bias: 'Right'}],
-  //     ['Associated Press', {popularity: 6,bias: 'Center'}],
-  //     ['Business Insider', {popularity: 6,bias: 'Left-Center'}]
-  //     ]);
-
   var bias_key = new Map([
       ['Left', 0],
       ['Left-Center', 1],
@@ -33,8 +9,6 @@
       ['NULL', 5]
       ]);
 
-// let endPoint = "https://newsapi.org/v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey=";
-// let apiKey = "1ec5e2d27afa46efaf95cfb4c8938f37";
 let url = "/toptrendingjson"
 
 let margin = {top: 100, right: 100, bottom: 100, left: 100};
@@ -57,22 +31,22 @@ let radiusScale = d3.scaleLinear()
   .domain([1, 10])
   .range([60, maxRadius]);
 
-  console.log(radiusScale(10));
+  // console.log(radiusScale(10));
 
 function makeCircles(response) {
   let data = response.articles;
   let nodes = data.map((d) => { 
 
-    let scaledRadius = radiusScale(outlets.get(d.source.name).popularity);
+    let scaledRadius = radiusScale(d.popularity);
   d = {
     title: d.title,
     source: d.source.name,
     author: d.author,
     description: d.description,
     url: d.url,
-    popularity: outlets.get(d.source.name).popularity,
-    bias: outlets.get(d.source.name).bias,
-    cluster: bias_key.get(outlets.get(d.source.name).bias),
+    popularity: d.popularity,
+    bias: d.bias,
+    cluster: bias_key.d.bias,
     radius: scaledRadius
   };
 

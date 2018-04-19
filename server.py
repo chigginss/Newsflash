@@ -15,7 +15,7 @@ app.secret_key = 'ABC'
 app.jinja_env.undefined = StrictUndefined
 
 # =============================================================================
-# Homepage and Search View
+# Homepage and Search View and JSON route
 
 @app.route('/', methods=['GET'])
 def default_view():
@@ -24,34 +24,80 @@ def default_view():
 
     return render_template('homepage.html')
 
-# @app.route('/usernews')
+# @app.route('/newsbykeyword')
 # def search_term():
 #     # methods=['POST']
 #     """ Update visual to show new coverage for search term """
+    
+#   search = request.form.get('fav_keyword')
+    
+    # if email in session:
+    #     if Search.query.filter(Search.search_term == fav_keyword).first() is None:
+    #     search_term = Search(search_term=fav_keyword)
+    #     db.session.add(search_term)
+    #     db.session.commit()
+    #     flash('Search term {} saved'.format(email))
 
-# #     search = request.form.get('fav_keyword')
-
-# #     if email in session:
-# #         if User.query.filter(User.email == session['email']).first() && Search.query.filter(Search.search_term == fav_keyword).all() is None:
-# #         search_term = Search(search_term=fav_keyword)
-# #         db.session.add(search_term)
-# #         db.session.commit()
-
-        # flash("You've already favorited that term")
+    # flash("You've already favorited that term")
 
 #     return render_template("search_view.html")
 
-@app.route('/toptrendingjson')
+@app.route('/toptrending.json')
 def json_data():
     """Combine News API and database data"""
 
-    let endPoint = "https://newsapi.org/v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey="
-    let apiKey = "1ec5e2d27afa46efaf95cfb4c8938f37"
-    top_trending = endPoint + apiKey
+    r = requests.get("https://newsapi.org/v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
+    top_trending_json = r.json()
 
-    data = Outlet.query.filter(Outlet.outlet_popularity, Outlet.outlet_bias  Outlet.outlet_name == top_trending['source']['name']).first()
-    top_trending[bias] = data[1]
-    top_trending[popularity] = data[0]
+    # print top_trending_json
+    top_articles = top_trending_json['articles']
+    # print top_articles
+    for i in range(len(top_articles)):
+        source_name = top_articles[i].get('source')['name']
+        # print source_name  
+        # pull objects from newsflashdb
+        data = Outlet.query.filter(Outlet.outlet_name == source_name).first()
+        # print data
+        # add popularity and bias into json
+        if data is not None:
+            top_articles[i]['popularity'] = data.outlet_popularity
+            top_articles[i]['bias'] = data.outlet_bias
+        else:
+            top_articles[i]['popularity'] = False
+            top_articles[i]['bias'] = False
+
+    return jsonify(top_articles)
+
+# @app.route('/topsearch.json')
+# def search_data():
+
+#     r = requests.get('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy&apiKey={}'.format({{ keyword }}, API_KEY))
+
+#     top_search_json = r.json()
+
+#     # print top_trending_json
+#     top_searches = top_search_json['articles']
+#     # print top_articles
+#     for i in range(len(top_searches)):
+#         source_name = top_searches[i].get('source')['name']
+#         # print source_name  
+#         # pull objects from newsflashdb
+#         data = Outlet.query.filter(Outlet.outlet_name == source_name).first()
+#         # print data
+#         # add popularity and bias into json
+#         if data is not None:
+#             top_searches[i]['popularity'] = data.outlet_popularity
+#             top_searches[i]['bias'] = data.outlet_bias
+#         else:
+#             top_searches[i]['popularity'] = False
+#             top_searches[i]['bias'] = False
+
+#     return jsonify(top_searches)
+
+@app.route('/hihi')
+def show_json_data():
+
+    return render_template('json_test.html')
 
 # =============================================================================
 # User Login / User Logout / Register New User

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<script> 
+
+$.get('/toptrending.json', function (results){
+  console.log(results);
+});
+
+</script>
+
+{% endblock %}
