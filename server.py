@@ -13,40 +13,88 @@ app = Flask(__name__)
 app.secret_key = 'ABC'
 
 app.jinja_env.undefined = StrictUndefined
+app.jinja_env.auto_reload = True
 
 # =============================================================================
-# Homepage and Search View and JSON route
+# Homepage 
 
 @app.route('/', methods=['GET'])
 def default_view():
-    """ Default top trending coverage - possibly also combine with search term? """
+    """ Default top trending coverage"""
 
 
     return render_template('homepage.html')
 
-# @app.route('/newsbykeyword')
-# def search_term():
-#     # methods=['POST']
-#     """ Update visual to show new coverage for search term """
-    
-#   search = request.form.get('fav_keyword')
-    
-    # if email in session:
-    #     if Search.query.filter(Search.search_term == fav_keyword).first() is None:
-    #     search_term = Search(search_term=fav_keyword)
-    #     db.session.add(search_term)
-    #     db.session.commit()
-    #     flash('Search term {} saved'.format(email))
+# =============================================================================
+# Search Views - form and visual 
 
-    # flash("You've already favorited that term")
+@app.route('/searchbykeyword', methods=['GET'])
+def search_term():
+    """ Update visual to show new coverage for search term """
 
-#     return render_template("search_view.html")
+    return render_template('search_for_term.html')
+
+@app.route('/topsearch.json', methods=['POST'])
+def search_for_term():
+    """ Update visual to show new coverage for search term """
+        
+    keyword = request.form.get('keyword')
+
+    #     #search for search_terms in Search table if user_id (that matches email in User table) also matches user_id in User_Search table.
+    #     #If none exist, add search_term to Search table that corresponds to User_id in User_Search table
+
+    # if session['user_id'] == user.user_id: 
+    #     if User_Search.query.filter(User_Search.search_id == keyword).first() is None:
+    #         search_term = Search(search_term=keyword)
+    #         search_id = User_Search(search_id=search_id)
+    #         db.session.add(search_term)
+    #         db.session.add(search_id)
+    #         db.session.commit()
+    #         flash('New search added')
+        
+    r = requests.get(('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy'+
+                     '&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37').format(keyword))
+
+    # print r
+    top_search_json = r.json()
+    # print top_search_json
+    # print top_trending_json
+    top_searches = top_search_json['articles']
+    # print top_articles
+    for i in range(len(top_searches)):
+        source_name = top_searches[i].get('source')['name']
+
+        # pull objects from newsflashdb
+        data = Outlet.query.filter(Outlet.outlet_name == source_name).first()
+
+        # add popularity and bias into json
+        if data is not None:
+            top_searches[i]['popularity'] = data.outlet_popularity
+            top_searches[i]['bias'] = data.outlet_bias
+        else:
+            top_searches[i]['popularity'] = False
+            top_searches[i]['bias'] = False
+
+    return jsonify(top_searches)
+
+    # searches = Search.query.all()
+
+# @app.route('/newsbykeyword', methods=['GET'])
+# def search_news_coverage():
+#     """ Display search term form """
+
+#     return render_template('search_view.html')
+
+# =============================================================================
+# JSON routes for top and search coverage
 
 @app.route('/toptrending.json')
 def json_data():
     """Combine News API and database data"""
 
-    r = requests.get("https://newsapi.org/v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
+    r = requests.get("https://newsapi.org/v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,"+
+                      "bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,"+
+                      "usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
     top_trending_json = r.json()
 
     # print top_trending_json
@@ -71,33 +119,34 @@ def json_data():
 # @app.route('/topsearch.json')
 # def search_data():
 
-#     r = requests.get('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy&apiKey={}'.format({{ keyword }}, API_KEY))
+    # r = requests.get('https://newsapi.org/v2/top-headlines?language=en&q=syria&sortBy=relevancy&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37')
+    #     # .format(keyword))
+    #     # .format(keyword, API_KEY))
+    # top_search_json = r.json()
 
-#     top_search_json = r.json()
+    # # print top_trending_json
+    # top_searches = top_search_json['articles']
+    # # print top_articles
+    # for i in range(len(top_searches)):
+    #     source_name = top_searches[i].get('source')['name']
 
-#     # print top_trending_json
-#     top_searches = top_search_json['articles']
-#     # print top_articles
-#     for i in range(len(top_searches)):
-#         source_name = top_searches[i].get('source')['name']
-#         # print source_name  
-#         # pull objects from newsflashdb
-#         data = Outlet.query.filter(Outlet.outlet_name == source_name).first()
-#         # print data
-#         # add popularity and bias into json
-#         if data is not None:
-#             top_searches[i]['popularity'] = data.outlet_popularity
-#             top_searches[i]['bias'] = data.outlet_bias
-#         else:
-#             top_searches[i]['popularity'] = False
-#             top_searches[i]['bias'] = False
+    #     # pull objects from newsflashdb
+    #     data = Outlet.query.filter(Outlet.outlet_name == source_name).first()
 
-#     return jsonify(top_searches)
+    #     # add popularity and bias into json
+    #     if data is not None:
+    #         top_searches[i]['popularity'] = data.outlet_popularity
+    #         top_searches[i]['bias'] = data.outlet_bias
+    #     else:
+    #         top_searches[i]['popularity'] = False
+    #         top_searches[i]['bias'] = False
 
-@app.route('/hihi')
-def show_json_data():
+    # return jsonify(top_searches)
 
-    return render_template('json_test.html')
+# @app.route('/hihi')
+# def show_json_data():
+
+#     return render_template('json_test.html')
 
 # =============================================================================
 # User Login / User Logout / Register New User
@@ -106,8 +155,6 @@ def show_json_data():
 def login_form():
     """Displays Login Form"""
 
-    # if 'email' in session:
-    #     del session['email']
 
     return render_template('login.html')
 
@@ -124,8 +171,8 @@ def user_login():
         return redirect('/login')
 
     if password == user.password:
-        session['email'] = email
-        flash('Logged in as {}'.format(email))
+        session['user_id'] = user.user_id
+        flash('Logged in as {}'.format(user.email))
         return redirect('/')
 
     flash('Invalid password')
@@ -138,8 +185,8 @@ def user_login():
 def user_logout():
     """Logout user"""
 
-    if 'email' in session:
-        del session['email']
+    if 'user_id' in session:
+        del session['user_id']
         flash ('Logged out')
 
     return redirect('/')
@@ -161,7 +208,7 @@ def register_user():
         user = User(email=email, password=password)
         db.session.add(user)
         db.session.commit()
-        session['email'] = email
+        session['user_id'] = user.user_id
         flash('Registered as {}'.format(email))
         return redirect('/')
 

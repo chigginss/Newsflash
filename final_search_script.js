@@ -1,4 +1,4 @@
-"use strict";
+ "use strict";
 
   var bias_key = new Map([
       ['Left', 0],
@@ -9,15 +9,15 @@
       ['NULL', 5]
       ]);
 
-let url = "/toptrending.json"
+let url = '/topsearch.json'
 
 let margin = {top: 100, right: 100, bottom: 100, left: 100};
 
-var width = 2000,
-  height = 700,
+var width = 1200,
+  height = 600,
   padding = 10, 
   clusterPadding = 15, 
-  maxRadius = 100;
+  maxRadius = 80;
 
 var n = 20, 
     m = 6; 
@@ -29,35 +29,40 @@ var clusters = new Array(m);
 
 let radiusScale = d3.scaleLinear()
   .domain([1, 10])
-  .range([60, maxRadius]);
+  .range([10, maxRadius]);
 
   // console.log(radiusScale(10));
 
 function makeCircles(response) {
-  let data = response.articles;
+  let data = response;
   let nodes = data.map((d) => { 
 
-    let scaledRadius = radiusScale(data['popularity']);
-  d = {
-    title: d.title,
-    source: d.source.name,
-    author: d.author,
-    description: d.description,
-    url: d.url,
-    popularity: d.popularity,
-    bias: d.bias,
-    cluster: bias_key.get(data['bias']),
-    radius: scaledRadius
-  };
+    let scaledRadius = radiusScale(d.popularity);
+    // debugger;
+    console.log(d.title, d.bias);
+    console.log(bias_key.get(d.bias))
+    let node = {
+        title: d.title,
+        source: d.source.name,
+        author: d.author,
+        description: d.description,
+        url: d.url,
+        popularity: d.popularity,
+        bias: d.bias,
+        cluster: bias_key.get(d.bias),
+        radius: scaledRadius
+    };
 
   if (!clusters[bias_key.get(d.bias)] || (d.radius > clusters[bias_key.get(d.bias)].radius)) {
-    clusters[bias_key.get(d.bias)] = d;
+    clusters[bias_key.get(d.bias)] = node;
   }
 
-  return d;
+  return node;
   });
-  console.log(nodes);
-  console.log(clusters);
+  // console.log(nodes);
+  // console.log(clusters);
+
+  // if svg is already attached to body, delete svg
 
   var svgContainer = d3.select("body")
         .append("svg")
@@ -76,16 +81,6 @@ function makeCircles(response) {
         .enter().append('circle')
             .attr('r', (d) => d.radius)
             .attr('fill', (d) => z(d.cluster))
-        // .append("text")
-        //     .text(function (d) {
-        //     return d.title;
-        //   })
-        //     .attr("dx", -10)
-        //     .attr("dy", ".35em")
-        //     .text(function (d) {
-        //     return d.title
-        //   })
-        // .style("stroke", "gray")
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
@@ -120,17 +115,6 @@ function makeCircles(response) {
         .attr('cy', (d) => d.y);
   }
 
-  // function tick(e) {
-  //   circles.each(cluster(10 * e.alpha * e.alpha))
-  //       .each(collide(.5))
-  //   //.attr("transform", functon(d) {});
-  //   .attr("transform", function (d) {
-  //       var k = "translate(" + d.x + "," + d.y + ")";
-  //       return k;
-  //   })
-
-  // }
-
   function dragstarted(d) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
       d.fx = d.x;
@@ -150,6 +134,7 @@ function makeCircles(response) {
 
   function clustering(alpha) {
       nodes.forEach(function(d) {
+        // debugger;
         var cluster = clusters[d.cluster];
         if (cluster === d) return;
         var x = d.x - cluster.x,
@@ -200,5 +185,9 @@ function makeCircles(response) {
 
 }
 
-$.get(url, makeCircles);
-
+$('#search-form').submit(function (e) { 
+    e.preventDefault();
+    $.post('/topsearch.json',$(e.target).serialize(), function (data) {
+        makeCircles(data);
+    }) 
+});

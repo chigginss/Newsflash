@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Search for coverage about any brand or term!</h1> </br>
+<form action="/topsearch.json" id="search-form" method="post">
+    Search for coverage by Keyword:<input type="text" name="keyword">
+    <input type="submit" value="Search"> <br>
+</form>
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="static/js/final_search_script.js"></script>
+
+{% endblock %}
