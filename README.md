@@ -1,3 +1,3 @@
 # Newsflash
-Hackbright Project
+Hackbright Project -
 A snapshot of whats trending now.
