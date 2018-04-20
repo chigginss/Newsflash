@@ -55,7 +55,6 @@ def search_for_term():
     r = requests.get(('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy'+
                      '&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37').format(keyword))
 
-    # print r
     top_search_json = r.json()
     # print top_search_json
     # print top_trending_json
