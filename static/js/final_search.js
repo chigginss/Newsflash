@@ -59,9 +59,8 @@ function makeCircles(response) {
 
   return node;
   });
-  // console.log(nodes);
-  // console.log(clusters);
-  
+
+
   // if svg is already attached to body, delete svg
   var svgContainer = d3.select("body")
         .append("svg")
