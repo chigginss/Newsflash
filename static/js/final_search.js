@@ -17,19 +17,19 @@ var width = 1200,
   height = 600,
   padding = 10, 
   clusterPadding = 15, 
-  maxRadius = 80;
+  maxRadius = 100;
 
 var n = 20, 
     m = 6; 
 
+// var color_scale = d3.scale.linear().domain([0, median_area, max_area]).range(['blue', 'purple', 'red']);
 var z = d3.scaleOrdinal(d3.schemeCategory20);
-    // clusters = new Array(m);
 
 var clusters = new Array(m);  
 
 let radiusScale = d3.scaleLinear()
   .domain([1, 10])
-  .range([10, maxRadius]);
+  .range([50, maxRadius]);
 
   // console.log(radiusScale(10));
 
@@ -60,8 +60,20 @@ function makeCircles(response) {
   return node;
   });
 
-
   // if svg is already attached to body, delete svg
+  // if empty then do this, else empty it 
+
+  // if svgContainer = svg { 
+      // d3.selectAll("svg > *").remove();
+    // }
+
+  if svgContainer = d3.select('body') {
+    d3.selectAll("svg > *").remove();
+  }
+
+    // var svg = d3.select("svg");
+    // svg.selectAll("*").remove();
+
   var svgContainer = d3.select("body")
         .append("svg")
         .attr("width", width)
@@ -85,10 +97,7 @@ function makeCircles(response) {
         //   })
         //     .attr("dx", -10)
         //     .attr("dy", ".35em")
-        //     .text(function (d) {
-        //     return d.title
-        //   })
-        // .style("stroke", "gray")
+        // .style("stroke", "black")
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
@@ -115,24 +124,12 @@ function makeCircles(response) {
         .force("collide", collide)
         .force("cluster", clustering)
         .on("tick", ticked);
-        // .on("tick");
 
   function ticked() {
       circles
         .attr('cx', (d) => d.x)
         .attr('cy', (d) => d.y);
   }
-
-  // function tick(e) {
-  //   circles.each(cluster(10 * e.alpha * e.alpha))
-  //       .each(collide(.5))
-  //   //.attr("transform", functon(d) {});
-  //   .attr("transform", function (d) {
-  //       var k = "translate(" + d.x + "," + d.y + ")";
-  //       return k;
-  //   })
-
-  // }
 
   function dragstarted(d) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();

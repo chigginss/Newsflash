@@ -20,7 +20,7 @@ Navigation Bar  -->
             <a href="/searchbykeyword">Search for news by Keyword</a> 
 
             <!-- User login / logout -->
-            {% if 'email' in session %}
+            {% if 'user_id' in session %}
                 <a href='/logout'>Logout</a>
             {% else %}
                 <a href='/login'>Login</a>

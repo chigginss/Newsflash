@@ -6,6 +6,7 @@ from model import User, Search, Outlet, connect_to_db, db
 import os
 import requests
 
+#logout not working
 # API_KEY = os.environ['API_KEY']
 
 app = Flask(__name__)
@@ -43,8 +44,16 @@ def search_for_term():
     #     #search for search_terms in Search table if user_id (that matches email in User table) also matches user_id in User_Search table.
     #     #If none exist, add search_term to Search table that corresponds to User_id in User_Search table
 
-    # if session['user_id'] == user.user_id: 
-    #     if User_Search.query.filter(User_Search.search_id == keyword).first() is None:
+
+#how will they view favorites? entire list or just top 3 - how will they decide 
+#case sensitive - for searches 
+
+    # check to see if search matches that user's searches (search_terms associated with specific user_id)
+    # if not, add for that specific user_id
+    # if session['user_id'] 
+    # User_Search.query.filter(User_Search.user_id, User_Search.search_id).all() 
+    # if User_Search.search_id matches Search.search_id 
+    #Search.query.filter(Search.search_term == keyword).first() is None:
     #         search_term = Search(search_term=keyword)
     #         search_id = User_Search(search_id=search_id)
     #         db.session.add(search_term)
@@ -114,38 +123,6 @@ def json_data():
             top_articles[i]['bias'] = False
 
     return jsonify(top_articles)
-
-# @app.route('/topsearch.json')
-# def search_data():
-
-    # r = requests.get('https://newsapi.org/v2/top-headlines?language=en&q=syria&sortBy=relevancy&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37')
-    #     # .format(keyword))
-    #     # .format(keyword, API_KEY))
-    # top_search_json = r.json()
-
-    # # print top_trending_json
-    # top_searches = top_search_json['articles']
-    # # print top_articles
-    # for i in range(len(top_searches)):
-    #     source_name = top_searches[i].get('source')['name']
-
-    #     # pull objects from newsflashdb
-    #     data = Outlet.query.filter(Outlet.outlet_name == source_name).first()
-
-    #     # add popularity and bias into json
-    #     if data is not None:
-    #         top_searches[i]['popularity'] = data.outlet_popularity
-    #         top_searches[i]['bias'] = data.outlet_bias
-    #     else:
-    #         top_searches[i]['popularity'] = False
-    #         top_searches[i]['bias'] = False
-
-    # return jsonify(top_searches)
-
-# @app.route('/hihi')
-# def show_json_data():
-
-#     return render_template('json_test.html')
 
 # =============================================================================
 # User Login / User Logout / Register New User

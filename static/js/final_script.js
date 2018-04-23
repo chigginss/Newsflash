@@ -17,7 +17,7 @@ var width = 1200,
   height = 600,
   padding = 10, 
   clusterPadding = 15, 
-  maxRadius = 80;
+  maxRadius = 100;
 
 var n = 20, 
     m = 6; 
@@ -29,7 +29,7 @@ var clusters = new Array(m);
 
 let radiusScale = d3.scaleLinear()
   .domain([1, 10])
-  .range([10, maxRadius]);
+  .range([40, maxRadius]);
 
   // console.log(radiusScale(10));
 
@@ -38,7 +38,6 @@ function makeCircles(response) {
   let nodes = data.map((d) => { 
 
     let scaledRadius = radiusScale(d.popularity);
-    // debugger;
     console.log(d.title, d.bias);
     console.log(bias_key.get(d.bias))
     let node = {
@@ -59,40 +58,31 @@ function makeCircles(response) {
 
   return node;
   });
-  // console.log(nodes);
-  // console.log(clusters);
-  // if svg is already attached to body, delete svg
+
   var svgContainer = d3.select("body")
         .append("svg")
         .attr("width", width)
         .attr("height", height)
-        .append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+
+  let anchorGroup = svgContainer.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
   let div = d3.select("body").append("div") 
     .attr("class", "tooltip")       
     .style("opacity", 0);
 
-  let circles = svgContainer.append('g')
+  let circles = anchorGroup
         .datum(nodes)
         .selectAll('.circle')
           .data(d => d)
-        .enter().append('circle')
+        .enter().append('g').attr('class', 'node').append('circle')
             .attr('r', (d) => d.radius)
             .attr('fill', (d) => z(d.cluster))
-        // .append("text")
-        //     .text(function (d) {
-        //     return d.title;
-        //   })
-        //     .attr("dx", -10)
-        //     .attr("dy", ".35em")
-        //     .text(function (d) {
-        //     return d.title
-        //   })
-        // .style("stroke", "gray")
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended)) 
+        // .selectAll(".tick text")
+        //       .call(wrap, 50)
         .on("mouseover", function(d) {
             div.transition()    
                 .duration(200)    
@@ -107,6 +97,26 @@ function makeCircles(response) {
                 .style("opacity", 0); 
         });  
 
+    let textLabels = anchorGroup.selectAll('.node')
+                    .data(nodes)
+                    .append("text")
+                    .attr('x', (d) => d.x)
+                    .attr('y', (d) => d.y)
+                    .text((d) => d.title.slice(0, 30) + '...')
+                    .attr('font-family', 'sans-serif')
+                    .attr('font-size', '12px')
+                    .attr('fill', 'black')
+                    // .selectAll(".tick text")
+                    //   .call(wrap, 80);
+    let textSource = anchorGroup.selectAll('.node')
+                    .data(nodes)
+                    .append("text")
+                    .attr('x', (d) => d.x)
+                    .attr('y', (d) => d.y)
+                    .text((d) => d.source)
+                    .attr('font-family', 'sans-serif')
+                    .attr('font-size', '12px')
+                    .attr('fill', 'black')
 
   let simulation = d3.forceSimulation(nodes)
         .velocityDecay(0.2)
@@ -115,24 +125,43 @@ function makeCircles(response) {
         .force("collide", collide)
         .force("cluster", clustering)
         .on("tick", ticked);
-        // .on("tick");
 
   function ticked() {
       circles
         .attr('cx', (d) => d.x)
         .attr('cy', (d) => d.y);
+      textLabels
+        .attr('x', (d) => d.x - d.radius + 2)
+        .attr('y', (d) => d.y);
+      textSource
+        .attr('x', (d) => d.x - d.radius + 2)
+        .attr('y', (d) => d.y + 15);
   }
 
-  // function tick(e) {
-  //   circles.each(cluster(10 * e.alpha * e.alpha))
-  //       .each(collide(.5))
-  //   //.attr("transform", functon(d) {});
-  //   .attr("transform", function (d) {
-  //       var k = "translate(" + d.x + "," + d.y + ")";
-  //       return k;
-  //   })
+    function wrap(text, width) {
+    text.each(function() {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1, // ems
+          y = text.attr("y"),
+          dy = parseFloat(text.attr("dy")),
+          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+      while (word = words.pop()) {
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > width) {
+          line.pop();
+          tspan.text(line.join(" "));
+          line = [word];
+          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+        }
+      }
+    });
+  }
 
-  // }
 
   function dragstarted(d) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
