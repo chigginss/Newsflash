@@ -19,7 +19,7 @@ var width = 1400,
   clusterPadding = 15, 
   maxRadius = 60;
 
-var n = 20, 
+var n = 30, 
     m = 6; 
 
 var z = d3.scaleOrdinal(d3.schemeCategory20);

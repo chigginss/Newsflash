@@ -60,9 +60,8 @@ def search_for_term():
     #         db.session.add(search_id)
     #         db.session.commit()
     #         flash('New search added')
-    
         #pageSize=50&
-    r = requests.get(('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy'+
+    r = requests.get(('https://newsapi.org/v2/top-headlines?pageSize=50&language=en&q={}&sortBy=relevancy'+
                      '&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37').format(keyword))
 
     top_search_json = r.json()
@@ -101,7 +100,7 @@ def search_for_term():
 def json_data():
     """Combine News API and database data"""
 
-    r = requests.get("https://newsapi.org/v2/top-headlines?sources=the-wall-street-journal,the-new-york-times,"+
+    r = requests.get("https://newsapi.org/v2/top-headlines?pageSize=30&sources=the-wall-street-journal,the-new-york-times,"+
                       "bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,"+
                       "usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
     top_trending_json = r.json()
@@ -191,6 +190,47 @@ def register_user():
 
     flash('User already exists')
     return redirect('/login')
+
+@app.route('/updateinfo', methods=['GET'])
+def view_update_form():
+    """ view form to update information """
+
+    return render_template('update_account.html')
+
+    
+@app.route('/updateinfo', methods=['POST'])
+def update_information():
+    """ allow user to update password """
+
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    user = User.query.filter_by(user_id=session['user_id']).one()
+
+    if email != '':
+        user.email = email
+        session['user_id'] = user_id
+    if password != '':
+        user.password = password
+    
+    db.session.commit()
+
+    flash('User info updated')
+
+    return redirect('/login')
+
+# =============================================================================
+# User add outlet information
+
+
+@app.route('/updateoutletinfo', methods=['GET'])
+def view_update_outlet_form():
+    """ view form to update outlet information """
+
+    
+@app.route('/updateoutletinfo', methods=['POST'])
+def update_outlet_information():
+    """ allow user to update outlet popularity or bias """
 
 
 # =============================================================================

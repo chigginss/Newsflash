@@ -9,7 +9,7 @@
       ['NULL', 5]
       ]);
 
-let url = "/toptrending.json"
+let url = "/topsearch.json"
 
 let margin = {top: 100, right: 100, bottom: 100, left: 100};
 
@@ -17,9 +17,9 @@ var width = 1200,
   height = 600,
   padding = 10, 
   clusterPadding = 15, 
-  maxRadius = 100;
+  maxRadius = 80;
 
-var n = 20, 
+var n = 30, 
     m = 6; 
 
 // var color_scale = d3.scale.linear().domain([0, median_area, max_area]).range(['blue', 'purple', 'red']);
@@ -29,18 +29,31 @@ var clusters = new Array(m);
 
 let radiusScale = d3.scaleLinear()
   .domain([1, 10])
-  .range([50, maxRadius]);
+  .range([30, maxRadius]);
 
-  // console.log(radiusScale(10));
+ function makeCircles(response) {
 
-function makeCircles(response) {
+  let nodes = [];
+  // d3.selectAll("#delete_me").remove();
+
+  // if (if (nodes) {
+  // } === true) {
+  //   nodes.remove();
+  // }
+
+  // if (nodes !== 'undefined') {
+  //   nodes.remove();
+  // }
+
   let data = response;
-  let nodes = data.map((d) => { 
+  nodes = data.map((d) => {
 
     let scaledRadius = radiusScale(d.popularity);
-    // debugger;
-    console.log(d.title, d.bias);
-    console.log(bias_key.get(d.bias))
+
+    if (d.popularity === 'NULL') {
+      d.popularity = 1
+    }
+
     let node = {
         title: d.title,
         source: d.source.name,
@@ -60,21 +73,11 @@ function makeCircles(response) {
   return node;
   });
 
-  // if svg is already attached to body, delete svg
-  // if empty then do this, else empty it 
 
-  // if svgContainer = svg { 
-      // d3.selectAll("svg > *").remove();
-    // }
-
-
-
-    // var svg = d3.select("svg");
-    // svg.selectAll("*").remove();
-
-  var svgContainer = d3.select("body")
-        // .selectAll("svg > *").remove();
+   var svgContainer = d3.select("body")
+        // .selectAll("#delete_me").remove();
         .append("svg")
+        .attr('id', 'delete_me')
         .attr("width", width)
         .attr("height", height)
         .append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
@@ -108,6 +111,30 @@ function makeCircles(response) {
                 .style("opacity", 0); 
         });  
 
+  // let textLabels = anchorGroup.selectAll('.node')
+  //                 .data(nodes)
+  //                 .append("text")
+  //                 .attr('x', (d) => d.x)
+  //                 .attr('y', (d) => d.y)
+  //                 .text((d) => d.title.slice(0, 10) + '...')
+  //                 .attr('font-family', 'sans-serif')
+  //                 .attr('font-size', '12px')
+  //                 .attr('fill', 'black')
+  //                 .on("click", function (d) {
+  //                         window.open(d.url);
+  //                   });
+  //                 // .selectAll(".tick text")
+  //                 //   .call(wrap, 80);
+                  
+  // let textSource = anchorGroup.selectAll('.node')
+  //                 .data(nodes)
+  //                 .append("text")
+  //                 .attr('x', (d) => d.x)
+  //                 .attr('y', (d) => d.y)
+  //                 .text((d) => d.source)
+  //                 .attr('font-family', 'sans-serif')
+  //                 .attr('font-size', '12px')
+  //                 .attr('fill', 'black')
 
   let simulation = d3.forceSimulation(nodes)
         .velocityDecay(0.2)
@@ -121,6 +148,12 @@ function makeCircles(response) {
       circles
         .attr('cx', (d) => d.x)
         .attr('cy', (d) => d.y);
+      // textLabels
+      //   .attr('x', (d) => d.x - d.radius + 2)
+      //   .attr('y', (d) => d.y);
+      // textSource
+      //   .attr('x', (d) => d.x - d.radius + 2)
+      //   .attr('y', (d) => d.y + 15);
   }
 
   function dragstarted(d) {
@@ -195,7 +228,9 @@ function makeCircles(response) {
 
 $('#search-form').submit(function (e) { 
     e.preventDefault();
-    $.post('/toptrending.json',$(e.target).serialize(), function (data) {
+    let s = d3.selectAll('svg');
+    s.remove();
+    $.post('/topsearch.json',$(e.target).serialize(), function (data) {
         makeCircles(data);
     }) 
 });

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+<!-- Logo 
+Login form  -->
+<h1>Update Account Information</h1><br>
+<form action="/login" method="POST">
+        <label>Old Email: </label><input type="text" name="email" required><br>
+        <label>New Email: </label><input type="text" name="email" required><br>
+        <label>New Password: </label><input type="password" name="password" required><br>
+        <input type="submit" name="Login">
+</form>
+
+<a href="/register">New User? Create Account</a>
+</center>
+
+{% endblock %}
