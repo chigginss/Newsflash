@@ -67,14 +67,13 @@ function makeCircles(response) {
       // d3.selectAll("svg > *").remove();
     // }
 
-  if svgContainer = d3.select('body') {
-    d3.selectAll("svg > *").remove();
-  }
+
 
     // var svg = d3.select("svg");
     // svg.selectAll("*").remove();
 
   var svgContainer = d3.select("body")
+        // .selectAll("svg > *").remove();
         .append("svg")
         .attr("width", width)
         .attr("height", height)
@@ -91,13 +90,6 @@ function makeCircles(response) {
         .enter().append('circle')
             .attr('r', (d) => d.radius)
             .attr('fill', (d) => z(d.cluster))
-        // .append("text")
-        //     .text(function (d) {
-        //     return d.title;
-        //   })
-        //     .attr("dx", -10)
-        //     .attr("dy", ".35em")
-        // .style("stroke", "black")
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)

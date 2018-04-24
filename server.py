@@ -60,7 +60,8 @@ def search_for_term():
     #         db.session.add(search_id)
     #         db.session.commit()
     #         flash('New search added')
-        
+    
+        #pageSize=50&
     r = requests.get(('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy'+
                      '&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37').format(keyword))
 

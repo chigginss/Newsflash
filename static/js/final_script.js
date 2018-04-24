@@ -13,11 +13,11 @@ let url = '/toptrending.json'
 
 let margin = {top: 100, right: 100, bottom: 100, left: 100};
 
-var width = 1200,
+var width = 1400,
   height = 600,
   padding = 10, 
   clusterPadding = 15, 
-  maxRadius = 100;
+  maxRadius = 60;
 
 var n = 20, 
     m = 6; 
@@ -102,10 +102,13 @@ function makeCircles(response) {
                     .append("text")
                     .attr('x', (d) => d.x)
                     .attr('y', (d) => d.y)
-                    .text((d) => d.title.slice(0, 30) + '...')
+                    .text((d) => d.title.slice(0, 10) + '...')
                     .attr('font-family', 'sans-serif')
                     .attr('font-size', '12px')
                     .attr('fill', 'black')
+                    .on("click", function (d) {
+                            window.open(d.url);
+                      });
                     // .selectAll(".tick text")
                     //   .call(wrap, 80);
     let textSource = anchorGroup.selectAll('.node')
@@ -117,6 +120,17 @@ function makeCircles(response) {
                     .attr('font-family', 'sans-serif')
                     .attr('font-size', '12px')
                     .attr('fill', 'black')
+
+       // let textUrl = anchorGroup.selectAll('.node')
+       //              .data(nodes)
+       //              .append("text")
+       //              .attr('x', (d) => d.x)
+       //              .attr('y', (d) => d.y)
+       //              .text("LINK")
+       //              .attr('font-family', 'sans-serif')
+       //              .attr('font-size', '12px')
+       //              .attr('fill', 'black')
+                    
 
   let simulation = d3.forceSimulation(nodes)
         .velocityDecay(0.2)
@@ -136,6 +150,9 @@ function makeCircles(response) {
       textSource
         .attr('x', (d) => d.x - d.radius + 2)
         .attr('y', (d) => d.y + 15);
+      // textUrl
+      //   .attr('x', (d) => d.x - d.radius + 1)
+      //   .attr('y', (d) => d.y + 25);
   }
 
     function wrap(text, width) {
