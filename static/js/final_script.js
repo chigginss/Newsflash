@@ -121,18 +121,7 @@ function makeCircles(response) {
                     .attr('font-size', '12px')
                     .attr('fill', 'black')
 
-       // let textUrl = anchorGroup.selectAll('.node')
-       //              .data(nodes)
-       //              .append("text")
-       //              .attr('x', (d) => d.x)
-       //              .attr('y', (d) => d.y)
-       //              .text("LINK")
-       //              .attr('font-family', 'sans-serif')
-       //              .attr('font-size', '12px')
-       //              .attr('fill', 'black')
-                    
-
-  let simulation = d3.forceSimulation(nodes)
+    let simulation = d3.forceSimulation(nodes)
         .velocityDecay(0.2)
         .force("x", d3.forceX().strength(.0005))
         .force("y", d3.forceY().strength(.0005))
@@ -150,10 +139,7 @@ function makeCircles(response) {
       textSource
         .attr('x', (d) => d.x - d.radius + 2)
         .attr('y', (d) => d.y + 15);
-      // textUrl
-      //   .attr('x', (d) => d.x - d.radius + 1)
-      //   .attr('y', (d) => d.y + 25);
-  }
+    }
 
     function wrap(text, width) {
     text.each(function() {
