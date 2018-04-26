@@ -17,29 +17,26 @@ var width = 1400,
   height = 600,
   padding = 10, 
   clusterPadding = 15, 
-  maxRadius = 60;
+  maxRadius = 90;
 
 var n = 30, 
     m = 6; 
 
 var z = d3.scaleOrdinal(d3.schemeCategory20);
-    // clusters = new Array(m);
 
 var clusters = new Array(m);  
 
 let radiusScale = d3.scaleLinear()
   .domain([1, 10])
-  .range([40, maxRadius]);
-
-  // console.log(radiusScale(10));
+  .range([30, maxRadius]);
 
 function makeCircles(response) {
   let data = response;
   let nodes = data.map((d) => { 
 
     let scaledRadius = radiusScale(d.popularity);
-    console.log(d.title, d.bias);
-    console.log(bias_key.get(d.bias))
+    // console.log(d.title, d.bias);
+    // console.log(bias_key.get(d.bias))
     let node = {
         title: d.title,
         source: d.source.name,
@@ -81,8 +78,6 @@ function makeCircles(response) {
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended)) 
-        // .selectAll(".tick text")
-        //       .call(wrap, 50)
         .on("mouseover", function(d) {
             div.transition()    
                 .duration(200)    
@@ -102,15 +97,17 @@ function makeCircles(response) {
                     .append("text")
                     .attr('x', (d) => d.x)
                     .attr('y', (d) => d.y)
-                    .text((d) => d.title.slice(0, 10) + '...')
+                    .text((d) => d.title.slice(0, 40) + '...')
+                    // .selectAll('.tick text')
+                    //   .call(wrap, x.rangeBand())
                     .attr('font-family', 'sans-serif')
                     .attr('font-size', '12px')
                     .attr('fill', 'black')
                     .on("click", function (d) {
                             window.open(d.url);
                       });
-                    // .selectAll(".tick text")
-                    //   .call(wrap, 80);
+              
+                    
     let textSource = anchorGroup.selectAll('.node')
                     .data(nodes)
                     .append("text")
@@ -141,7 +138,8 @@ function makeCircles(response) {
         .attr('y', (d) => d.y + 15);
     }
 
-    function wrap(text, width) {
+
+  function wrap(text, width) {
     text.each(function() {
       var text = d3.select(this),
           words = text.text().split(/\s+/).reverse(),
@@ -149,9 +147,9 @@ function makeCircles(response) {
           line = [],
           lineNumber = 0,
           lineHeight = 1.1, // ems
-          y = text.attr("y"),
+          y = text.attr('y'),
           dy = parseFloat(text.attr("dy")),
-          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy);
       while (word = words.pop()) {
         line.push(word);
         tspan.text(line.join(" "));
@@ -159,12 +157,11 @@ function makeCircles(response) {
           line.pop();
           tspan.text(line.join(" "));
           line = [word];
-          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy).text(word);
         }
       }
     });
-  }
-
+    } 
 
   function dragstarted(d) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();

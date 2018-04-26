@@ -1,0 +1,24 @@
+<?php
+if(isset($_POST["message"])) {
+    mail("cierramhiggins@gmail.com", "Form to email message", $_POST["message"], "From: Newsflash@email.address");
+}
+?>
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+<!-- Logo 
+Login form  -->
+<h1>Submit reccomendation for Outlet Popularity and Bias</h1><br>
+<p>Is there an outlet that you do not agree with or find to be rated incorrectly? Submit sugestions below and we will take them into consideration. Thank you!</p>
+
+<form action="/contact.php" method="post">
+        <textarea name="message" rows='4' cols='50'>Please add suggestion here!</textarea><br/>
+        <input type="submit">
+</form>
+
+</center>
+
+{% endblock %}

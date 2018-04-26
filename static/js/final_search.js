@@ -17,7 +17,7 @@ var width = 1200,
   height = 600,
   padding = 10, 
   clusterPadding = 15, 
-  maxRadius = 80;
+  maxRadius = 100;
 
 var n = 30, 
     m = 6; 
@@ -29,26 +29,16 @@ var clusters = new Array(m);
 
 let radiusScale = d3.scaleLinear()
   .domain([1, 10])
-  .range([30, maxRadius]);
+  .range([50, maxRadius]);
 
  function makeCircles(response) {
 
   let nodes = [];
-  // d3.selectAll("#delete_me").remove();
-
-  // if (if (nodes) {
-  // } === true) {
-  //   nodes.remove();
-  // }
-
-  // if (nodes !== 'undefined') {
-  //   nodes.remove();
-  // }
 
   let data = response;
   nodes = data.map((d) => {
 
-    let scaledRadius = radiusScale(d.popularity);
+  let scaledRadius = radiusScale(d.popularity);
 
     if (d.popularity === 'NULL') {
       d.popularity = 1
@@ -74,23 +64,23 @@ let radiusScale = d3.scaleLinear()
   });
 
 
-   var svgContainer = d3.select("body")
-        // .selectAll("#delete_me").remove();
+ var svgContainer = d3.select("body")
         .append("svg")
-        .attr('id', 'delete_me')
         .attr("width", width)
         .attr("height", height)
-        .append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+        
+
+  let anchorGroup = svgContainer.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
   let div = d3.select("body").append("div") 
     .attr("class", "tooltip")       
     .style("opacity", 0);
 
-  let circles = svgContainer.append('g')
+  let circles = anchorGroup
         .datum(nodes)
         .selectAll('.circle')
           .data(d => d)
-        .enter().append('circle')
+        .enter().append('g').attr('class','node').append('circle')
             .attr('r', (d) => d.radius)
             .attr('fill', (d) => z(d.cluster))
         .call(d3.drag()
@@ -111,30 +101,36 @@ let radiusScale = d3.scaleLinear()
                 .style("opacity", 0); 
         });  
 
-  // let textLabels = anchorGroup.selectAll('.node')
-  //                 .data(nodes)
-  //                 .append("text")
-  //                 .attr('x', (d) => d.x)
-  //                 .attr('y', (d) => d.y)
-  //                 .text((d) => d.title.slice(0, 10) + '...')
-  //                 .attr('font-family', 'sans-serif')
-  //                 .attr('font-size', '12px')
-  //                 .attr('fill', 'black')
-  //                 .on("click", function (d) {
-  //                         window.open(d.url);
-  //                   });
-  //                 // .selectAll(".tick text")
-  //                 //   .call(wrap, 80);
-                  
-  // let textSource = anchorGroup.selectAll('.node')
-  //                 .data(nodes)
-  //                 .append("text")
-  //                 .attr('x', (d) => d.x)
-  //                 .attr('y', (d) => d.y)
-  //                 .text((d) => d.source)
-  //                 .attr('font-family', 'sans-serif')
-  //                 .attr('font-size', '12px')
-  //                 .attr('fill', 'black')
+  // if (circles === null) {
+  //   console.log('Sorry, No Data at this time! Please search again');
+  // }
+
+
+  let textLabels = anchorGroup.selectAll('.node')
+                    .data(nodes)
+                    .append("text")
+                    .attr('x', (d) => d.x)
+                    .attr('y', (d) => d.y)
+                    .text((d) => d.title.slice(0, 35) + '...')
+                    .attr('font-family', 'sans-serif')
+                    .attr('font-size', '12px')
+                    .attr('fill', 'black')
+                    .on("click", function (d) {
+                            window.open(d.url);
+                      });
+                    // .selectAll(".tick text")
+                    //   .call(wrap, 80);
+                    
+    let textSource = anchorGroup.selectAll('.node')
+                    .data(nodes)
+                    .append("text")
+                    .attr('x', (d) => d.x)
+                    .attr('y', (d) => d.y)
+                    .text((d) => d.source)
+                    .attr('font-family', 'sans-serif')
+                    .attr('font-size', '12px')
+                    .attr('fill', 'black')
+
 
   let simulation = d3.forceSimulation(nodes)
         .velocityDecay(0.2)
@@ -148,12 +144,12 @@ let radiusScale = d3.scaleLinear()
       circles
         .attr('cx', (d) => d.x)
         .attr('cy', (d) => d.y);
-      // textLabels
-      //   .attr('x', (d) => d.x - d.radius + 2)
-      //   .attr('y', (d) => d.y);
-      // textSource
-      //   .attr('x', (d) => d.x - d.radius + 2)
-      //   .attr('y', (d) => d.y + 15);
+      textLabels
+        .attr('x', (d) => d.x - d.radius + 2)
+        .attr('y', (d) => d.y);
+      textSource
+        .attr('x', (d) => d.x - d.radius + 2)
+        .attr('y', (d) => d.y + 15);
   }
 
   function dragstarted(d) {
@@ -227,6 +223,7 @@ let radiusScale = d3.scaleLinear()
 }
 
 $('#search-form').submit(function (e) { 
+    // debugger;
     e.preventDefault();
     let s = d3.selectAll('svg');
     s.remove();

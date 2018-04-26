@@ -2,6 +2,7 @@
 from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, redirect, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
+from werkzeug.security import generate_password_hash, check_password_hash
 from model import User, Search, Outlet, connect_to_db, db
 import os
 import requests
@@ -26,12 +27,24 @@ def default_view():
 
     return render_template('homepage.html')
 
+
+@app.route('/testtest', methods=['GET'])
+def default_test_test():
+    """ Default top trending coverage"""
+
+
+    return render_template('test_test_test.html')
+
 # =============================================================================
 # Search Views - form and visual 
 
 @app.route('/searchbykeyword', methods=['GET'])
 def search_term():
     """ Update visual to show new coverage for search term """
+
+    #how will users view favorites? dropdown of all favorited terms. 
+        # user = User.query.filter_by(user_id=user_id).options(
+        # db.joinedload('search_term')).all()
 
     return render_template('search_for_term.html')
 
@@ -41,27 +54,23 @@ def search_for_term():
         
     keyword = request.form.get('keyword')
 
-    #     #search for search_terms in Search table if user_id (that matches email in User table) also matches user_id in User_Search table.
-    #     #If none exist, add search_term to Search table that corresponds to User_id in User_Search table
+    #search for search_terms in Search table if user_id (that matches user_id in session) 
+    #If none exist, add search_term to Search table with search_id that corresponds to user_id in User_Search table
+    #If search_term already exists for user_id, then do not add into database
 
+    # User_Search.query.filter(User_Search.search_id if User_Search.user_id == session['user_id']).all() 
+    # if User_Search.search_id matches Search.search_id and (Search.search_term == keyword).first() is None:
 
-#how will they view favorites? entire list or just top 3 - how will they decide 
-#case sensitive - for searches 
-
-    # check to see if search matches that user's searches (search_terms associated with specific user_id)
-    # if not, add for that specific user_id
-    # if session['user_id'] 
-    # User_Search.query.filter(User_Search.user_id, User_Search.search_id).all() 
-    # if User_Search.search_id matches Search.search_id 
-    #Search.query.filter(Search.search_term == keyword).first() is None:
     #         search_term = Search(search_term=keyword)
-    #         search_id = User_Search(search_id=search_id)
+    #         search_id = Search(search_id=search_id), User_Search(search_id=search_id)
+              # user_id = User(user_id=user_id), User_Search(user_id=user_id)
+
     #         db.session.add(search_term)
-    #         db.session.add(search_id)
+              # db.session.add(user_id)
     #         db.session.commit()
     #         flash('New search added')
-        #pageSize=50&
-    r = requests.get(('https://newsapi.org/v2/top-headlines?pageSize=50&language=en&q={}&sortBy=relevancy'+
+
+    r = requests.get(('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy'+
                      '&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37').format(keyword))
 
     top_search_json = r.json()
@@ -84,14 +93,6 @@ def search_for_term():
             top_searches[i]['bias'] = False
 
     return jsonify(top_searches)
-
-    # searches = Search.query.all()
-
-# @app.route('/newsbykeyword', methods=['GET'])
-# def search_news_coverage():
-#     """ Display search term form """
-
-#     return render_template('search_view.html')
 
 # =============================================================================
 # JSON routes for top and search coverage
@@ -180,8 +181,13 @@ def register_user():
     email = request.form.get('email')
     password = request.form.get('password')
 
+    # hashed_value = generate_password_hash(password)
+    # stored_password= 'xx'
+    # pass_result = check_password_hash(stored_password, password)
+
+
     if User.query.filter(User.email == email).first() is None:
-        user = User(email=email, password=password)
+        user = User(email=email, password=hashed_value)
         db.session.add(user)
         db.session.commit()
         session['user_id'] = user.user_id
@@ -227,11 +233,18 @@ def update_information():
 def view_update_outlet_form():
     """ view form to update outlet information """
 
+    return render_template('update_outlet_information.html')
     
-@app.route('/updateoutletinfo', methods=['POST'])
-def update_outlet_information():
-    """ allow user to update outlet popularity or bias """
+# @app.route('/updateoutletinfo', methods=['POST'])
+# def update_outlet_information():
+#     """ allow user to update outlet popularity or bias """
 
+@app.route('/contact.php', methods=['POST'])
+def email_update_outlet_form():
+
+  flash('Thanks for submitting!')
+
+  return redirect('/updateoutletinfo')
 
 # =============================================================================
 # User 

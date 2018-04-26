@@ -1,6 +1,6 @@
-"use strict";
+ "use strict";
 
-var bias_key = new Map([
+  var bias_key = new Map([
       ['Left', 0],
       ['Left-Center', 1],
       ['Center', 2],
@@ -13,40 +13,37 @@ let url = '/toptrending.json'
 
 let margin = {top: 100, right: 100, bottom: 100, left: 100};
 
-var width = 1200,
+var width = 1600,
   height = 600,
   padding = 10, 
   clusterPadding = 15, 
   maxRadius = 80;
 
-var n = 20, 
+var n = 30, 
     m = 6; 
 
 var z = d3.scaleOrdinal(d3.schemeCategory20);
-    // clusters = new Array(m);
 
 var clusters = new Array(m);  
 
 let radiusScale = d3.scaleLinear()
   .domain([1, 10])
-  .range([10, maxRadius]);
-
-  // console.log(radiusScale(10));
+  .range([30, maxRadius]);
 
 function makeCircles(response) {
   let data = response;
   let nodes = data.map((d) => { 
 
     let scaledRadius = radiusScale(d.popularity);
-    // debugger;
-    console.log(d.title, d.bias);
-    console.log(bias_key.get(d.bias))
+    // console.log(d.title, d.bias);
+    // console.log(bias_key.get(d.bias))
     let node = {
         title: d.title,
         source: d.source.name,
         author: d.author,
         description: d.description,
         url: d.url,
+        urlToImage: d.urlToImage,
         popularity: d.popularity,
         bias: d.bias,
         cluster: bias_key.get(d.bias),
@@ -59,41 +56,27 @@ function makeCircles(response) {
 
   return node;
   });
-  // console.log(nodes);
-  // console.log(clusters);
 
-  // if svg is already attached to body, delete svg
   var svgContainer = d3.select("body")
         .append("svg")
         .attr("width", width)
         .attr("height", height)
-        .append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+
+  let anchorGroup = svgContainer.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
   let div = d3.select("body").append("div") 
     .attr("class", "tooltip")       
     .style("opacity", 0);
 
-  let circles = svgContainer.append('g')
-        .datum(nodes)
-        .selectAll('.circle')
-          .data(d => d)
-        .enter().append('circle')
-            .attr('r', (d) => d.radius)
-            .attr('fill', (d) => z(d.cluster))
-        // .append("text")
-        //     .text(function (d) {
-        //     return d.title;
-        //   })
-        //     .attr("dx", -10)
-        //     .attr("dy", ".35em")
-        //     .text(function (d) {
-        //     return d.title
-        //   })
-        // .style("stroke", "gray")
-        .call(d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended)) 
+  let groups = anchorGroup
+    .selectAll('g')
+    .data(nodes)
+    .enter().append('g')
+      .attr('class', 'node')
+      .call(d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended)) 
         .on("mouseover", function(d) {
             div.transition()    
                 .duration(200)    
@@ -109,31 +92,103 @@ function makeCircles(response) {
         });  
 
 
-  let simulation = d3.forceSimulation(nodes)
+
+  let circles = groups
+        .append('circle')
+            .attr('r', (d) => d.radius)
+            .attr('fill', (d) => z(d.cluster));
+
+
+    let textLabels = anchorGroup.selectAll('.node')
+                    .data(nodes)
+                    .append("text")
+                    .text((d) => d.title.slice(0, 35) + '...')
+                    .attr('font-family', 'sans-serif')
+                    .attr('font-size', '12px')
+                    .attr('fill', 'black')
+                    .attr('dy', '0')
+                    .attr('text-anchor', 'middle')
+                    .attr('dominant-baseline','central')
+                    .call(wrap, 60)
+                    .on("click", function (d) {
+                            window.open(d.url);
+                      });
+              
+                    
+    let textSource = anchorGroup.selectAll('.node')
+                    .data(nodes)
+                    .append("text")
+                    .text((d) => d.source)
+                    .attr('font-family', 'sans-serif')
+                    .attr('font-size', '12px')
+                    .attr('fill', 'black')
+                    .attr('y', -30)
+                    .attr('text-anchor', 'middle')
+                    .attr('dominant-baseline','central')
+
+    let simulation = d3.forceSimulation(nodes)
         .velocityDecay(0.2)
         .force("x", d3.forceX().strength(.0005))
         .force("y", d3.forceY().strength(.0005))
         .force("collide", collide)
         .force("cluster", clustering)
         .on("tick", ticked);
-        // .on("tick");
 
-  function ticked() {
-      circles
-        .attr('cx', (d) => d.x)
-        .attr('cy', (d) => d.y);
+  function translate(d) {
+    return "translate(" + d.x + "," + d.y +")";
   }
 
-  // function tick(e) {
-  //   circles.each(cluster(10 * e.alpha * e.alpha))
-  //       .each(collide(.5))
-  //   //.attr("transform", functon(d) {});
-  //   .attr("transform", function (d) {
-  //       var k = "translate(" + d.x + "," + d.y + ")";
-  //       return k;
-  //   })
+  function ticked() {
+      groups
+        .data(nodes)
+        .attr('transform', translate)
+        // .attr("cx", function(d) { return d.x = Math.max(d.radius, Math.min(width - d.radius, d.x)); })
+        // .attr("cy", function(d) { return d.y = Math.max(d.radius, Math.min(height - d.radius, d.y)); });
+    }
 
-  // }
+
+  function wrap(text, width) {
+    text.each(function() {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          count = 0,
+          // lineNumber = 0,
+          // lineHeight = 2, // ems
+          // y = text.attr('y'),
+          // dy = parseFloat(text.attr("dy")),
+          dy = -1,
+          tspan = text.text(null)
+            .append("tspan")
+            .attr("x", -25)
+            // .attr("y", y)
+            .attr("dy", dy);
+      while (word = words.pop()) {
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > width) {
+          line.pop();
+          tspan.text(line.join(" "));
+          line = [word];
+          if (count === 1) {
+            dy === 6;
+          } else {
+            dy = 12;
+          }    
+          count += 1      
+          // let xoff = -(tspan.node().getComputedTextLength() / 2.0);
+          tspan = text.append("tspan")
+                .attr('text-anchor', 'middle')
+                .attr('dominant-baseline','middle')
+                .attr("x", -4)
+                // .attr("y", y)
+                .attr("dy", dy).text(word);
+                // ++lineNumber * lineHeight + dy
+        }
+      }
+    });
+    } 
 
   function dragstarted(d) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -205,7 +260,4 @@ function makeCircles(response) {
 
 }
 
-$( window ).load( function () {
-  console.log("document ready");
-  $.get(url, makeCircles);
-});
+$.get(url, makeCircles);
