@@ -1,1 +1,0 @@
-https://stackoverflow.com/questions/29758385/clear-d3-js-charts-before-loading-new-chart
