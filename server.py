@@ -3,7 +3,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, redirect, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.security import generate_password_hash, check_password_hash
-from model import User, Search, Outlet, connect_to_db, db
+from model import User, User_Search, Search, Outlet, connect_to_db, db
 import os
 import requests
 
@@ -42,33 +42,41 @@ def default_test_test():
 def search_term():
     """ Update visual to show new coverage for search term """
 
-    #how will users view favorites? dropdown of all favorited terms. 
-        # user = User.query.filter_by(user_id=user_id).options(
-        # db.joinedload('search_term')).all()
+    if session['user_id']:
+        user = User.query.get(session['user_id'])
+        user_terms = user.searches
 
-    return render_template('search_for_term.html')
+    return render_template('search_for_term.html',
+                            user_terms=user_terms)
 
 @app.route('/topsearch.json', methods=['POST'])
 def search_for_term():
     """ Update visual to show new coverage for search term """
         
     keyword = request.form.get('keyword')
+    add_or_remove = request.form.get('arterm')
 
-    #search for search_terms in Search table if user_id (that matches user_id in session) 
-    #If none exist, add search_term to Search table with search_id that corresponds to user_id in User_Search table
-    #If search_term already exists for user_id, then do not add into database
+       # user_keywords = User.query.filter(User.user_id == session['user_id']).options(db.joinedload('search_term')).all()
 
-    # User_Search.query.filter(User_Search.search_id if User_Search.user_id == session['user_id']).all() 
-    # if User_Search.search_id matches Search.search_id and (Search.search_term == keyword).first() is None:
-
-    #         search_term = Search(search_term=keyword)
-    #         search_id = Search(search_id=search_id), User_Search(search_id=search_id)
-              # user_id = User(user_id=user_id), User_Search(user_id=user_id)
-
-    #         db.session.add(search_term)
-              # db.session.add(user_id)
-    #         db.session.commit()
-    #         flash('New search added')
+    if session['user_id']:
+        user = User.query.get(session['user_id'])
+        if add_or_remove == 'favorite':
+                search_term = Search(search_term=keyword)
+                user.searches.append(search_term)
+                db.session.add(search_term)
+                db.session.commit()
+                flash('Your term is now added to favorites!')
+        elif add_or_remove == 'delete':
+                search_term = Search(search_term=keyword)
+                user.searches.remove(search_term)
+                db.session.commit()
+                flash('Your term is deleted')
+        # elif:
+        #     search_term = Search(search_term=keyword)
+        #     if search_term in user.searches:
+        #         flash('You have already favorited that term')
+    # else:
+    #     flash('You must be logged in to favorite a term')
 
     r = requests.get(('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy'+
                      '&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37').format(keyword))
@@ -77,7 +85,10 @@ def search_for_term():
     # print top_search_json
     # print top_trending_json
     top_searches = top_search_json['articles']
-    # print top_articles
+    # # print top_articles
+    # if top_searches == undefined:
+    #     print "Sorry! No coverage for that term. Please search again!"
+
     for i in range(len(top_searches)):
         source_name = top_searches[i].get('source')['name']
 
@@ -182,12 +193,13 @@ def register_user():
     password = request.form.get('password')
 
     # hashed_value = generate_password_hash(password)
-    # stored_password= 'xx'
-    # pass_result = check_password_hash(stored_password, password)
+    # pass_result = check_password_hash(hashed_value, password)
 
+    # if pass_result == True:
+    #     return True
 
     if User.query.filter(User.email == email).first() is None:
-        user = User(email=email, password=hashed_value)
+        user = User(email=email, password=password)
         db.session.add(user)
         db.session.commit()
         session['user_id'] = user.user_id

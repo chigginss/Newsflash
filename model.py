@@ -13,7 +13,7 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String(64), unique=True)
-    password = db.Column(db.String(64))
+    password = db.Column(db.String(256))
 
     searches = db.relationship("Search",
                             secondary = "user_searches",
@@ -49,7 +49,7 @@ class User_Search(db.Model):
                          nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'),
                          nullable=False)
-
+ 
     def __repr__(self):
         """Representation of User instance"""
 

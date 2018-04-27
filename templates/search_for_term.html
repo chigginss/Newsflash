@@ -2,11 +2,22 @@
 
 {% block content %}
 
-<h1> Search for coverage about any brand or term!</h1> </br>
+<h1> Display metrics on coverage about any brand or term!</h1> </br>
 <form action="/topsearch.json" id="search-form" method="post">
     Search for coverage by Keyword:<input type="text" name="keyword">
+    <input type="radio" name="arterm" value="favorite">Add Search Term to Favorites
+    <input type="radio" name="arterm" value="delete">Delete Term from Favorites </br>
     <input type="submit" value="Search"> <br>
 </form>
+
+<h2>Favorite Searches</h2>
+<ul>
+{% if user_terms %}
+  {% for term in user_terms %}
+    <li>{{ term }}</li>
+  {% endfor %}
+{% endif %}
+</ul>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="static/js/final_search.js"></script>

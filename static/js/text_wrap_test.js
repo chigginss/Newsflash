@@ -17,7 +17,7 @@ var width = 1600,
   height = 600,
   padding = 10, 
   clusterPadding = 15, 
-  maxRadius = 80;
+  maxRadius = 90;
 
 var n = 30, 
     m = 6; 
@@ -28,7 +28,7 @@ var clusters = new Array(m);
 
 let radiusScale = d3.scaleLinear()
   .domain([1, 10])
-  .range([30, maxRadius]);
+  .range([40, maxRadius]);
 
 function makeCircles(response) {
   let data = response;
@@ -92,39 +92,77 @@ function makeCircles(response) {
         });  
 
 
-
   let circles = groups
         .append('circle')
             .attr('r', (d) => d.radius)
             .attr('fill', (d) => z(d.cluster));
+              // .attr("cx", function(d) { return d.x = Math.max(d.radius, Math.min(width - d.radius, d.x)); })
+              // .attr("cy", function(d) { return d.y = Math.max(d.radius, Math.min(height - d.radius, d.y)); });
 
 
-    let textLabels = anchorGroup.selectAll('.node')
-                    .data(nodes)
-                    .append("text")
-                    .text((d) => d.title.slice(0, 35) + '...')
-                    .attr('font-family', 'sans-serif')
-                    .attr('font-size', '12px')
-                    .attr('fill', 'black')
-                    .attr('dy', '0')
-                    .attr('text-anchor', 'middle')
-                    .attr('dominant-baseline','central')
-                    .call(wrap, 60)
-                    .on("click", function (d) {
-                            window.open(d.url);
-                      });
-              
+
+  function makeTspans(text, data) {
+    text.each( function(d) {
+      let this_text = d3.select(this),
+          words = this_text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          // count = 0,
+          lineNumber = 0,
+          // lineHeight = 2, // ems
+          x = 0,
+          y = this_text.attr('y'),
+          // dy = parseFloat(text.attr("dy")),
+          dy = 1;
+      let tspan = this_text.text(null)
+                           .append("tspan")
+                           .attr("x", x)
+                           .attr("y", y)
+                           .attr("dy", dy + "em");
+      while (word = words.pop()) {
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > d.radius) {
+          line.pop();
+          tspan.text(line.join(" "));
+          line = [word];
+          tspan = this_text.append("tspan")
+                .attr('x', x)
+                .attr('y', y)
+                .attr("dy", dy + 'em')
+                .text(word);
+          lineNumber++;
+        }
+      }
+      this_text.attr('y', -0.65 * lineNumber + "em");
+
+    });
+  }
+
+  let textLabels = anchorGroup
+                  .selectAll('g')
+                  .data(nodes)
+                  .append("text")
+                  .text((d) => d.title.slice(0, 40) + '...')
+                  .attr('font-family', 'sans-serif')
+                  .attr('font-size', '12px')
+                  .attr('fill', 'black')
+                  .attr('text-anchor', 'middle')
+                  .call(makeTspans, nodes)
+                  .on("click", function (d) {
+                          window.open(d.url);
+                    });
+            
                     
-    let textSource = anchorGroup.selectAll('.node')
-                    .data(nodes)
-                    .append("text")
-                    .text((d) => d.source)
-                    .attr('font-family', 'sans-serif')
-                    .attr('font-size', '12px')
-                    .attr('fill', 'black')
-                    .attr('y', -30)
-                    .attr('text-anchor', 'middle')
-                    .attr('dominant-baseline','central')
+  let textSource = anchorGroup.selectAll('.node')
+                  .data(nodes)
+                  .append("text")
+                  .text((d) => d.source)
+                  .attr('font-family', 'sans-serif')
+                  .attr('font-size', '12px')
+                  .attr('fill', 'black')
+                  .attr('y', -32)
+                  .attr('text-anchor', 'middle')
 
     let simulation = d3.forceSimulation(nodes)
         .velocityDecay(0.2)
@@ -142,53 +180,7 @@ function makeCircles(response) {
       groups
         .data(nodes)
         .attr('transform', translate)
-        // .attr("cx", function(d) { return d.x = Math.max(d.radius, Math.min(width - d.radius, d.x)); })
-        // .attr("cy", function(d) { return d.y = Math.max(d.radius, Math.min(height - d.radius, d.y)); });
     }
-
-
-  function wrap(text, width) {
-    text.each(function() {
-      var text = d3.select(this),
-          words = text.text().split(/\s+/).reverse(),
-          word,
-          line = [],
-          count = 0,
-          // lineNumber = 0,
-          // lineHeight = 2, // ems
-          // y = text.attr('y'),
-          // dy = parseFloat(text.attr("dy")),
-          dy = -1,
-          tspan = text.text(null)
-            .append("tspan")
-            .attr("x", -25)
-            // .attr("y", y)
-            .attr("dy", dy);
-      while (word = words.pop()) {
-        line.push(word);
-        tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
-          line.pop();
-          tspan.text(line.join(" "));
-          line = [word];
-          if (count === 1) {
-            dy === 6;
-          } else {
-            dy = 12;
-          }    
-          count += 1      
-          // let xoff = -(tspan.node().getComputedTextLength() / 2.0);
-          tspan = text.append("tspan")
-                .attr('text-anchor', 'middle')
-                .attr('dominant-baseline','middle')
-                .attr("x", -4)
-                // .attr("y", y)
-                .attr("dy", dy).text(word);
-                // ++lineNumber * lineHeight + dy
-        }
-      }
-    });
-    } 
 
   function dragstarted(d) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
