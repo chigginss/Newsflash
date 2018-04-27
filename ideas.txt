@@ -1,0 +1,69 @@
+https://stackoverflow.com/questions/29758385/clear-d3-js-charts-before-loading-new-chart
+
+
+
+<ul>
+{% if user_terms %}
+  {% for term in user_terms %}
+    <li>{{ search.search_term }}</li>
+  {% endfor %}
+{% endif %}
+</ul>
+
+    if 'user_id' not in session and add_or_remove == 'delete' or add_or_remove == 'favorite':
+        flash('You must be logged in to save or delete a favorite term')
+    elif session['user_id']:
+        user = User.query.get(session['user_id'])
+        if add_or_remove == 'favorite':
+            search_term = Search(search_term=keyword)
+            if search_term in user.searches:
+                flash('You have already favorited that term')
+            elif search_term not in user.searches: 
+                search_term = Search(search_term=keyword)               
+                user.searches.append(search_term)
+                db.session.commit()
+                flash('Your term is now added to favorites!')
+        elif add_or_remove == 'delete':
+                search_term = Search(search_term=keyword)
+                user.searches.remove(search_term)
+                db.session.commit()
+                flash('Your term is deleted')
+
+
+3  News_API  Newsflash_App
+vagrant@vagrant:~/src/Newsflash$ cd Newsflash_App
+vagrant@vagrant:~/src/Newsflash/Newsflash_App$ source env/bin/activate
+(env) vagrant@vagrant:~/src/Newsflash/Newsflash_App$ python -i seed.py
+Connected to DB.
+>>> db
+<SQLAlchemy engine=postgresql:///newsflashdb>
+>>> u = User.query.get(2)
+>>> u.searches
+[<Search: search_id=3, search_term=Google>]
+>>> s = Search.query.get(3)
+>>> s2 = Search(search_term='Microsoft')
+>>> s in u.searches
+True
+>>> s2 in u.searches
+False
+>>> u.append(s2)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'User' object has no attribute 'append'
+>>> u.searches.append(s2)
+>>> s2 in u.searches
+True
+>>> u.searches.del(s)
+  File "<stdin>", line 1
+    u.searches.del(s)
+                 ^
+SyntaxError: invalid syntax
+>>> u.searches.delete(s)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'InstrumentedList' object has no attribute 'delete'
+>>> u.searches.remove(s)
+>>> s in u.searches
+False
+>>> db.session.commit()
+>>> s

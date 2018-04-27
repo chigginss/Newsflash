@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, redirect, flash, session, jso
 from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.security import generate_password_hash, check_password_hash
 from model import User, User_Search, Search, Outlet, connect_to_db, db
+from datetime import datetime
 import os
 import requests
 
@@ -24,8 +25,11 @@ app.jinja_env.auto_reload = True
 def default_view():
     """ Default top trending coverage"""
 
+    dtime = datetime.now()
+    dtime = dtime.strftime('%B %d, %Y - %-I:%M %p, %S seconds')
 
-    return render_template('homepage.html')
+    return render_template('homepage.html',
+                            dtime=dtime)
 
 
 @app.route('/testtest', methods=['GET'])
@@ -46,44 +50,40 @@ def search_term():
         user = User.query.get(session['user_id'])
         user_terms = user.searches
 
-    return render_template('search_for_term.html',
+        return render_template('search_for_term.html',
                             user_terms=user_terms)
 
 @app.route('/topsearch.json', methods=['POST'])
 def search_for_term():
     """ Update visual to show new coverage for search term """
-        
+    
     keyword = request.form.get('keyword')
     add_or_remove = request.form.get('arterm')
-
-       # user_keywords = User.query.filter(User.user_id == session['user_id']).options(db.joinedload('search_term')).all()
 
     if session['user_id']:
         user = User.query.get(session['user_id'])
         if add_or_remove == 'favorite':
-                search_term = Search(search_term=keyword)
-                user.searches.append(search_term)
-                db.session.add(search_term)
+            if Search.query.filter(Search.search_term == keyword).all() is None:
+                new_term = Search(search_term=keyword)
+                user.searches.append(new_term)
                 db.session.commit()
                 flash('Your term is now added to favorites!')
+            else: 
+                flash('You cannot favorite the same term twice!')
         elif add_or_remove == 'delete':
-                search_term = Search(search_term=keyword)
-                user.searches.remove(search_term)
-                db.session.commit()
-                flash('Your term is deleted')
-        # elif:
-        #     search_term = Search(search_term=keyword)
-        #     if search_term in user.searches:
-        #         flash('You have already favorited that term')
-    # else:
-    #     flash('You must be logged in to favorite a term')
+            term = Search.query.filter(Search.search_term == keyword).one()
+            user.searches.remove(term)
+            db.session.commit()
+            flash('Your term is deleted')
 
     r = requests.get(('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy'+
                      '&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37').format(keyword))
 
     top_search_json = r.json()
+
     # print top_search_json
     # print top_trending_json
+
     top_searches = top_search_json['articles']
     # # print top_articles
     # if top_searches == undefined:
@@ -114,7 +114,8 @@ def json_data():
 
     r = requests.get("https://newsapi.org/v2/top-headlines?pageSize=30&sources=the-wall-street-journal,the-new-york-times,"+
                       "bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,"+
-                      "usa-today,politico,cnbc,engadget,nbc-news,cbs-news,abc-news,associated-press,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
+                      "politico,cnbc,engadget,nbc-news,cbs-news,associated-press,abc-news,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
+    #removed usa-today and daily
     top_trending_json = r.json()
 
     # print top_trending_json
@@ -192,7 +193,7 @@ def register_user():
     email = request.form.get('email')
     password = request.form.get('password')
 
-    # hashed_value = generate_password_hash(password)
+    # hashed_value = generate_password_hash(method='pbkdf2:sha512', password)
     # pass_result = check_password_hash(hashed_value, password)
 
     # if pass_result == True:

@@ -4,25 +4,25 @@ The Washington Post|10|Left-Center |1
 Wired|9|Left-Center|1
 BBC News|9|Left-Center|1
 The Wall Street Journal|9|Right-Center|3
-TechRadar|8|NULL|5
-TechCrunch|8|Left-Center|1
-The Guardian|8|NULL|5
-Fox News|8|Right|4
-The Huffington Post|8|Left|0
-Bloomberg|8|Left-Center|1
-USA Today|8|Center|2
-Time|8|Center|2
-Forbes|8|Right-Center|3
-Fortune|7|Right-Center|3
-NBC News|7|Left-Center|1
+TechRadar|7|NULL|5
+TechCrunch|7|Left-Center|1
+The Guardian|7|NULL|5
+Fox News|7|Right|4
+The Huffington Post|7|Left|0
+Bloomberg|7|Left-Center|1
+USA Today|7|Center|2
+Time|7|Center|2
+Forbes|7|Right-Center|3
+Fortune|6|Right-Center|3
+NBC News|6|Left-Center|1
 The Atlantic|6|Left-Center|1
 ABC News|6|Left-Center|1
 Al Jazeera English|6|Left-Center|1
 Breitbart News|6|Right|4
-Buzzfeed|6|Left-Center|1
-Vice News|6|Left-Center|1
+Buzzfeed|5|Left-Center|1
+Vice News|5|Left-Center|1
 Associated Press|6|Center|2
-Business Insider|6|Left-Center|1
+Business Insider|5|Left-Center|1
 Crypto Coins News|NULL|NULL|5
 Entertainment Weekly|NULL|NULL|5
 Financial Times|NULL|Center|2
@@ -54,7 +54,7 @@ Yahoo|9|NULL|5
 Business Insider (UK)|9|Left-Center|1
 ESPN|8|NULL|5
 ESPN Cric Info|8|NULL|5
-Reuters|8|Center|2
+Reuters|7|Center|2
 Fox Sports|7|Right|4
 CBS News|7|Left-Center|1
 ABC News (AU)|7|Left-Center|1

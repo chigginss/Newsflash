@@ -31,7 +31,7 @@ class Search(db.Model):
     __tablename__ = "searches"
 
     search_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    search_term = db.Column(db.String(64))
+    search_term = db.Column(db.String(64), unique=True)
 
     def __repr__(self):
         """Representation of Search instance"""
