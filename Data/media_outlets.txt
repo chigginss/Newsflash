@@ -1,6 +1,6 @@
 CNN|10|Left|0
 The New York Times|10|Left-Center|1
-The Washington Post|10|Left-Center |1
+The Washington Post|10|Left|1
 Wired|9|Left-Center|1
 BBC News|9|Left-Center|1
 The Wall Street Journal|9|Right-Center|3
@@ -20,31 +20,32 @@ ABC News|6|Left-Center|1
 Al Jazeera English|6|Left-Center|1
 Breitbart News|6|Right|4
 Buzzfeed|5|Left-Center|1
+The Guardian (AU)|7|NULL|5
 Vice News|5|Left-Center|1
 Associated Press|6|Center|2
 Business Insider|5|Left-Center|1
-Crypto Coins News|NULL|NULL|5
-Entertainment Weekly|NULL|NULL|5
-Financial Times|NULL|Center|2
-Focus|NULL|NULL|5
-FourFourTwo|NULL|NULL|5
-Hacker News|NULL|NULL|5
-Independent|NULL|NULL|5
-InfoMoney|NULL|NULL|5
-New Scientist|NULL|NULL|5
-New York Magazine|NULL|Left|0
-New York Daily News|NULL|NULL|5
-Next Big Future|NULL|NULL|5
-NFL News|NULL|NULL|5
-NHL News|NULL|NULL|5
-RBC|NULL|NULL|5
-Reddit|NULL|NULL|5
-TalkSport|NULL|NULL|5
-The Irish Times|NULL|Left-Center|1
+Crypto Coins News|1|NULL|5
+Entertainment Weekly|1|NULL|5
+Financial Times|1|Center|2
+Focus|1|NULL|5
+FourFourTwo|1|NULL|5
+Hacker News|1|NULL|5
+Independent|1|NULL|5
+InfoMoney|1|NULL|5
+New Scientist|1|NULL|5
+New York Magazine|1|Left|0
+New York Daily News|1|NULL|5
+Next Big Future|1|NULL|5
+NFL News|1|NULL|5
+NHL News|1|NULL|5
+RBC|1|NULL|5
+Reddit|1|NULL|5
+TalkSport|1|NULL|5
+The Irish Times|1|Left-Center|1
 The Lad Bible|2|NULL|5
 The Sport Bible|2|NULL|5
-The Telegraph|NULL|NULL|5
-The Times of India|NULL|NULL|5
+The Telegraph|1|NULL|5
+The Times of India|1|NULL|5
 Google News|9|NULL|5
 Google News (Australia)|9|NULL|5
 Google News (Canada)|9|NULL|5
@@ -59,7 +60,7 @@ Fox Sports|7|Right|4
 CBS News|7|Left-Center|1
 ABC News (AU)|7|Left-Center|1
 NPR|7|Left|0
-CNBC|7|Left-Center|1
+CNBC|7|Center|1
 Ars Technica|7|NULL|5
 New York Post|6|NULL|5 
 LA Times|6|Left|0

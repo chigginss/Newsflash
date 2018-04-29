@@ -6,23 +6,24 @@
       ['Center', 2],
       ['Right-Center', 3],
       ['Right', 4],
-      ['NULL', 5]
+      // ['NULL', 5]
       ]);
 
 let url = '/toptrending.json'
 
 let margin = {top: 100, right: 100, bottom: 100, left: 100};
 
-var width = 1400,
+var width = 1800,
   height = 600,
   padding = 10, 
   clusterPadding = 15, 
   maxRadius = 90;
 
 var n = 30, 
-    m = 6; 
+    m = 5; 
 
-var z = d3.scaleOrdinal(d3.schemeCategory20);
+// var color_scale = d3.scale.linear().domain([0, median_area, max_area]).range(['blue', 'purple', 'red']);
+var z = d3.scaleOrdinal(['blue', '#8000ff', 'purple', '#cc0066','red']);
 
 var clusters = new Array(m);  
 
@@ -43,6 +44,7 @@ function makeCircles(response) {
         author: d.author,
         description: d.description,
         url: d.url,
+        urlToImage: d.urlToImage,
         popularity: d.popularity,
         bias: d.bias,
         cluster: bias_key.get(d.bias),
@@ -67,22 +69,20 @@ function makeCircles(response) {
     .attr("class", "tooltip")       
     .style("opacity", 0);
 
-  let circles = anchorGroup
-        .datum(nodes)
-        .selectAll('.circle')
-          .data(d => d)
-        .enter().append('g').attr('class', 'node').append('circle')
-            .attr('r', (d) => d.radius)
-            .attr('fill', (d) => z(d.cluster))
-        .call(d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended)) 
+  let groups = anchorGroup
+    .selectAll('g')
+    .data(nodes)
+    .enter().append('g')
+      .attr('class', 'node')
+      .call(d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended)) 
         .on("mouseover", function(d) {
             div.transition()    
                 .duration(200)    
                 .style("opacity", .9);    
-            div .html( "TITLE: " + d.title+ "<br/>AUTHOR:" + d.author +"<br/>SUMMARY:" + d.description + "<br/>SOURCE:" + d.source + "<br/>BIAS:" + d.bias)  
+            div .html( "TITLE: " + d.title+ "<br/>AUTHOR: " + d.author +"<br/>SUMMARY: " + d.description + "<br/>SOURCE: " + d.source + "<br/>BIAS: " + d.bias)  
                 .style("left", (d3.event.pageX) + "px")   
                 .style("top", (d3.event.pageY - 28) + "px");  
             })          
@@ -92,31 +92,78 @@ function makeCircles(response) {
                 .style("opacity", 0); 
         });  
 
-    let textLabels = anchorGroup.selectAll('.node')
-                    .data(nodes)
-                    .append("text")
-                    .attr('x', (d) => d.x)
-                    .attr('y', (d) => d.y)
-                    .text((d) => d.title.slice(0, 40) + '...')
-                    // .selectAll('.tick text')
-                    //   .call(wrap, x.rangeBand())
-                    .attr('font-family', 'sans-serif')
-                    .attr('font-size', '12px')
-                    .attr('fill', 'black')
-                    .on("click", function (d) {
-                            window.open(d.url);
-                      });
-              
+
+  let circles = groups
+        .append('circle')
+            .attr('r', (d) => d.radius)
+            .attr('fill', (d) => z(d.cluster));
+              // .attr("cx", function(d) { return d.x = Math.max(d.radius, Math.min(width - d.radius, d.x)); })
+              // .attr("cy", function(d) { return d.y = Math.max(d.radius, Math.min(height - d.radius, d.y)); });
+
+
+
+  function makeTspans(text, data) {
+    text.each( function(d) {
+      let this_text = d3.select(this),
+          words = this_text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          // count = 0,
+          lineNumber = 0,
+          // lineHeight = 2, // ems
+          x = 0,
+          y = this_text.attr('y'),
+          // dy = parseFloat(text.attr("dy")),
+          dy = 1;
+      let tspan = this_text.text(null)
+                           .append("tspan")
+                           .attr("x", x)
+                           .attr("y", y)
+                           .attr("dy", dy + "em");
+      while (word = words.pop()) {
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > d.radius) {
+          line.pop();
+          tspan.text(line.join(" "));
+          line = [word];
+          tspan = this_text.append("tspan")
+                .attr('x', x)
+                .attr('y', y)
+                .attr("dy", dy + 'em')
+                .text(word);
+          lineNumber++;
+        }
+      }
+      this_text.attr('y', -0.65 * lineNumber + "em");
+
+    });
+  }
+
+  let textLabels = anchorGroup
+                  .selectAll('g')
+                  .data(nodes)
+                  .append("text")
+                  .text((d) => d.title.slice(0, 40) + '...')
+                  .attr('font-family', 'helvetica')
+                  .attr('font-size', '11px')
+                  .attr('fill', 'black')
+                  .attr('text-anchor', 'middle')
+                  .call(makeTspans, nodes)
+                  .on("click", function (d) {
+                          window.open(d.url);
+                    });
+            
                     
-    let textSource = anchorGroup.selectAll('.node')
-                    .data(nodes)
-                    .append("text")
-                    .attr('x', (d) => d.x)
-                    .attr('y', (d) => d.y)
-                    .text((d) => d.source)
-                    .attr('font-family', 'sans-serif')
-                    .attr('font-size', '12px')
-                    .attr('fill', 'black')
+  let textSource = anchorGroup.selectAll('.node')
+                  .data(nodes)
+                  .append("text")
+                  .text((d) => d.source)
+                  .attr('font-family', 'sans-serif')
+                  .attr('font-size', '12px')
+                  .attr('fill', 'black')
+                  .attr('y', -32)
+                  .attr('text-anchor', 'middle')
 
     let simulation = d3.forceSimulation(nodes)
         .velocityDecay(0.2)
@@ -126,42 +173,15 @@ function makeCircles(response) {
         .force("cluster", clustering)
         .on("tick", ticked);
 
+  function translate(d) {
+    return "translate(" + d.x + "," + d.y +")";
+  }
+
   function ticked() {
-      circles
-        .attr('cx', (d) => d.x)
-        .attr('cy', (d) => d.y);
-      textLabels
-        .attr('x', (d) => d.x - d.radius + 2)
-        .attr('y', (d) => d.y);
-      textSource
-        .attr('x', (d) => d.x - d.radius + 2)
-        .attr('y', (d) => d.y + 15);
+      groups
+        .data(nodes)
+        .attr('transform', translate)
     }
-
-
-  function wrap(text, width) {
-    text.each(function() {
-      var text = d3.select(this),
-          words = text.text().split(/\s+/).reverse(),
-          word,
-          line = [],
-          lineNumber = 0,
-          lineHeight = 1.1, // ems
-          y = text.attr('y'),
-          dy = parseFloat(text.attr("dy")),
-          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy);
-      while (word = words.pop()) {
-        line.push(word);
-        tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
-          line.pop();
-          tspan.text(line.join(" "));
-          line = [word];
-          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy).text(word);
-        }
-      }
-    });
-    } 
 
   function dragstarted(d) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();

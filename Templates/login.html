@@ -2,18 +2,20 @@
 
 {% block content %}
 
-<center>
-<!-- Logo 
-Login form  -->
-<h1>Account Login</h1><br>
-<form action="/login" method="POST">
-        <label>Email: </label><input type="text" name="email" required><br>
-        <label>Password: </label><input type="password" name="password" required><br>
-        <input type="submit" name="Login">
-</form>
 
-<a href="/register">New User? Create Account</a> </br>
-<a href="/updateinfo">Update Account Information</a>
-</center>
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+              <h1>Login</h1><br>
+              <form action="/login" method="post">
+                      <label>Email address</label><input class="form-control mr-sm-2" type="text" name="email" required><br>
+                      <label>Password</label><input class="form-control mr-sm-2" type="password" name="password" required><br>
+                      <input class="btn btn-outline-success my-2 my-sm-0" value="Login" type="submit"></br></br>
+                      <small id="emailHelp" class="form-text text-muted"> <a href="/register">New User? Create Account</a> </br>
+              </form>
+            </div>
+        </div>
+</div>
+
 
 {% endblock %}

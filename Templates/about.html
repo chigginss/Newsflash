@@ -2,30 +2,44 @@
 
 {% block content %}
 
-<!-- 
-Logo or other content
-About Newsflash description // Maybe information about me?
-Information about News.API
-Information about D3 visualization used
-List techstack and logos of each tech used
-Information about Popularity and Bias ratings
- -->
- <h1> About Newsflash </h1> <br>
- <p>Lucas ipsum dolor sit amet fett dantooine lando kenobi yoda antilles wedge mustafar solo mothma. Fett sidious antilles skywalker darth gonk obi-wan. Watto hutt utapau dagobah luke. R2-d2 antilles mon calamari tatooine gamorrean endor tusken raider. Aayla mandalorians skywalker c-3po. Watto kit c-3p0 darth binks. Fett greedo palpatine kessel wedge calrissian skywalker. Darth biggs anakin han. Darth wedge boba maul. Ewok luke jabba fett darth. Baba c-3po gonk sebulba. Lobot padmé ahsoka padmé mace wedge.
+ <div class="container-fluid">
+    <div class="row">
+        <div class="cols-lg-6">
+             <h1> About Newsflash </h1><br>
+             <p> Have you ever wondered if your newsfeed isn't showing you the whole picture? Welcome to Newsflash, an app that displays top trending news coverage and information about each outlet through an interactive D3.js visual. It updates in almost real-time, and provides context about media outlets, organizing trending stories by the popularity and bias of the respective media outlet. Instead of showing the user media from certain outlets, you get a range of outlets, and more context and information about each one - and that way you get the whole story.
 
-Solo darth skywalker mandalore dooku. Jango skywalker jawa darth. Dantooine skywalker moff aayla antilles. Tusken raider endor darth c-3p0 organa mara yavin gonk anakin. Binks obi-wan kamino fisto darth solo calrissian mandalore jango. Dantooine calrissian vader c-3po amidala kenobi owen. Grievous yoda maul leia amidala calamari fett coruscant dooku. Antilles watto qui-gon skywalker yoda cade leia solo. Jabba mara r2-d2 ponda mon gamorrean. Sidious thrawn ewok dooku organa darth. Mandalorians moff naboo solo thrawn jango jinn luke.
+             Newsflash was created by Cierra Higgins for her HackBright Academy final project. Cierra is a data-scientist turned software engineer who is passionate about design, data and digital media.</p>
 
-Cade boba mothma boba wookiee fett. Padmé grievous ventress mandalore vader padmé. Aayla jade mandalore moff organa mon watto. Padmé mon palpatine solo. Owen anakin padmé moff ahsoka moff. Droid moff skywalker greedo hutt. Twi'lek darth skywalker mara kessel solo kit antilles ackbar. Maul r2-d2 calrissian grievous maul darth coruscant. Binks grievous vader moff mandalore. Secura mara skywalker gamorrean lando dagobah. Moff ben moff bothan. Boba coruscant grievous mothma jade secura mothma. Mara darth ben mace dagobah.</p>
+            <h2> How Newsflash Works </h2>  
+            <h3>Trending Coverage - NewsAPI</h3><br>
+            <p>All news covearge comes from <a href="https://newsapi.org/docs/get-started">NewsAPI</a>. NewsAPI decides internally which articles are Trending using their 'Top Trending' endpoint. Please visit the NewsAPI site for a <a href="https://newsapi.org/sources">complete list of outlets</a> NewsAPI uses for Top Trending coverage.</p>
 
-<h2> Techstack </h2> <br>
-<p>
-    NEED LOGOS OF TECH USED
-Javascript (D3.js, AJAX, Jquery), Python, SQLAlchemy, Flask, Jinja2, HTML, CSS 
-NewsAPI 
-</p><br>
+            <h3> Bias and Popularity Metrics </h3><br>
+            <p> Media Bias and Popularity ratings are not added from NewsAPI. Instead I have researched and manually added these metrics for each media outlet. All Bias ratings come from <a href="https://www.allsides.com/media-bias/media-bias-ratings">AllSides</a> and all popularity metrics are based off of Amazon's <a href="https://www.alexa.com/topsites">Alexa's Top 500 Websites</a>, filtered by news and media. If you disagree with the rating of an outlet's popularity or bias, or do not think that an outlet should be included, please send<a href="/updateoutletinfo"> feedback here.</a>
+            </p>
+        </div> 
+    </div>
+</div>
 
-<h2> Bias and Popularity Metrics </h2> <br>
-<p>  HOW I GENERATED BIAS AND POPULARITY METRICS 
-Solo darth skywalker mandalore dooku. Jango skywalker jawa darth. Dantooine skywalker moff aayla antilles. Tusken raider endor darth c-3p0 organa mara yavin gonk anakin. Binks obi-wan kamino fisto darth solo calrissian mandalore jango. Dantooine calrissian vader c-3po amidala kenobi owen. Grievous yoda maul leia amidala calamari fett coruscant dooku. Antilles watto qui-gon skywalker yoda cade leia solo. Jabba mara r2-d2 ponda mon gamorrean. Sidious thrawn ewok dooku organa darth. Mandalorians moff naboo solo thrawn jango jinn luke.
-</p>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="cols-lg-6">
+
+                <h2> Techstack </h2> <br>
+                <h4>Click the image to learn more</h4>
+                <p>
+                <a href="https://d3js.org/" target="_blank"><img src="/static/css/d3.jpg"></a>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank"><img src="/static/css/js6.png"></a>
+                <a href="https://www.python.org/" target="_blank"><img src="/static/css/python-logo.png"></a>
+                <a href="http://flask.pocoo.org/" target="_blank"><img src="/static/css/Flask-logo.png"></a>
+                <a href="http://flask-sqlalchemy.pocoo.org/2.3/" target="_blank"><img src="/static/css/flsksqlalchemy.png"></a>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5" target="_blank"><img src="/static/css/csshtml.png"></a>
+                <a href="http://jinja.pocoo.org/docs/2.10/" target="_blank"><img src="/static/css/jinja2.png"></a>
+                <a href="http://jquery.com/" target="_blank"><img src="/static/css/Jquery.png"></a>
+                <a href="https://getbootstrap.com/docs/3.3/" target="_blank"><img src="/static/css/bootstrap.png"></a>
+                </p><br>
+            </div> 
+        </div>
+    </div>
+
 {% endblock %}

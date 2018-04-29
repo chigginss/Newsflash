@@ -1,4 +1,4 @@
- "use strict";
+  "use strict";
 
   var bias_key = new Map([
       ['Left', 0],
@@ -23,7 +23,7 @@ var n = 30,
     m = 6; 
 
 // var color_scale = d3.scale.linear().domain([0, median_area, max_area]).range(['blue', 'purple', 'red']);
-var z = d3.scaleOrdinal(d3.schemeCategory20);
+var z = d3.scaleOrdinal(['blue', '#8000ff', 'purple', '#cc0066','red']);
 
 var clusters = new Array(m);  
 
@@ -38,11 +38,11 @@ let radiusScale = d3.scaleLinear()
   let data = response;
   nodes = data.map((d) => {
 
+  if (d.popularity === null) {
+    d.popularity = 2;
+  }
+    
   let scaledRadius = radiusScale(d.popularity);
-
-    if (d.popularity === 'NULL') {
-      d.popularity = 1
-    }
 
     let node = {
         title: d.title,
@@ -63,7 +63,6 @@ let radiusScale = d3.scaleLinear()
   return node;
   });
 
-
  var svgContainer = d3.select("body")
         .append("svg")
         .attr("width", width)
@@ -76,13 +75,14 @@ let radiusScale = d3.scaleLinear()
     .attr("class", "tooltip")       
     .style("opacity", 0);
 
-  let circles = anchorGroup
-        .datum(nodes)
-        .selectAll('.circle')
-          .data(d => d)
-        .enter().append('g').attr('class','node').append('circle')
-            .attr('r', (d) => d.radius)
-            .attr('fill', (d) => z(d.cluster))
+  let groups = anchorGroup
+        // .datum(nodes)
+        // .selectAll('.circle')
+        //   .data(d => d)
+        .selectAll('g')
+        .data(nodes)
+        .enter().append('g')
+        .attr('class','node')
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
@@ -101,35 +101,74 @@ let radiusScale = d3.scaleLinear()
                 .style("opacity", 0); 
         });  
 
-  // if (circles === null) {
-  //   console.log('Sorry, No Data at this time! Please search again');
-  // }
+let circles = groups
+        .append('circle')
+            .attr('r', (d) => d.radius)
+            .attr('fill', (d) => z(d.cluster));
 
 
-  let textLabels = anchorGroup.selectAll('.node')
-                    .data(nodes)
-                    .append("text")
-                    .attr('x', (d) => d.x)
-                    .attr('y', (d) => d.y)
-                    .text((d) => d.title.slice(0, 35) + '...')
-                    .attr('font-family', 'sans-serif')
-                    .attr('font-size', '12px')
-                    .attr('fill', 'black')
-                    .on("click", function (d) {
-                            window.open(d.url);
-                      });
-                    // .selectAll(".tick text")
-                    //   .call(wrap, 80);
+    function makeTspans(text, data) {
+    text.each( function(d) {
+      let this_text = d3.select(this),
+          words = this_text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          // count = 0,
+          lineNumber = 0,
+          // lineHeight = 2, // ems
+          x = 0,
+          y = this_text.attr('y'),
+          // dy = parseFloat(text.attr("dy")),
+          dy = 1;
+      let tspan = this_text.text(null)
+                           .append("tspan")
+                           .attr("x", x)
+                           .attr("y", y)
+                           .attr("dy", dy + "em");
+      while (word = words.pop()) {
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > d.radius) {
+          line.pop();
+          tspan.text(line.join(" "));
+          line = [word];
+          tspan = this_text.append("tspan")
+                .attr('x', x)
+                .attr('y', y)
+                .attr("dy", dy + 'em')
+                .text(word);
+          lineNumber++;
+        }
+      }
+      this_text.attr('y', -0.65 * lineNumber + "em");
+
+    });
+  }
+
+  let textLabels = anchorGroup
+                  .selectAll('g')
+                  .data(nodes)
+                  .append("text")
+                  .text((d) => d.title.slice(0, 40) + '...')
+                  .attr('font-family', 'sans-serif')
+                  .attr('font-size', '12px')
+                  .attr('fill', 'black')
+                  .attr('text-anchor', 'middle')
+                  .call(makeTspans, nodes)
+                  .on("click", function (d) {
+                          window.open(d.url);
+                    });
+            
                     
-    let textSource = anchorGroup.selectAll('.node')
-                    .data(nodes)
-                    .append("text")
-                    .attr('x', (d) => d.x)
-                    .attr('y', (d) => d.y)
-                    .text((d) => d.source)
-                    .attr('font-family', 'sans-serif')
-                    .attr('font-size', '12px')
-                    .attr('fill', 'black')
+  let textSource = anchorGroup.selectAll('.node')
+                  .data(nodes)
+                  .append("text")
+                  .text((d) => d.source)
+                  .attr('font-family', 'sans-serif')
+                  .attr('font-size', '12px')
+                  .attr('fill', 'black')
+                  .attr('y', -32)
+                  .attr('text-anchor', 'middle')
 
 
   let simulation = d3.forceSimulation(nodes)
@@ -140,16 +179,14 @@ let radiusScale = d3.scaleLinear()
         .force("cluster", clustering)
         .on("tick", ticked);
 
+   function translate(d) {
+    return "translate(" + d.x + "," + d.y +")";
+  }
+
   function ticked() {
-      circles
-        .attr('cx', (d) => d.x)
-        .attr('cy', (d) => d.y);
-      textLabels
-        .attr('x', (d) => d.x - d.radius + 2)
-        .attr('y', (d) => d.y);
-      textSource
-        .attr('x', (d) => d.x - d.radius + 2)
-        .attr('y', (d) => d.y + 15);
+      groups
+        .data(nodes)
+        .attr('transform', translate)
   }
 
   function dragstarted(d) {
@@ -231,3 +268,15 @@ $('#search-form').submit(function (e) {
         makeCircles(data);
     }) 
 });
+
+// $('#search-dropdown').submit(function (e) { 
+//     // debugger;
+//     e.preventDefault();
+//     let s = d3.selectAll('svg');
+//     s.remove();
+//     $.post('/topsearch.json',$(e.target).serialize(), function (data) {
+//         makeCircles(data);
+//     }) 
+// });
+
+

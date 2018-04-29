@@ -1,41 +1,110 @@
 <!DOCTYPE HTML>
+
 <html>
-<!-- Needs link to CSS page
-Needs link to Boostrap
-Navigation Bar  -->
     <head>
-        <title>NewsFlash</title>
         <script src="https://code.jquery.com/jquery-3.3.1.js"
   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
   crossorigin="anonymous"></script>
-        <link rel="stylesheet" type="text/css" href="static/css/styles.css">
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+
+                    <!-- You can use Open Graph tags to customize link previews.
+                    Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+                  <meta property="og:url"           content="localhost:5000/" />
+                  <meta property="og:type"          content="website" />
+                  <meta property="og:title"         content="Newsflash" />
+                  <meta property="og:description"   content="News with Context" />
+                  <meta property="og:image"         content="/static/css/" />
+                  <!-- Load Facebook SDK for JavaScript -->
+                
     </head>
     <body>
     <header>
-        <nav>
-            <h1>Newsflash</h1>
 
-            <a href='/'>Home</a>
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+      <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand">Newsflash</a>
+            </div>
+            <ul class="nav navbar-nav">
+              <li><a href="/">Home</a></li>
+              <li><a href="/searchbykeyword">Search News By Keyword</a></li>
+              <li><a href="/aboutnewsflash">About</a></li>
+              <li><a href="/register">Sign Up</a></li>
+              {% if 'user_id' in session %} 
+                    <li><a href='/logout'>Logout</a></li>
+                    <li><a href='/updateinfo'>Update Account</a></li>
+                {% else %} 
+                    <li><a href='/login'>Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!--   {% if 'user_id' in session %} 
+                    <li><a class="nav-link"><a href='/logout'>Logout</a></li>
+                {% else %} 
+                    <li><a class="nav-link"><a href='/login'>Login</a></li>
+                {% endif %} -->
+  
+<!-- </body>
+</html>
+ -->
+  <!--   <div class="container-fluid"> 
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">   
+                <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
+                  <a class="navbar-brand">Newsflash</a> </br>
+                    <span class="navbar-toggler-icon"></span>
+                      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                        <ul class="navbar-nav mr-auto">
+                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/aboutnewsflash">About </a>
+                            <a class="nav-link" href="/searchbykeyword">Search News by Keyword </a>
+                            <a class="nav-link" href="/updateoutletinfo">Send Feedback </a>
+                            <a class="nav-link"
+                            {% if 'user_id' in session %}
+                            <a href='/logout'>Logout</a>
+                            {% else %}
+                            <a href='/login'>Login</a>
+                            {% endif %}
+                        </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+ -->
+             <!--    <a href='/'>Home</a>
             <a href='/aboutnewsflash'>About</a>
             <a href="/searchbykeyword">Search for news by Keyword</a> 
              <a href='/updateoutletinfo'>Rate Outlet</a>
 
-            <!-- User login / logout -->
+            User login / logout
             {% if 'user_id' in session %}
                 <a href='/logout'>Logout</a>
             {% else %}
                 <a href='/login'>Login</a>
             {% endif %}
         </nav>
-    </header>
+    </header> -->
 
-    <hr>
-    
-        {% for message in get_flashed_messages() %}
-            <p>{{ message }}</p>
-        {% endfor %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6">
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-info" role="alert" duration='10'>{{ message }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
       
     {% block content %}{% endblock %}
+
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/
+    3.3.7/js/bootstrap.js"></script>
 
     </body>
 </html>
