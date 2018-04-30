@@ -30,12 +30,12 @@
               <li><a href="/">Home</a></li>
               <li><a href="/searchbykeyword">Search News By Keyword</a></li>
               <li><a href="/aboutnewsflash">About</a></li>
-              <li><a href="/register">Sign Up</a></li>
               {% if 'user_id' in session %} 
                     <li><a href='/logout'>Logout</a></li>
                     <li><a href='/updateinfo'>Update Account</a></li>
                 {% else %} 
                     <li><a href='/login'>Login</a></li>
+                    <li><a href="/register">Sign Up</a></li>
                 {% endif %}
             </ul>
         </div>

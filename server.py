@@ -46,45 +46,47 @@ def default_test_test():
 def search_term():
     """ Update visual to show new coverage for search term """
 
-    # if 'user_id' in session:
-    #     user = User.query.get(session['user_id'])
-    #     user_terms = user.searches
-    # else:
-    #     user_terms = None
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+        user_terms = user.searches
+    else:
+        user_terms = None
 
-    return render_template('search_for_term.html')
-        # ,
-                            # user_terms=user_terms)
+    return render_template('search_for_term.html',
+                            user='user_id',
+                            user_terms=user_terms)
 
 @app.route('/topsearch.json', methods=['POST'])
 def search_for_term():
     """ Update visual to show new coverage for search term """
     
-    # fav_search = request.form.get('favorite-search')
-    # txt_keyword = request.form.get('keyword')
+    fav_search = request.form.get('favorite-search')
     keyword = request.form.get('keyword')
     add_or_remove = request.form.get('arterm')
 
-    # if fav_search != 'Search from Favorite Terms:'or fav_search != None:
-    #     keyword = fav_search
-    # else:
-    #     keyword = txt_keyword
+    if add_or_remove == 'favorite':
+        user = User.query.get(session['user_id'])
+        for search in user.searches: 
+            if keyword == search.search_term:
+                flash('You cannot favorite the same term twice!')
+                return redirect('/searchbykeyword')
+        else:
+            term = Search.query.filter(Search.search_term == keyword).one()
+            if not term:
+                term = Search(search_term=keyword)
+            user.searches.append(term)
+            db.session.commit()
+            flash('Your term is now added to favorites!')
+    elif add_or_remove == 'delete':
+        user = User.query.get(session['user_id'])
+        term = Search.query.filter(Search.search_term == keyword).one()
+        user.searches.remove(term)
+        db.session.commit()
+        flash('Your term is deleted')
 
-    # if session['user_id']:
-    #     user = User.query.get(session['user_id'])
-    #     if add_or_remove == 'favorite':
-    #         if Search.query.filter(Search.search_term == keyword).all() is None:
-    #             new_term = Search(search_term=keyword)
-    #             user.searches.append(new_term)
-    #             db.session.commit()
-    #             flash('Your term is now added to favorites!')
-    #         else: 
-    #             flash('You cannot favorite the same term twice!')
-    #     elif add_or_remove == 'delete':
-    #         term = Search.query.filter(Search.search_term == keyword).one()
-    #         user.searches.remove(term)
-    #         db.session.commit()
-    #         flash('Your term is deleted')
+    
+    if fav_search != None:
+        keyword = fav_search
 
     r = requests.get(('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy'+
                      '&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37').format(keyword))
@@ -124,7 +126,7 @@ def json_data():
 
     r = requests.get("https://newsapi.org/v2/top-headlines?pageSize=30&sources=the-wall-street-journal,the-new-york-times,"+
                       "bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,"+
-                      "politico,daily-mail,usa-today,reuters,cnbc,engadget,nbc-news,cbs-news,associated-press,abc-news,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
+                      "politico,daily-mail,reuters,cnbc,engadget,nbc-news,cbs-news,abc-news,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
     #removed usa-today and daily
     top_trending_json = r.json()
 

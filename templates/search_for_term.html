@@ -9,14 +9,28 @@
             <div class="col-lg-6">
                 <form class="form-inline my-2 my-lg-0" action="/topsearch.json" id="search-form" method="post">
                     <h1>Search for coverage by Keyword: </h1></br><input class="form-control mr-sm-2" type="text" name="keyword">
-                    <input type="radio" name="arterm" value="favorite">Add Search Term to Favorites
-                    <input type="radio" name="arterm" value="delete">Delete Term from Favorites
+                    {% if user in session %}
+                        <input type="radio" name="arterm" value="favorite">Add Search Term to Favorites
+                        <input type="radio" name="arterm" value="delete">Delete Term from Favorites
+                    {% endif %}
                     <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search"> 
                     
                 <small><h4>Bias Color Key: Right Bias(Conservative) Right-Center(Leaning Conservative) Center(No Bias) Left-Center(Leaning Liberal) Left(Liberal)</h4>
                 <h4>Hover for Article Description</h4></small>
-                <a target="_blank" href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=cierramhiggins@gmail.com&body=check-out-newsflash-at-localhost:5000/searchbykeyword-i-searched">Click here to email</a>
 
+                {% if user in session %}
+                <form action="/topsearch.json" id="search-dropdown" method="post">
+                    <select name='favorite-search' value='favorites'>
+                        {% if user_terms %}
+                            <option value="Favorite">Search from Favorite Terms:</option>
+                          {% for term in user_terms %}
+                            <option value="{{ term.search_term }}">{{ term.search_term }}</option>
+                          {% endfor %}
+                        {% endif %}
+                        <input type="submit" value="Search"> 
+                    </select>
+                </form>
+                {% endif %}
                 </form>
             </div>
         </div>
