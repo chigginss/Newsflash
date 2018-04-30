@@ -23,7 +23,7 @@ var n = 30,
     m = 5; 
 
 // var color_scale = d3.scale.linear().domain([0, median_area, max_area]).range(['blue', 'purple', 'red']);
-var z = d3.scaleOrdinal(['blue', '#8000ff', 'purple', '#cc0066','red']);
+var z = d3.scaleOrdinal(['#1B7CF3', '#461BF3', '#871BF3', '#F31B3B','#F31B1E']);
 
 var clusters = new Array(m);  
 
@@ -92,11 +92,15 @@ function makeCircles(response) {
                 .style("opacity", 0); 
         });  
 
+  if (nodes === null) {
+      return console.log('There is nothing trendinig for this topic - Please Search Again!');
+  }
 
   let circles = groups
         .append('circle')
             .attr('r', (d) => d.radius)
-            .attr('fill', (d) => z(d.cluster));
+            .attr('fill', (d) => z(d.cluster))
+            // .attr("opacity", 60);
               // .attr("cx", function(d) { return d.x = Math.max(d.radius, Math.min(width - d.radius, d.x)); })
               // .attr("cy", function(d) { return d.y = Math.max(d.radius, Math.min(height - d.radius, d.y)); });
 

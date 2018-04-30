@@ -1,4 +1,4 @@
-  "use strict";
+"use strict";
 
   var bias_key = new Map([
       ['Left', 0],
@@ -37,10 +37,6 @@ let radiusScale = d3.scaleLinear()
 
   let data = response;
   nodes = data.map((d) => {
-
-  if (d.popularity === null) {
-    d.popularity = 2;
-  }
     
   let scaledRadius = radiusScale(d.popularity);
 
@@ -269,14 +265,14 @@ $('#search-form').submit(function (e) {
     }) 
 });
 
-// $('#search-dropdown').submit(function (e) { 
-//     // debugger;
-//     e.preventDefault();
-//     let s = d3.selectAll('svg');
-//     s.remove();
-//     $.post('/topsearch.json',$(e.target).serialize(), function (data) {
-//         makeCircles(data);
-//     }) 
-// });
+$('#search-dropdown').submit(function (e) { 
+    // debugger;
+    e.preventDefault();
+    let s = d3.selectAll('svg');
+    s.remove();
+    $.post('/topsearch.json',$(e.target).serialize(), function (data) {
+        makeCircles(data);
+    }) 
+});
 
 

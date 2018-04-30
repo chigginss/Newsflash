@@ -7,19 +7,20 @@
  <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6">
+                <h1>Search for coverage by Keyword: </h1></br>                   
+                <small><h4>Bias Color Key: Right Bias(Conservative) Right-Center(Leaning Conservative) Center(No Bias) Left-Center(Leaning Liberal) Left(Liberal)</h4>
+                <h4>Hover for Article Description</h4></small>
                 <form class="form-inline my-2 my-lg-0" action="/topsearch.json" id="search-form" method="post">
-                    <h1>Search for coverage by Keyword: </h1></br><input class="form-control mr-sm-2" type="text" name="keyword">
+                    <input class="form-control mr-sm-2" type="text" name="keyword">
                     {% if user in session %}
                         <input type="radio" name="arterm" value="favorite">Add Search Term to Favorites
                         <input type="radio" name="arterm" value="delete">Delete Term from Favorites
                     {% endif %}
                     <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search"> 
-                    
-                <small><h4>Bias Color Key: Right Bias(Conservative) Right-Center(Leaning Conservative) Center(No Bias) Left-Center(Leaning Liberal) Left(Liberal)</h4>
-                <h4>Hover for Article Description</h4></small>
+                </form>
 
-                {% if user in session %}
-                <form action="/topsearch.json" id="search-dropdown" method="post">
+                  {% if user in session %}
+                    <form action="/topsearch.json" id="search-dropdown" method="post">
                     <select name='favorite-search' value='favorites'>
                         {% if user_terms %}
                             <option value="Favorite">Search from Favorite Terms:</option>
@@ -29,9 +30,9 @@
                         {% endif %}
                         <input type="submit" value="Search"> 
                     </select>
-                </form>
+                    </form>
                 {% endif %}
-                </form>
+
             </div>
         </div>
 </div>

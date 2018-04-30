@@ -64,30 +64,30 @@ def search_for_term():
     keyword = request.form.get('keyword')
     add_or_remove = request.form.get('arterm')
 
-    if add_or_remove == 'favorite':
-        user = User.query.get(session['user_id'])
-        for search in user.searches: 
-            if keyword == search.search_term:
-                flash('You cannot favorite the same term twice!')
-                return redirect('/searchbykeyword')
-        else:
+    if fav_search == None or fav_search == 'Search from Favorite Terms:':
+        keyword = keyword
+        if add_or_remove == 'favorite':
+            user = User.query.get(session['user_id'])
+            for search in user.searches: 
+                if keyword == search.search_term:
+                    flash('You cannot favorite the same term twice!')
+                    return redirect('/searchbykeyword')
+            else:
+                term = Search.query.filter(Search.search_term == keyword).first()
+                if term is None:
+                    term = Search(search_term=keyword)
+                user.searches.append(term)
+                db.session.commit()
+                flash('Your term is now added to favorites!')
+        elif add_or_remove == 'delete':
+            user = User.query.get(session['user_id'])
             term = Search.query.filter(Search.search_term == keyword).one()
-            if not term:
-                term = Search(search_term=keyword)
-            user.searches.append(term)
+            user.searches.remove(term)
             db.session.commit()
-            flash('Your term is now added to favorites!')
-    elif add_or_remove == 'delete':
-        user = User.query.get(session['user_id'])
-        term = Search.query.filter(Search.search_term == keyword).one()
-        user.searches.remove(term)
-        db.session.commit()
-        flash('Your term is deleted')
-
-    
-    if fav_search != None:
+            flash('Your term is deleted')
+    elif keyword == None or keyword == '' or keyword == []:
         keyword = fav_search
-
+    
     r = requests.get(('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy'+
                      '&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37').format(keyword))
 
@@ -98,8 +98,9 @@ def search_for_term():
 
     top_searches = top_search_json['articles']
     # # print top_articles
-    # if top_searches == undefined:
-    #     print "Sorry! No coverage for that term. Please search again!"
+
+    # if top_searches == None:
+    #     print 
 
     for i in range(len(top_searches)):
         source_name = top_searches[i].get('source')['name']
