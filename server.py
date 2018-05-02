@@ -5,6 +5,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.security import generate_password_hash, check_password_hash
 from model import User, User_Search, Search, Outlet, connect_to_db, db
 from datetime import datetime
+import pytz
 import os
 import requests
 
@@ -21,12 +22,29 @@ app.jinja_env.auto_reload = True
 # =============================================================================
 # Homepage 
 
+# @app.route('/landing', methods=['GET'])
+# def landing_view():
+
+        
+
+#     return render_template('landing.html')
+
 @app.route('/', methods=['GET'])
 def default_view():
     """ Default top trending coverage"""
 
-    dtime = datetime.now()
-    dtime = dtime.strftime('%B %d, %Y - %-I:%M %p, %S seconds')
+
+    fmt = '%B %d, %Y - %-I:%M %p, %S seconds'
+    # pacific = timezone('America/Los_Angeles')
+    # datet = datetime.now()
+    # dtime = pacific.localize(datet)
+    # # fmt = '%B %d, %Y - %H:%M:%S %Z%z'
+    # dtime = dtime.strftime(fmt)
+    # fmt = '%B %d, %Y - %H:%M:%S %Z%z'
+    d = datetime.now()
+    timezone = pytz.timezone("America/Los_Angeles")
+    d_aware = timezone.localize(d)
+    dtime = d_aware.strftime(fmt)
 
     return render_template('homepage.html',
                             dtime=dtime)
@@ -64,27 +82,27 @@ def search_for_term():
     keyword = request.form.get('keyword')
     add_or_remove = request.form.get('arterm')
 
-    if fav_search == None or fav_search == 'Search from Favorite Terms:':
-        keyword = keyword
-        if add_or_remove == 'favorite':
-            user = User.query.get(session['user_id'])
-            for search in user.searches: 
-                if keyword == search.search_term:
-                    flash('You cannot favorite the same term twice!')
-                    return redirect('/searchbykeyword')
-            else:
-                term = Search.query.filter(Search.search_term == keyword).first()
-                if term is None:
-                    term = Search(search_term=keyword)
-                user.searches.append(term)
-                db.session.commit()
-                flash('Your term is now added to favorites!')
-        elif add_or_remove == 'delete':
-            user = User.query.get(session['user_id'])
-            term = Search.query.filter(Search.search_term == keyword).one()
-            user.searches.remove(term)
+    # if fav_search == None or fav_search == 'Search from Favorite Terms:':
+    #     keyword = keyword
+    if add_or_remove == 'favorite':
+        user = User.query.get(session['user_id'])
+        for search in user.searches: 
+            if keyword == search.search_term:
+                flash('You cannot favorite the same term twice!')
+                return redirect('/searchbykeyword')
+        else:
+            term = Search.query.filter(Search.search_term == keyword).first()
+            if term is None:
+                term = Search(search_term=keyword)
+            user.searches.append(term)
             db.session.commit()
-            flash('Your term is deleted')
+            # flash('Your term is now added to favorites!')
+    elif add_or_remove == 'delete':
+        user = User.query.get(session['user_id'])
+        term = Search.query.filter(Search.search_term == fav_search).one()
+        user.searches.remove(term)
+        db.session.commit()
+            # flash('Your term is deleted')
     elif keyword == None or keyword == '' or keyword == []:
         keyword = fav_search
     
@@ -127,7 +145,7 @@ def json_data():
 
     r = requests.get("https://newsapi.org/v2/top-headlines?pageSize=30&sources=the-wall-street-journal,the-new-york-times,"+
                       "bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,"+
-                      "politico,daily-mail,reuters,cnbc,engadget,nbc-news,cbs-news,abc-news,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
+                      "politico,the-economist,reuters,cnbc,engadget,nbc-news,cbs-news,abc-news,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
     #removed usa-today and daily
     top_trending_json = r.json()
 
@@ -141,6 +159,8 @@ def json_data():
         data = Outlet.query.filter(Outlet.outlet_name == source_name).first()
         # print data
         # add popularity and bias into json
+
+        #Need to remove popularity fom this part!!!
         if data is not None:
             top_articles[i]['popularity'] = data.outlet_popularity
             top_articles[i]['bias'] = data.outlet_bias
@@ -149,7 +169,6 @@ def json_data():
             top_articles[i]['bias'] = False
 
     return jsonify(top_articles)
-
 # =============================================================================
 # User Login / User Logout / Register New User
 
@@ -170,18 +189,18 @@ def user_login():
     user = User.query.filter(User.email == email).first()
     if user is None:
         flash('User not found')
-        return redirect('/login')
+        return redirect('/')
 
-    if password == user.password:
+    if check_password_hash(user.password, password):
         session['user_id'] = user.user_id
         flash('Logged in as {}'.format(user.email))
         return redirect('/')
 
     flash('Invalid password')
-    return redirect('/login')
+    return redirect('/')
 
     # users = User.query.all()
-    return render_template('login.html')
+    # return render_template('login.html')
 
 @app.route('/logout')
 def user_logout():
@@ -206,22 +225,25 @@ def register_user():
     email = request.form.get('email')
     password = request.form.get('password')
 
-    # hashed_value = generate_password_hash(method='pbkdf2:sha512', password)
-    # pass_result = check_password_hash(hashed_value, password)
+    if '@' or '.com' or '.edu' not in email:
+        flash('Please enter a valid email address')
+        return redirect('/register')
+    elif len(password) > 8 and "1234567890" not in password:
+        flash("Please enter a password with one or more numbers")
+        return redirect('/register')
 
-    # if pass_result == True:
-    #     return True
+        hashed_value = generate_password_hash(password)
 
     if User.query.filter(User.email == email).first() is None:
-        user = User(email=email, password=password)
+        user = User(email=email, password=hashed_value)
         db.session.add(user)
         db.session.commit()
         session['user_id'] = user.user_id
         flash('Registered as {}'.format(email))
         return redirect('/')
 
-    flash('User already exists')
-    return redirect('/login')
+    flash('User already exists - Please use different Email')
+    return redirect('/register')
 
 @app.route('/updateinfo', methods=['GET'])
 def view_update_form():
@@ -249,7 +271,7 @@ def update_information():
             return redirect('/')
     else:
         flash('You cannot change password for that account')
-        return redirect('/updateinfo')
+        return redirect('/')
     
     db.session.commit()
 

@@ -6,32 +6,47 @@
       ['Center', 2],
       ['Right-Center', 3],
       ['Right', 4],
-      ['NULL', 5]
+      [null, 5],
+      [false, 5]
       ]);
 
 let url = "/topsearch.json"
 
 let margin = {top: 100, right: 100, bottom: 100, left: 100};
 
-var width = 1200,
+var width = 1400,
   height = 600,
   padding = 10, 
   clusterPadding = 15, 
-  maxRadius = 100;
+  maxRadius = 140;
 
-var n = 30, 
+var n = 25, 
     m = 6; 
 
-// var color_scale = d3.scale.linear().domain([0, median_area, max_area]).range(['blue', 'purple', 'red']);
-var z = d3.scaleOrdinal(['blue', '#8000ff', 'purple', '#cc0066','red']);
+var z = new Map ([
+    [0, '#3385ff'],
+    [1, '#b3d1ff'],
+    [2, '#ffe6cc'],
+    [3, '#ff9999'],
+    [4, '#ff6666'],
+    [5, '#d9d9d9']
+  ])
 
 var clusters = new Array(m);  
 
 let radiusScale = d3.scaleLinear()
   .domain([1, 10])
-  .range([50, maxRadius]);
+  .range([70, maxRadius]);
 
  function makeCircles(response) {
+
+  console.log("Response is...")
+  console.log(response);
+
+  if (response.length === 0) {
+    $('body').append('<div id="hi"><center><img src="/static/css/srryno.JPG"></center></div>');
+    return;
+  }
 
   let nodes = [];
 
@@ -46,6 +61,7 @@ let radiusScale = d3.scaleLinear()
         author: d.author,
         description: d.description,
         url: d.url,
+        urlToImage: d.urlToImage,
         popularity: d.popularity,
         bias: d.bias,
         cluster: bias_key.get(d.bias),
@@ -65,7 +81,8 @@ let radiusScale = d3.scaleLinear()
         .attr("height", height)
         
 
-  let anchorGroup = svgContainer.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+  let anchorGroup = svgContainer.append('g');
+  // .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
   let div = d3.select("body").append("div") 
     .attr("class", "tooltip")       
@@ -87,7 +104,7 @@ let radiusScale = d3.scaleLinear()
             div.transition()    
                 .duration(200)    
                 .style("opacity", .9);    
-            div .html( "TITLE: " + d.title+ "<br/>AUTHOR:" + d.author +"<br/>SUMMARY:" + d.description + "<br/>SOURCE:" + d.source + "<br/>BIAS:" + d.bias)  
+            div .html( "TITLE: " + d.title+ "<br/>AUTHOR: " + d.author.slice(0, 15) +"<br/>SUMMARY: " + d.description)  
                 .style("left", (d3.event.pageX) + "px")   
                 .style("top", (d3.event.pageY - 28) + "px");  
             })          
@@ -100,7 +117,7 @@ let radiusScale = d3.scaleLinear()
 let circles = groups
         .append('circle')
             .attr('r', (d) => d.radius)
-            .attr('fill', (d) => z(d.cluster));
+            .attr('fill', (d) => z.get(d.cluster));
 
 
     function makeTspans(text, data) {
@@ -145,9 +162,9 @@ let circles = groups
                   .selectAll('g')
                   .data(nodes)
                   .append("text")
-                  .text((d) => d.title.slice(0, 40) + '...')
-                  .attr('font-family', 'sans-serif')
-                  .attr('font-size', '12px')
+                  .text((d) => d.title.slice(0, 35) + '...')
+                  .attr('font-family', 'helvetica')
+                  .attr('font-size', '10px')
                   .attr('fill', 'black')
                   .attr('text-anchor', 'middle')
                   .call(makeTspans, nodes)
@@ -160,9 +177,10 @@ let circles = groups
                   .data(nodes)
                   .append("text")
                   .text((d) => d.source)
-                  .attr('font-family', 'sans-serif')
-                  .attr('font-size', '12px')
+                  .attr('font-family', 'helvetica')
+                  .attr('font-size', '11px')
                   .attr('fill', 'black')
+                  .attr('font-weight', 'bold')
                   .attr('y', -32)
                   .attr('text-anchor', 'middle')
 
@@ -182,7 +200,9 @@ let circles = groups
   function ticked() {
       groups
         .data(nodes)
-        .attr('transform', translate)
+        .attr("cx", function(d) { return d.x = Math.max(d.radius, Math.min(width - d.radius, d.x)); })
+        .attr("cy", function(d) { return d.y = Math.max(d.radius, Math.min(height - d.radius, d.y)); })
+        .attr('transform', translate);
   }
 
   function dragstarted(d) {
@@ -260,6 +280,7 @@ $('#search-form').submit(function (e) {
     e.preventDefault();
     let s = d3.selectAll('svg');
     s.remove();
+    $('#hi').remove();
     $.post('/topsearch.json',$(e.target).serialize(), function (data) {
         makeCircles(data);
     }) 
@@ -270,6 +291,7 @@ $('#search-dropdown').submit(function (e) {
     e.preventDefault();
     let s = d3.selectAll('svg');
     s.remove();
+    $('#hi').remove();
     $.post('/topsearch.json',$(e.target).serialize(), function (data) {
         makeCircles(data);
     }) 

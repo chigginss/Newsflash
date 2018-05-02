@@ -4,10 +4,79 @@ div.tooltip {
     width: 150px;          
     /*height: 28px;         */
     padding: 2px;       
-    font: 12px sans-serif;    
+    font: 14px helvetica;
+    /*text-transform: uppercase;   */
     background: white; 
     border: 0px;    
     border-radius: 8px;     
-    pointer-events: none;     
+    pointer-events: none;
   }
 
+h3, .node {
+    font: 11px helvetica;
+    text-transform: uppercase;
+    /*opacity*/: 0.60;
+}
+
+/*h4 {
+    font-family: Lucida;
+}*/
+
+body {
+
+    padding: 50px;
+}
+
+.navbar-inverse {
+
+    color: white;
+    background: black;
+}
+
+#searchbar {
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 5px 5px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+.nav-button {
+
+    color: white;
+    border-color: white;
+    background-color: black;
+}
+.nav-button:hover {
+
+    background-color: white;
+    color: black;
+    border-color: black;
+}
+
+.links:hover {
+
+    background-color: white;
+    color: black;
+}
+
+#searchbar:focus {
+    width: 40%;
+}
+
+.divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}
+
+.url {
+    cursor: pointer;
+}

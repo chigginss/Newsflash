@@ -2,31 +2,33 @@
 
 {% block content %}
 
- <div class="container-fluid">
+<div class="container-fluid" id="content">
     <div class="row">
         <div class="cols-lg-6">
-             <h1> About Newsflash </h1><br>
-             <p> Have you ever wondered if your newsfeed isn't showing you the whole picture? Welcome to Newsflash, an app that displays top trending news coverage and information about each outlet through an interactive D3.js visual. It updates in almost real-time, and provides context about media outlets, organizing trending stories by the popularity and bias of the respective media outlet. Instead of showing the user media from certain outlets, you get a range of outlets, and more context and information about each one - and that way you get the whole story.
+           <center> <img src="/static/css/logo2.JPG">
+             <h2> About Newsflash </h2>
+             <p> Have you ever wondered if your newsfeed isn't showing you the whole picture? <br> Welcome to Newsflash, an app that displays top trending news coverage and information about each outlet through an interactive D3.js visual. <br> It updates in almost real-time, and provides context about media outlets, organizing trending stories by the popularity and bias of the respective media outlet. <br>Instead of showing the user media from certain outlets, you get a range of outlets, and more context and information about each one - and that way you get the whole story. <br> <br>
 
-             Newsflash was created by Cierra Higgins for her HackBright Academy final project. Cierra is a data-scientist turned software engineer who is passionate about design, data and digital media.</p>
+             Newsflash was created by Cierra Higgins for her HackBright Academy final project. <br>Cierra is a data-scientist turned software engineer who is passionate about design, data and digital media.</p>
 
             <h2> How Newsflash Works </h2>  
-            <h3>Trending Coverage - NewsAPI</h3><br>
+            <h4>Trending Coverage - NewsAPI</h4>
             <p>All news covearge comes from <a href="https://newsapi.org/docs/get-started">NewsAPI</a>. NewsAPI decides internally which articles are Trending using their 'Top Trending' endpoint. Please visit the NewsAPI site for a <a href="https://newsapi.org/sources">complete list of outlets</a> NewsAPI uses for Top Trending coverage.</p>
 
-            <h3> Bias and Popularity Metrics </h3><br>
+            <h4> Bias and Popularity Metrics </h4>
             <p> Media Bias and Popularity ratings are not added from NewsAPI. Instead I have researched and manually added these metrics for each media outlet. All Bias ratings come from <a href="https://www.allsides.com/media-bias/media-bias-ratings">AllSides</a> and all popularity metrics are based off of Amazon's <a href="https://www.alexa.com/topsites">Alexa's Top 500 Websites</a>, filtered by news and media. If you disagree with the rating of an outlet's popularity or bias, or do not think that an outlet should be included, please send<a href="/updateoutletinfo"> feedback here.</a>
+                </center>
             </p>
         </div> 
     </div>
 </div>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="cols-lg-6">
-
-                <h2> Techstack </h2> <br>
-                <h4>Click the image to learn more</h4>
+<div class="container-fluid" id="content">
+    <div class="row">
+        <div class="cols-lg-6">
+                <center>
+                     <h2>Techstack</h2> 
+                <h4>Click the image to learn more</h4><br>
                 <p>
                 <a href="https://d3js.org/" target="_blank"><img src="/static/css/d3.jpg"></a>
                 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank"><img src="/static/css/js6.png"></a>
@@ -37,9 +39,11 @@
                 <a href="http://jinja.pocoo.org/docs/2.10/" target="_blank"><img src="/static/css/jinja2.png"></a>
                 <a href="http://jquery.com/" target="_blank"><img src="/static/css/Jquery.png"></a>
                 <a href="https://getbootstrap.com/docs/3.3/" target="_blank"><img src="/static/css/bootstrap.png"></a>
-                </p><br>
-            </div> 
-        </div>
+                <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                </p>
+                </center>
+        </div> 
     </div>
+</div>
 
 {% endblock %}

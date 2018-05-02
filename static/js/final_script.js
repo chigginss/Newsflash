@@ -13,23 +13,29 @@ let url = '/toptrending.json'
 
 let margin = {top: 100, right: 100, bottom: 100, left: 100};
 
-var width = 1800,
-  height = 600,
+var width = 1390,
+  height = 700,
   padding = 10, 
   clusterPadding = 15, 
-  maxRadius = 90;
+  maxRadius = 115;
 
 var n = 30, 
     m = 5; 
 
-// var color_scale = d3.scale.linear().domain([0, median_area, max_area]).range(['blue', 'purple', 'red']);
-var z = d3.scaleOrdinal(['#1B7CF3', '#461BF3', '#871BF3', '#F31B3B','#F31B1E']);
+var z = new Map ([
+    [0, '#3385ff'],
+    [1, '#b3d1ff'],
+    [2, '#ffe6cc'],
+    [3, '#ff9999'],
+    [4, '#ff6666'],
+    [5, '#d9d9d9']
+  ])
 
 var clusters = new Array(m);  
 
 let radiusScale = d3.scaleLinear()
-  .domain([1, 10])
-  .range([30, maxRadius]);
+  .domain([5, 10])
+  .range([70, maxRadius]);
 
 function makeCircles(response) {
   let data = response;
@@ -63,7 +69,8 @@ function makeCircles(response) {
         .attr("width", width)
         .attr("height", height)
 
-  let anchorGroup = svgContainer.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+  let anchorGroup = svgContainer.append('g').attr('transform', 'translate');
+  // 'translate(' + width / 2 + ',' + height / 2 + ')');
 
   let div = d3.select("body").append("div") 
     .attr("class", "tooltip")       
@@ -82,7 +89,7 @@ function makeCircles(response) {
             div.transition()    
                 .duration(200)    
                 .style("opacity", .9);    
-            div .html( "TITLE: " + d.title+ "<br/>AUTHOR: " + d.author +"<br/>SUMMARY: " + d.description + "<br/>SOURCE: " + d.source + "<br/>BIAS: " + d.bias)  
+            div .html( "TITLE: " + d.title + "<br/>AUTHOR: " + d.author.slice(0,15) +"<br/>SUMMARY: " + d.description)  
                 .style("left", (d3.event.pageX) + "px")   
                 .style("top", (d3.event.pageY - 28) + "px");  
             })          
@@ -92,20 +99,11 @@ function makeCircles(response) {
                 .style("opacity", 0); 
         });  
 
-  if (nodes === null) {
-      return console.log('There is nothing trendinig for this topic - Please Search Again!');
-  }
-
   let circles = groups
         .append('circle')
             .attr('r', (d) => d.radius)
-            .attr('fill', (d) => z(d.cluster))
-            // .attr("opacity", 60);
-              // .attr("cx", function(d) { return d.x = Math.max(d.radius, Math.min(width - d.radius, d.x)); })
-              // .attr("cy", function(d) { return d.y = Math.max(d.radius, Math.min(height - d.radius, d.y)); });
-
-
-
+            .attr('fill', (d) => z.get(d.cluster));
+            
   function makeTspans(text, data) {
     text.each( function(d) {
       let this_text = d3.select(this),
@@ -148,7 +146,7 @@ function makeCircles(response) {
                   .selectAll('g')
                   .data(nodes)
                   .append("text")
-                  .text((d) => d.title.slice(0, 40) + '...')
+                  .text((d) => d.title.slice(0, 35) + '...')
                   .attr('font-family', 'helvetica')
                   .attr('font-size', '11px')
                   .attr('fill', 'black')
@@ -165,6 +163,7 @@ function makeCircles(response) {
                   .text((d) => d.source)
                   .attr('font-family', 'sans-serif')
                   .attr('font-size', '12px')
+                  .attr('font-weight', 'bold')
                   .attr('fill', 'black')
                   .attr('y', -32)
                   .attr('text-anchor', 'middle')
@@ -184,7 +183,9 @@ function makeCircles(response) {
   function ticked() {
       groups
         .data(nodes)
-        .attr('transform', translate)
+        .attr("cx", function(d) { return d.x = Math.max(d.radius, Math.min(width - d.radius, d.x)); })
+        .attr("cy", function(d) { return d.y = Math.max(d.radius, Math.min(height - d.radius, d.y)); })
+        .attr('transform', translate);
     }
 
   function dragstarted(d) {

@@ -4,22 +4,24 @@
 
 <!-- <h1> Display metrics on coverage about any brand or term!</h1> </br>
  -->
- <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-6">
-                <h1>Search for coverage by Keyword: </h1></br>                   
-                <small><h4>Bias Color Key: Right Bias(Conservative) Right-Center(Leaning Conservative) Center(No Bias) Left-Center(Leaning Liberal) Left(Liberal)</h4>
-                <h4>Hover for Article Description</h4></small>
-                <form class="form-inline my-2 my-lg-0" action="/topsearch.json" id="search-form" method="post">
-                    <input class="form-control mr-sm-2" type="text" name="keyword">
-                    {% if user in session %}
-                        <input type="radio" name="arterm" value="favorite">Add Search Term to Favorites
-                        <input type="radio" name="arterm" value="delete">Delete Term from Favorites
-                    {% endif %}
-                    <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search"> 
-                </form>
 
+<!-- <center> -->
+<div class="container-fluid">
+        <!-- <div class="row"> -->
+            <div class="col-lg-8">
+                <h2>Search for coverage by Keyword </h2>
+                <form class="form-inline my-2 my-lg-0" action="/topsearch.json" id="search-form" method="post">
+                    <input class="form-control mr-sm-2" id="searchbar" type="text" name="keyword" placeholder="Search..">
+                     <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search"><br>
+                    {% if user in session %}
+                        <input type="radio" name="arterm" value="favorite"> Add Search Term to Favorites<br>
+                       <!--  <input type="radio" name="arterm" value="delete"> Delete Term from Favorites<br> -->
+                    {% endif %}
+                </form>
+ 
                   {% if user in session %}
+                   <h3>Select From Favorites</h3> 
+
                     <form action="/topsearch.json" id="search-dropdown" method="post">
                     <select name='favorite-search' value='favorites'>
                         {% if user_terms %}
@@ -28,14 +30,36 @@
                             <option value="{{ term.search_term }}">{{ term.search_term }}</option>
                           {% endfor %}
                         {% endif %}
-                        <input type="submit" value="Search"> 
+                       <div class="divider"/> <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search"> <br>
+                       <input type="radio" name="arterm" value="delete"> Delete Term from Favorites<br>
                     </select>
                     </form>
                 {% endif %}
 
+                <h3>Don't know what to search for? Check out top trending news first!</h3>
+            </div>
+ <!--        </div>
+</div> -->
+
+<!-- <div class="container-fluid">
+        <div class="row"> -->
+            <div class="col-lg-offset-8">
+                <br>
+                <br>
+                <img src="/static/css/newbiaskey.JPG">
+            </div>
+<!--         </div> -->
+</div>
+<!-- <center> -->
+<!-- <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <h3>Bias Color Key: Right Bias (Conservative) Right-Center (Leaning Conservative) Center (No Bias) Left-Center (Leaning Liberal) Left (Liberal)</h3>
+                <h3>Hover for Article Description</h3>
+
             </div>
         </div>
-</div>
+</div> -->
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="/static/js/final_search.js"></script>

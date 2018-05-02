@@ -1,29 +1,29 @@
-CNN|10|Left|0
+CNN|9|Left|0
 The New York Times|10|Left-Center|1
-The Washington Post|10|Left-Center|1
-Wired|9|Left-Center|1
-BBC News|9|Center|1
+The Washington Post|9|Left-Center|1
+Wired|7|Left-Center|1
+BBC News|8|Center|2
 The Wall Street Journal|9|Right-Center|3
-TechRadar|7|NULL|5
-TechCrunch|7|Center|1
+TechRadar|5|NULL|5
+TechCrunch|6|Center|1
 The Guardian|7|Left-Center|5
-Fox News|7|Right|4
+Fox News|8|Right|4
 The Huffington Post|7|Left|0
-Bloomberg|7|Center|1
+Bloomberg|7|Center|2
 USA Today|7|Center|2
-Time|7|Center|2
+Time|5|Center|2
 Forbes|7|Center|3
 Fortune|6|Right-Center|3
 NBC News|6|Left-Center|1
 The Atlantic|6|Left-Center|1
 ABC News|6|Center|1
-Al Jazeera English|6|Center|1
-Breitbart News|6|Right|4
-Buzzfeed|5|Left-Center|1
-The Guardian (AU)|7|Left-Center|5
-Vice News|5|Left-Center|1
+Al Jazeera English|6|Center|2
+Breitbart News|5|Right|4
+Buzzfeed|6|Left-Center|1
+The Guardian (AU)|6|Left-Center|5
+Vice News|6|Left-Center|1
 Associated Press|6|Center|2
-Business Insider|5|Center|1
+Business Insider|5|Center|2
 Crypto Coins News|1|NULL|5
 Entertainment Weekly|1|NULL|5
 Financial Times|1|Center|2
@@ -42,43 +42,46 @@ RBC|1|NULL|5
 Reddit|1|NULL|5
 TalkSport|1|NULL|5
 The Irish Times|1|Left-Center|1
-The Lad Bible|2|NULL|5
-The Sport Bible|2|NULL|5
+The Lad Bible|1|NULL|5
+The Sport Bible|1|NULL|5
 The Telegraph|1|Right-Center|5
 The Times of India|1|NULL|5
-Google News|9|NULL|5
-Google News (Australia)|9|NULL|5
-Google News (Canada)|9|NULL|5
-Google News (India)|9|NULL|5
-Google News (UK)|9|NULL|5
-Yahoo|9|Left-Center|5
-Business Insider (UK)|9|Center|1
-ESPN|8|NULL|5
-ESPN Cric Info|8|NULL|5
-Reuters|7|Center|2
+Google News|7|NULL|5
+Google News (Australia)|7|NULL|5
+Google News (Canada)|7|NULL|5
+Google News (India)|7|NULL|5
+Google News (UK)|7|NULL|5
+Yahoo|8|Left-Center|5
+Business Insider (UK)|7|Center|1
+ESPN|7|NULL|5
+ESPN Cric Info|7|NULL|5
+Reuters|5|Center|2
 Fox Sports|7|Right|4
-CBS News|7|Left-Center|1
-ABC News (AU)|7|Left-Center|1
+CBS News|5|Left-Center|1
+ABC News (AU)|5|Left-Center|1
 NPR|7|Left|0
-CNBC|7|Center|1
+CNBC|5|Center|1
 Ars Technica|7|NULL|5
-New York Post|6|Right|5 
-LA Times|6|Left|0
-CBC News|6|Left-Center|1
-Daily Mail|6|Right|4
-IGN|6|NULL|5
-Politico|6|Left-Center|1
-New Zealand Herald|6|Center|2
-News.com.au|6|Left-Center|1
-Engadget|6|Left-Center|1
+New York Post|5|Right|5 
+LA Times|5|Left|0
+CBC News|5|Left-Center|1
+Daily Mail|5|Right|4
+IGN|5|NULL|5
+Politico|5|Left-Center|1
+New Zealand Herald|5|Center|2
+News.com.au|5|Left-Center|1
+Engadget|5|Left-Center|1
 The Verge|5|Left-Center|5
 Mashable|5|Left|0
-Bleacher Report|4|NULL|5
-Australian Financial Review|4|Center|2
-Axios|4|Center|1
-Polygon|4|NULL|5
-News24|4|NULL|5
+Bleacher Report|1|NULL|5
+Australian Financial Review|2|Center|2
+Axios|3|Center|1
+Polygon|3|NULL|5
+News24|2|NULL|5
 Newsweek|3|Left-Center|1
 The Next Web|3|NULL|5
 Financial Post|3|NULL|5
 Recode|3|Center|2
+The Economist|7|Center|2
+MSNBC|5|Left-Center|1
+FourFourTwo|1|NULL|5

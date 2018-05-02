@@ -2,97 +2,119 @@
 
 <html>
     <head>
-        <script src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
-      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> 
+        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
-
-                    <!-- You can use Open Graph tags to customize link previews.
-                    Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
-                  <meta property="og:url"           content="localhost:5000/" />
-                  <meta property="og:type"          content="website" />
-                  <meta property="og:title"         content="Newsflash" />
-                  <meta property="og:description"   content="News with Context" />
-                  <meta property="og:image"         content="/static/css/" />
-                  <!-- Load Facebook SDK for JavaScript -->
-                
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
     </head>
     <body>
+        
     <header>
-
-    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="navbar">
       <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand">Newsflash</a>
+              <!-- <a class="navbar-brand">Newsflash</a> -->
+              <img src="/static/css/testlogo1.JPG">
             </div>
             <ul class="nav navbar-nav">
-              <li><a href="/">Home</a></li>
-              <li><a href="/searchbykeyword">Search News By Keyword</a></li>
-              <li><a href="/aboutnewsflash">About</a></li>
+              <li><a href="/" class="links">Home</a></li>
+              <li><a href="/searchbykeyword" class="links">Search News</a></li>
+              <li><a href="/aboutnewsflash" class="links">About</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
               {% if 'user_id' in session %} 
-                    <li><a href='/logout'>Logout</a></li>
-                    <li><a href='/updateinfo'>Update Account</a></li>
+                    <button type="button" class="btn nav-button" data-toggle="modal" data-target="#myModal">Logout</button>
+                    <button type="button" class="btn nav-button" data-toggle="modal" data-target="#mySecModal"><span class="glyphicon glyphicon-user"></span> Manage Account</button>
                 {% else %} 
-                    <li><a href='/login'>Login</a></li>
-                    <li><a href="/register">Sign Up</a></li>
-                {% endif %}
+                  <button type="button" class="btn nav-button" data-toggle="modal" data-target="#mySecModal"><span class="glyphicon glyphicon-user"></span> Sign Up</button>
+                  <button type="button" class="btn nav-button" data-toggle="modal" data-target="#myModal">Login</button>
+                {% endif %} 
             </ul>
         </div>
     </nav>
+  </header>
 
-    <!--   {% if 'user_id' in session %} 
-                    <li><a class="nav-link"><a href='/logout'>Logout</a></li>
-                {% else %} 
-                    <li><a class="nav-link"><a href='/login'>Login</a></li>
-                {% endif %} -->
-  
-<!-- </body>
-</html>
- -->
-  <!--   <div class="container-fluid"> 
-        <div class="row">
-            <div class="col-xs-12 col-md-12 col-lg-12">   
-                <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
-                  <a class="navbar-brand">Newsflash</a> </br>
-                    <span class="navbar-toggler-icon"></span>
-                      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                        <ul class="navbar-nav mr-auto">
-                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                            <a class="nav-link" href="/aboutnewsflash">About </a>
-                            <a class="nav-link" href="/searchbykeyword">Search News by Keyword </a>
-                            <a class="nav-link" href="/updateoutletinfo">Send Feedback </a>
-                            <a class="nav-link"
-                            {% if 'user_id' in session %}
-                            <a href='/logout'>Logout</a>
-                            {% else %}
-                            <a href='/login'>Login</a>
-                            {% endif %}
-                        </div>
-                </nav>
+  <div class="modal fade" id="mySecModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            {% if 'user_id' in session %} 
+            <h2 class="modal-title" id="myModalLabel">Update Account Password</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
             </div>
-        </div>
-    </div>
- -->
-             <!--    <a href='/'>Home</a>
-            <a href='/aboutnewsflash'>About</a>
-            <a href="/searchbykeyword">Search for news by Keyword</a> 
-             <a href='/updateoutletinfo'>Rate Outlet</a>
-
-            User login / logout
-            {% if 'user_id' in session %}
-                <a href='/logout'>Logout</a>
+            <div class="modal-body">
+             <form action="/updateinfo" method="post">
+                      <label>Email: </label><input class="form-control mr-sm-2" type="text" name="email" required><br>
+                      <label>New Password: </label><input class="form-control mr-sm-2" type="password" name="password" required><br>
+                      <input class="btn btn-outline-success my-2 my-sm-0" value="Update Information" type="submit"></br></br>
+             </form>
+            </div>
             {% else %}
-                <a href='/login'>Login</a>
-            {% endif %}
-        </nav>
-    </header> -->
+             <h2 class="modal-title" id="myModalLabel">Welcome to Newsflash!</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+              </div>
+              <div class="modal-body">
+                <form action="/register" method="post">
+                        <label>Email address</label><input class="form-control mr-sm-2" type="text" name="email" required><br>
+                        <label>Password</label><input class="form-control mr-sm-2" type="password" name="password" required><br>
+                        <input class="btn btn-outline-success my-2 my-sm-0" value="Create Account" type="submit"></br></br>
+                </form>
+                <div>                  </div>
+              </div>
+             {% endif %}
+        </div>
+      </div>
+    </div>
 
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            {% if 'user_id' in session %} 
+            <h2 class="modal-title" id="myModalLabel">Come Back Soon!</h2>
+            </button>
+          </div>
+          <div class="modal-body">
+            <a href='/logout'>Logout</a>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </div>
+            {% else %}
+             <h2 class="modal-title" id="myModalLabel">Login</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="/login" method="post">
+                <label>Email address</label><input class="form-control mr-sm-2" type="text" name="email" required><br>
+                <label>Password</label><input class="form-control mr-sm-2" type="password" name="password" required><br>
+                <input class="btn btn-outline-success my-2 my-sm-0" value="Login" type="submit"></br></br>
+                <small id="emailHelp" class="form-text text-muted"> <a href="/register">New User? Create Account</a> </br>
+            </form>
+          </div>
+             {% endif %}
+        </div>
+      </div>
+    </div>
+    
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-6">
                 {% for message in get_flashed_messages() %}
-                <div class="alert alert-info" role="alert" duration='2'>{{ message }}</div>
+<!--                 <div class="alert alert-info" role="alert" duration='2'>{{ message }}</div> -->
+                <br>
+                <div class="alert alert-info alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+                  {{ message }}
+                </div>
                 {% endfor %}
             </div>
         </div>
@@ -100,7 +122,6 @@
 
       
     {% block content %}{% endblock %}
-
 
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/
