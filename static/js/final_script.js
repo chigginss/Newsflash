@@ -39,19 +39,25 @@ let radiusScale = d3.scaleLinear()
 
 function makeCircles(response) {
   let data = response;
-  let nodes = data.map((d) => { 
+  let nodes = data.map((d) => {
 
-    let scaledRadius = radiusScale(d.popularity);
-    // console.log(d.title, d.bias);
-    // console.log(bias_key.get(d.bias))
+    let popularity = d.popularity || 5; 
+    
+    let author = d.author;
+    if (author === null) {
+        author = 'unknown';
+    }
+
+    let scaledRadius = radiusScale(popularity);
+
     let node = {
         title: d.title,
         source: d.source.name,
-        author: d.author,
+        author: author,
         description: d.description,
         url: d.url,
         urlToImage: d.urlToImage,
-        popularity: d.popularity,
+        popularity: popularity,
         bias: d.bias,
         cluster: bias_key.get(d.bias),
         radius: scaledRadius
@@ -69,8 +75,9 @@ function makeCircles(response) {
         .attr("width", width)
         .attr("height", height)
 
-  let anchorGroup = svgContainer.append('g').attr('transform', 'translate');
-  // 'translate(' + width / 2 + ',' + height / 2 + ')');
+  let anchorGroup = svgContainer.append('g');
+  // .attr('transform', 'translate');
+  // (' + width / 2 + ',' + height / 2 + ')');
 
   let div = d3.select("body").append("div") 
     .attr("class", "tooltip")       
@@ -89,7 +96,7 @@ function makeCircles(response) {
             div.transition()    
                 .duration(200)    
                 .style("opacity", .9);    
-            div .html( "TITLE: " + d.title + "<br/>AUTHOR: " + d.author.slice(0,15) +"<br/>SUMMARY: " + d.description)  
+            div .html( "TITLE: " + d.title + "<br/>AUTHOR: " + d.author.slice(0,10) +"<br/>SUMMARY: " + d.description)  
                 .style("left", (d3.event.pageX) + "px")   
                 .style("top", (d3.event.pageY - 28) + "px");  
             })          
@@ -183,8 +190,20 @@ function makeCircles(response) {
   function ticked() {
       groups
         .data(nodes)
-        .attr("cx", function(d) { return d.x = Math.max(d.radius, Math.min(width - d.radius, d.x)); })
-        .attr("cy", function(d) { return d.y = Math.max(d.radius, Math.min(height - d.radius, d.y)); })
+        .attr("cx", function(d) { 
+          if (isNaN(d.x)) {
+            d.x = 0;
+          }
+          let new_x = Math.max(d.radius, Math.min(width - d.radius, d.x));         
+          return d.x = new_x;
+        })
+        .attr("cy", function(d) { 
+          if (isNaN(d.y)) {
+            d.y = 0;
+          }
+          let new_y = Math.max(d.radius, Math.min(height - d.radius, d.y));
+          return d.y = new_y;
+        })
         .attr('transform', translate);
     }
 

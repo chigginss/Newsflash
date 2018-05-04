@@ -18,11 +18,11 @@ class NewsflashTests(unittest.TestCase):
 
     def test_homepage(self):
         result = self.client.get("/")
-        self.assertIn("Homepage Test 1", result.data)
+        self.assertIn("Top Trending", result.data)
 
     def test_about(self):
         result = self.client.get("/aboutnewsflash")
-        self.assertIn("NEED LOGOS", result.data)
+        self.assertIn("NewsAPI", result.data)
 
     def test_register(self):
         result = self.client.get("/register")
@@ -35,7 +35,7 @@ class NewsflashTests(unittest.TestCase):
 
     def test_favorite_search(self):
         result = self.client.get("/newsbykeyword")
-        self.assertIn("Search to Favorite", result.data)
+        self.assertIn("Search", result.data)
 
     def test_register_works(self):
         result = self.client.post("/register",
@@ -97,29 +97,5 @@ if __name__ == "__main__":
 
     #     self.assertNotIn("Logged In",result.data)
     #     self.assertIn("Logged Out", result.data)
-#API TEST ======================================================================
 
-# def _mock_get_trending_articles('https://newsapi.org/v2/top-headlines?language=en&sources=google-news&apiKey={}'.format(API_KEY)')):
-#     return for article in data['articles']:
-#         description = (article['description'] or " ").encode('utf-8')
-#         title = (article['title'] or " ").encode('utf-8')
-#         url = (article['url'] or " ").encode('utf-8')
-#         author = (article['author'] or " ").encode('utf-8') 
-#         publishedAt = (article['publishedAt'] or " ").encode('utf-8')
-#         source = (article['source']['name'] or " ").encode('utf-8')
-#         urlToImage = (article['urlToImage'] or " ").encode('utf-8')
-# import server
-# server.get_trending_articles = _mock_get_trending_articles
-
-# def setUp(self):
-
-#     def _mock_get_trending_articles('https://newsapi.org/v2/top-headlines?language=en&sources=google-news&apiKey={}'.format(API_KEY))'
-#         return for article in data['articles']:
-#         description = (article['description'] or " ").encode('utf-8')
-#         title = (article['title'] or " ").encode('utf-8')
-#         url = (article['url'] or " ").encode('utf-8')
-#         author = (article['author'] or " ").encode('utf-8') 
-#         publishedAt = (article['publishedAt'] or " ").encode('utf-8')
-#         source = (article['source']['name'] or " ").encode('utf-8')
-# server.get_trending_articles = _mock_get_trending_articles
 

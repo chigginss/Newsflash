@@ -6,7 +6,16 @@
         <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+         <title>Newsflash</title>
+          <!-- You can use Open Graph tags to customize link previews.
+          Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+        <meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
+        <meta property="og:type"          content="website" />
+        <meta property="og:title"         content="Newsflash" />
+        <meta property="og:description"   content="Data-Driven Newsfeed" />
+        <meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />
     </head>
     <body>
         
@@ -24,11 +33,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               {% if 'user_id' in session %} 
-                    <button type="button" class="btn nav-button" data-toggle="modal" data-target="#myModal">Logout</button>
-                    <button type="button" class="btn nav-button" data-toggle="modal" data-target="#mySecModal"><span class="glyphicon glyphicon-user"></span> Manage Account</button>
+                  <button type="button" class="btn nav-button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
+                  <button type="button" class="btn nav-button" data-toggle="modal" data-target="#mySecModal"><span class="glyphicon glyphicon-user"></span> Manage Account</button>
                 {% else %} 
                   <button type="button" class="btn nav-button" data-toggle="modal" data-target="#mySecModal"><span class="glyphicon glyphicon-user"></span> Sign Up</button>
-                  <button type="button" class="btn nav-button" data-toggle="modal" data-target="#myModal">Login</button>
+                  <button type="button" class="btn nav-button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-log-in"></span> Login</button>
                 {% endif %} 
             </ul>
         </div>
@@ -102,6 +111,22 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="myshareModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+             <h2 class="modal-title" id="myModalLabel">Share current top trending content</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <a href="mailto:?subject=look at this website&body=Hey check out what is trending on Newsflash:"></a>
+          </div>
+        </div>
+      </div>
+    </div>
     
     <div class="container-fluid">
         <div class="row">
@@ -122,10 +147,6 @@
 
       
     {% block content %}{% endblock %}
-
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/
-    3.3.7/js/bootstrap.js"></script>
 
     </body>
 </html>

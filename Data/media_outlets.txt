@@ -74,7 +74,7 @@ Engadget|5|Left-Center|1
 The Verge|5|Left-Center|5
 Mashable|5|Left|0
 Bleacher Report|1|NULL|5
-Australian Financial Review|2|Center|2
+Australian Financial Review|4|Center|2
 Axios|3|Center|1
 Polygon|3|NULL|5
 News24|2|NULL|5

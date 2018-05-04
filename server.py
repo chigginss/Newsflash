@@ -5,11 +5,11 @@ from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.security import generate_password_hash, check_password_hash
 from model import User, User_Search, Search, Outlet, connect_to_db, db
 from datetime import datetime
+from pytz import timezone
 import pytz
 import os
 import requests
 
-#logout not working
 # API_KEY = os.environ['API_KEY']
 
 app = Flask(__name__)
@@ -20,42 +20,82 @@ app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
 
 # =============================================================================
-# Homepage 
+# Homepage And Landing Page
 
-# @app.route('/landing', methods=['GET'])
-# def landing_view():
+@app.route('/landing', methods=['GET'])
+def landing_view():
+    """ landing page"""
 
-        
-
-#     return render_template('landing.html')
+    return render_template('landing_page.html')
 
 @app.route('/', methods=['GET'])
 def default_view():
     """ Default top trending coverage"""
 
-
     fmt = '%B %d, %Y - %-I:%M %p, %S seconds'
-    # pacific = timezone('America/Los_Angeles')
-    # datet = datetime.now()
-    # dtime = pacific.localize(datet)
-    # # fmt = '%B %d, %Y - %H:%M:%S %Z%z'
-    # dtime = dtime.strftime(fmt)
-    # fmt = '%B %d, %Y - %H:%M:%S %Z%z'
-    d = datetime.now()
-    timezone = pytz.timezone("America/Los_Angeles")
-    d_aware = timezone.localize(d)
-    dtime = d_aware.strftime(fmt)
+    pacific = 'US/Pacific'
+    now_utc = datetime.now(timezone('UTC'))
+    dtime = now_utc.astimezone(timezone(pacific))
+    ddtime = dtime.strftime(fmt)
+
+    r = requests.get("https://newsapi.org/v2/top-headlines?pageSize=30&sources=the-wall-street-journal,the-new-york-times,"+
+                      "bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,"+
+                      "politico,the-economist,reuters,cnbc,engadget,nbc-news,cbs-news,abc-news,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
+
+    top_trending_json = r.json()
+
+    top_articles = top_trending_json['articles']
+
+    for article in top_articles:
+        description = (article['description'] or " ").encode('utf-8')
+        title = (article['title'] or " ").encode('utf-8')
+        url = (article['url'] or " ").encode('utf-8')
+        author = (article['author'] or " ").encode('utf-8') 
+        publishedAt = (article['publishedAt'] or " ").encode('utf-8')
+        source = (article['source']['name'] or " ").encode('utf-8')
+        urlToImage = (article['urlToImage'] or " ").encode('utf-8')
+        content = "{}, {}, {}, {}, {}, {}, {}".format(title, url, author, publishedAt, source, description, urlToImage)
 
     return render_template('homepage.html',
-                            dtime=dtime)
+                            ddtime=ddtime,
+                            title=title,
+                            url=url,
+                            source=source,
+                            publishedAt=publishedAt)
+
+# =============================================================================
+# Share Newsflash Content
+
+# @app.route('/sharenewsflash', methods=['GET'])
+# def share_coverage():
+#     """ share top coverage for this moment"""
+
+#     r = requests.get("https://newsapi.org/v2/top-headlines?pageSize=30&sources=the-wall-street-journal,the-new-york-times,"+
+#                       "bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,"+
+#                       "politico,the-economist,reuters,cnbc,engadget,nbc-news,cbs-news,abc-news,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
+
+#     top_trending_json = r.json()
+
+#     top_articles = top_trending_json['articles']
+
+#     # content = top_articles
+
+#     for article in top_articles:
+#         description = (article['description'] or " ").encode('utf-8')
+#         title = (article['title'] or " ").encode('utf-8')
+#         url = (article['url'] or " ").encode('utf-8')
+#         author = (article['author'] or " ").encode('utf-8') 
+#         publishedAt = (article['publishedAt'] or " ").encode('utf-8')
+#         source = (article['source']['name'] or " ").encode('utf-8')
+#         urlToImage = (article['urlToImage'] or " ").encode('utf-8')
+#         content = "{}, {}, {}, {}, {}, {}, {}".format(title, url, author, publishedAt, source, description, urlToImage)
 
 
-@app.route('/testtest', methods=['GET'])
-def default_test_test():
-    """ Default top trending coverage"""
-
-
-    return render_template('test_test_test.html')
+#     return render_template('share_newsflash.html',
+#                             title=title,
+#                             url=url,
+#                             source=source,
+#                             publishedAt=publishedAt)
 
 # =============================================================================
 # Search Views - form and visual 
@@ -70,7 +110,14 @@ def search_term():
     else:
         user_terms = None
 
+    fmt = '%B %d, %Y - %-I:%M %p, %S seconds'
+    pacific = 'US/Pacific'
+    now_utc = datetime.now(timezone('UTC'))
+    dtime = now_utc.astimezone(timezone(pacific))
+    ddtime = dtime.strftime(fmt)
+
     return render_template('search_for_term.html',
+                            ddtime=ddtime,
                             user='user_id',
                             user_terms=user_terms)
 
@@ -102,7 +149,9 @@ def search_for_term():
         term = Search.query.filter(Search.search_term == fav_search).one()
         user.searches.remove(term)
         db.session.commit()
-            # flash('Your term is deleted')
+        # flash('Your term is deleted')
+        return 'deleted'
+
     elif keyword == None or keyword == '' or keyword == []:
         keyword = fav_search
     
@@ -169,8 +218,9 @@ def json_data():
             top_articles[i]['bias'] = False
 
     return jsonify(top_articles)
+
 # =============================================================================
-# User Login / User Logout / Register New User
+# User Login / User Logout
 
 @app.route('/login', methods=['GET']) 
 def login_form():
@@ -199,9 +249,6 @@ def user_login():
     flash('Invalid password')
     return redirect('/')
 
-    # users = User.query.all()
-    # return render_template('login.html')
-
 @app.route('/logout')
 def user_logout():
     """Logout user"""
@@ -211,6 +258,9 @@ def user_logout():
         flash ('Logged out')
 
     return redirect('/')
+
+# =============================================================================
+# Register New User
 
 @app.route('/register', methods=['GET'])
 def register_form():
@@ -225,14 +275,14 @@ def register_user():
     email = request.form.get('email')
     password = request.form.get('password')
 
-    if '@' or '.com' or '.edu' not in email:
-        flash('Please enter a valid email address')
-        return redirect('/register')
-    elif len(password) > 8 and "1234567890" not in password:
-        flash("Please enter a password with one or more numbers")
-        return redirect('/register')
+    # if '@' or '.com' or '.edu' not in email:
+    #     flash('Please enter a valid email address')
+    #     return redirect('/register')
+    # elif len(password) > 8 and "1234567890" not in password:
+    #     flash("Please enter a password with one or more numbers")
+    #     return redirect('/register')
 
-        hashed_value = generate_password_hash(password)
+    hashed_value = generate_password_hash(password)
 
     if User.query.filter(User.email == email).first() is None:
         user = User(email=email, password=hashed_value)
@@ -244,6 +294,9 @@ def register_user():
 
     flash('User already exists - Please use different Email')
     return redirect('/register')
+
+# =============================================================================
+# Update User Info
 
 @app.route('/updateinfo', methods=['GET'])
 def view_update_form():
@@ -275,7 +328,6 @@ def update_information():
     
     db.session.commit()
 
-
 # =============================================================================
 # User add outlet information
 
@@ -298,17 +350,6 @@ def email_update_outlet_form():
   return redirect('/updateoutletinfo')
 
 # =============================================================================
-# User 
-
-# @app.route('/users')
-# def view_all_users():
-#     """Display users for test"""
-
-#     users = User.query.all()
-
-#     return render_template('user.html', users=users)
-
-# =============================================================================
 # About
 
 @app.route('/aboutnewsflash')
@@ -316,6 +357,8 @@ def about_us():
     """list a brief description about Newsflash"""
 
     return render_template('about.html')
+
+# =============================================================================
 
 if __name__ == "__main__":
     app.debug = True

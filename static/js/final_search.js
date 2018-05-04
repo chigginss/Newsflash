@@ -15,7 +15,7 @@ let url = "/topsearch.json"
 let margin = {top: 100, right: 100, bottom: 100, left: 100};
 
 var width = 1400,
-  height = 600,
+  height = 800,
   padding = 10, 
   clusterPadding = 15, 
   maxRadius = 140;
@@ -44,7 +44,7 @@ let radiusScale = d3.scaleLinear()
   console.log(response);
 
   if (response.length === 0) {
-    $('body').append('<div id="hi"><center><img src="/static/css/srryno.JPG"></center></div>');
+    $('body').append('<div id="delete-me"><center><img src="/static/css/nodata2.JPG"></center></div>');
     return;
   }
 
@@ -52,8 +52,15 @@ let radiusScale = d3.scaleLinear()
 
   let data = response;
   nodes = data.map((d) => {
+
+  let popularity = d.popularity || 1; 
     
-  let scaledRadius = radiusScale(d.popularity);
+  let author = d.author;
+    if (author === null) {
+        author = 'unknown';
+    }
+    
+  let scaledRadius = radiusScale(popularity);
 
     let node = {
         title: d.title,
@@ -62,7 +69,7 @@ let radiusScale = d3.scaleLinear()
         description: d.description,
         url: d.url,
         urlToImage: d.urlToImage,
-        popularity: d.popularity,
+        popularity: popularity,
         bias: d.bias,
         cluster: bias_key.get(d.bias),
         radius: scaledRadius
@@ -104,7 +111,7 @@ let radiusScale = d3.scaleLinear()
             div.transition()    
                 .duration(200)    
                 .style("opacity", .9);    
-            div .html( "TITLE: " + d.title+ "<br/>AUTHOR: " + d.author.slice(0, 15) +"<br/>SUMMARY: " + d.description)  
+            div .html( "TITLE: " + d.title+ "<br/>AUTHOR: " + d.author +"<br/>SUMMARY: " + d.description)  
                 .style("left", (d3.event.pageX) + "px")   
                 .style("top", (d3.event.pageY - 28) + "px");  
             })          
@@ -198,10 +205,23 @@ let circles = groups
   }
 
   function ticked() {
+
       groups
         .data(nodes)
-        .attr("cx", function(d) { return d.x = Math.max(d.radius, Math.min(width - d.radius, d.x)); })
-        .attr("cy", function(d) { return d.y = Math.max(d.radius, Math.min(height - d.radius, d.y)); })
+        .attr("cx", function(d) { 
+          if (isNaN(d.x)) {
+            d.x = 0;
+          }
+          let new_x = Math.max(d.radius, Math.min(width - d.radius, d.x));         
+          return d.x = new_x;
+        })
+        .attr("cy", function(d) { 
+          if (isNaN(d.y)) {
+            d.y = 0;
+          }
+          let new_y = Math.max(d.radius, Math.min(height - d.radius, d.y));
+          return d.y = new_y;
+        })
         .attr('transform', translate);
   }
 
@@ -248,7 +268,7 @@ let circles = groups
         .addAll(nodes);
 
     nodes.forEach(function(d) {
-      var r = d.r + maxRadius + Math.max(padding, clusterPadding),
+      var r = d.radius + maxRadius + Math.max(padding, clusterPadding),
           nx1 = d.x - r,
           nx2 = d.x + r,
           ny1 = d.y - r,
@@ -280,10 +300,15 @@ $('#search-form').submit(function (e) {
     e.preventDefault();
     let s = d3.selectAll('svg');
     s.remove();
-    $('#hi').remove();
+    $('#delete-me').remove();
+    let keyword = $('#searchbar').val();
     $.post('/topsearch.json',$(e.target).serialize(), function (data) {
         makeCircles(data);
     }) 
+    if ($('#favorite-button:checked').length === 1 && $('#reload-favorite').val() !== '<option value='+ keyword +'>'+ keyword +'</option>') {
+      $('#reload-favorite').append('<option value='+ keyword +'>'+ keyword +'</option>');
+    }
+    $('#search-form')[0].reset();
 });
 
 $('#search-dropdown').submit(function (e) { 
@@ -291,10 +316,17 @@ $('#search-dropdown').submit(function (e) {
     e.preventDefault();
     let s = d3.selectAll('svg');
     s.remove();
-    $('#hi').remove();
+    $('#delete-me').remove();
     $.post('/topsearch.json',$(e.target).serialize(), function (data) {
+      console.log(data);
+      if (data !== 'deleted') {
         makeCircles(data);
-    }) 
+      } else {
+        $('#search-dropdown').find(":selected").remove();
+        $('#search-dropdown')[0].reset();
+      } 
+    })
+    
 });
 
 
