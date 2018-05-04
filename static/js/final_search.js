@@ -40,18 +40,13 @@ let radiusScale = d3.scaleLinear()
 
  function makeCircles(response) {
 
-  console.log("Response is...")
-  console.log(response);
-
   if (response.length === 0) {
     $('body').append('<div id="delete-me"><center><img src="/static/css/nodata2.JPG"></center></div>');
     return;
   }
 
-  let nodes = [];
-
   let data = response;
-  nodes = data.map((d) => {
+  let nodes = data.map((d) => {
 
   let popularity = d.popularity || 1; 
     
@@ -96,9 +91,6 @@ let radiusScale = d3.scaleLinear()
     .style("opacity", 0);
 
   let groups = anchorGroup
-        // .datum(nodes)
-        // .selectAll('.circle')
-        //   .data(d => d)
         .selectAll('g')
         .data(nodes)
         .enter().append('g')
@@ -111,7 +103,7 @@ let radiusScale = d3.scaleLinear()
             div.transition()    
                 .duration(200)    
                 .style("opacity", .9);    
-            div .html( "TITLE: " + d.title+ "<br/>AUTHOR: " + d.author +"<br/>SUMMARY: " + d.description)  
+            div .html( "TITLE: " + d.title+ "<br/>AUTHOR: " + d.author.slice(0,15) +"<br/>SUMMARY: " + d.description)  
                 .style("left", (d3.event.pageX) + "px")   
                 .style("top", (d3.event.pageY - 28) + "px");  
             })          
@@ -305,14 +297,14 @@ $('#search-form').submit(function (e) {
     $.post('/topsearch.json',$(e.target).serialize(), function (data) {
         makeCircles(data);
     }) 
-    if ($('#favorite-button:checked').length === 1 && $('#reload-favorite').val() !== '<option value='+ keyword +'>'+ keyword +'</option>') {
+    if ($('#favorite-button:checked').length === 1) {
       $('#reload-favorite').append('<option value='+ keyword +'>'+ keyword +'</option>');
+      alert('Your term was added to favorites');
     }
     $('#search-form')[0].reset();
 });
 
 $('#search-dropdown').submit(function (e) { 
-    // debugger;
     e.preventDefault();
     let s = d3.selectAll('svg');
     s.remove();
@@ -324,6 +316,7 @@ $('#search-dropdown').submit(function (e) {
       } else {
         $('#search-dropdown').find(":selected").remove();
         $('#search-dropdown')[0].reset();
+        alert('Your term was deleted');
       } 
     })
     

@@ -32,7 +32,7 @@ def landing_view():
 def default_view():
     """ Default top trending coverage"""
 
-    fmt = '%B %d, %Y - %-I:%M %p, %S seconds'
+    fmt = '%B %d, %Y - %-I:%M %p'
     pacific = 'US/Pacific'
     now_utc = datetime.now(timezone('UTC'))
     dtime = now_utc.astimezone(timezone(pacific))
@@ -46,7 +46,9 @@ def default_view():
 
     top_articles = top_trending_json['articles']
 
-    for article in top_articles:
+    content = []
+
+    for article in top_articles[:3]:
         description = (article['description'] or " ").encode('utf-8')
         title = (article['title'] or " ").encode('utf-8')
         url = (article['url'] or " ").encode('utf-8')
@@ -54,14 +56,17 @@ def default_view():
         publishedAt = (article['publishedAt'] or " ").encode('utf-8')
         source = (article['source']['name'] or " ").encode('utf-8')
         urlToImage = (article['urlToImage'] or " ").encode('utf-8')
-        content = "{}, {}, {}, {}, {}, {}, {}".format(title, url, author, publishedAt, source, description, urlToImage)
+        article_one = "{} - {} - {} ".format(title, source, url)
+        article_one = unicode(article_one, 'utf-8')
+        content.append(article_one)
+        
+    content = " | ".join(content)
+
+    print content
 
     return render_template('homepage.html',
                             ddtime=ddtime,
-                            title=title,
-                            url=url,
-                            source=source,
-                            publishedAt=publishedAt)
+                            content=content)
 
 # =============================================================================
 # Share Newsflash Content

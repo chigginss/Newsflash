@@ -13,13 +13,13 @@ let url = '/toptrending.json'
 
 let margin = {top: 100, right: 100, bottom: 100, left: 100};
 
-var width = 1390,
-  height = 700,
+var width = 1400,
+  height = 800,
   padding = 10, 
   clusterPadding = 15, 
-  maxRadius = 115;
+  maxRadius = 140;
 
-var n = 30, 
+var n = 25, 
     m = 5; 
 
 var z = new Map ([
@@ -96,7 +96,7 @@ function makeCircles(response) {
             div.transition()    
                 .duration(200)    
                 .style("opacity", .9);    
-            div .html( "TITLE: " + d.title + "<br/>AUTHOR: " + d.author.slice(0,10) +"<br/>SUMMARY: " + d.description)  
+            div .html( "TITLE: " + d.title + "<br/>AUTHOR: " + d.author.slice(0,15) +"<br/>SUMMARY: " + d.description)  
                 .style("left", (d3.event.pageX) + "px")   
                 .style("top", (d3.event.pageY - 28) + "px");  
             })          
@@ -184,6 +184,7 @@ function makeCircles(response) {
         .on("tick", ticked);
 
   function translate(d) {
+    // console.log(d.x, d.y, d.vx, d.vy);
     return "translate(" + d.x + "," + d.y +")";
   }
 
@@ -250,7 +251,7 @@ function makeCircles(response) {
         .addAll(nodes);
 
     nodes.forEach(function(d) {
-      var r = d.r + maxRadius + Math.max(padding, clusterPadding),
+      var r = d.radius + maxRadius + Math.max(padding, clusterPadding),
           nx1 = d.x - r,
           nx2 = d.x + r,
           ny1 = d.y - r,

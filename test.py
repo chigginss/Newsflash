@@ -33,6 +33,21 @@ class NewsflashTests(unittest.TestCase):
         self.assertIn("Login",result.data)
         self.assertNotIn("Logout", result.data)
 
+    def test_no_login_Sign_Up(self):
+        result = self.client.get("/")
+        self.assertIn("Manage Account",result.data)
+        self.assertNotIn("Sign Up", result.data)
+
+    def test_logged_in_manage_account(self):
+        result = self.client.get("/")
+        self.assertIn("Sign Up",result.data)
+        self.assertNotIn("Manage Account", result.data)
+
+     def register_user_after(self):
+        result = self.client.get("/")
+        self.assertIn("Logout",result.data)
+        self.assertNotIn("Login", result.data)
+
     def test_favorite_search(self):
         result = self.client.get("/newsbykeyword")
         self.assertIn("Search", result.data)
@@ -45,36 +60,36 @@ class NewsflashTests(unittest.TestCase):
         # import pdb; pdb.set_trace()
         result.status_code == 200
 
-# class NewsflashTestDatabase(unittest.TestCase):
-#     """Flask tests that use the database."""
+class NewsflashTestDatabase(unittest.TestCase):
+    """Flask tests that use the database."""
 
-#     def setUp(self):
-#         """Stuff to do before every test."""
+    def setUp(self):
+        """Stuff to do before every test."""
 
-#         self.client = app.test_client()
-#         app.config['TESTING'] = True
-#         with self.client as c:
-#                 with c.session_transaction() as sess:
-#                     sess['email'] = True
+        self.client = app.test_client()
+        app.config['TESTING'] = True
+        with self.client as c:
+                with c.session_transaction() as sess:
+                    sess['email'] = True
 
-#         # Connect to test database
-#         connect_to_db(app, "postgresql:///test1")
+        # Connect to test database
+        connect_to_db(app, "postgresql:///test1")
 
-#         # Create tables and add sample data
-#         db.create_all()
-#         example_data()
+        # Create tables and add sample data
+        db.create_all()
+        example_data()
 
-#     def tearDown(self):
-#         """teardown"""
+    def tearDown(self):
+        """teardown"""
 
-#         db.session.close()
-#         db.drop_all()
+        db.session.close()
+        db.drop_all()
 
-#     def test_db(self):
-#         """Test departments page."""
+    def test_db(self):
+        """Test departments page."""
 
-#         result = self.client.get("/users")
-#         self.assertIn("chiggins@lclark.edu", result.data)
+        result = self.client.get("/users")
+        self.assertIn("chiggins@lclark.edu", result.data)
 
 if __name__ == "__main__":
     unittest.main()
