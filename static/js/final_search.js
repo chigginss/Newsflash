@@ -60,7 +60,7 @@ let radiusScale = d3.scaleLinear()
     let node = {
         title: d.title,
         source: d.source.name,
-        author: d.author,
+        author: author,
         description: d.description,
         url: d.url,
         urlToImage: d.urlToImage,
