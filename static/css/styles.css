@@ -4,7 +4,8 @@ div.tooltip {
     width: 150px;          
     /*height: 28px;         */
     padding: 2px;       
-    font: 14px helvetica;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 14px;
     /*text-transform: uppercase;   */
     background: white; 
     border: 0px;    
@@ -13,25 +14,49 @@ div.tooltip {
   }
 
 h3, .node {
-    font: 11px helvetica;
+    font-family:'Nunito Sans', sans-serif;
     text-transform: uppercase;
-    /*opacity*/: 0.60;
+    font-size: 11px;
 }
 
-/*h4 {
-    font-family: Lucida;
-}*/
+h4,h5,h2,h1,p {
+    font-family: 'Nunito Sans', sans-serif;
+}
 
 body {
 
     padding: 50px;
 }
 
-.navbar-inverse {
+.upper {
 
-    color: white;
-    background: black;
+    text-transform: uppercase;
 }
+
+#smol {
+
+    font-family:'Nunito Sans', sans-serif;
+    text-transform: uppercase;
+    font-size: 11px;
+
+}
+
+#about {
+
+    font-color: white;
+}
+
+div.back {
+
+    background-color: black;
+    opacity: .2;
+}
+
+hr {
+    padding: 0px;
+    margin: 0px;
+    color: black;   
+  }
 
 #searchbar {
     width: 130px;
@@ -48,12 +73,24 @@ body {
     transition: width 0.4s ease-in-out;
 }
 
+.navbar {
+
+    background-color: black;
+    color: white;
+}
+
 .nav-button {
 
-    color: white;
-    /*border-color: white;*/
+    padding-top: 15px;
+    padding-bottom: 10px;
+    font-family: 'Francois One', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
     background-color: black;
+    color: white;
+
 }
+
 .nav-button:hover {
 
     background-color: white;
@@ -63,23 +100,36 @@ body {
 
 .norm-button {
 
-    height: 20px;
-    color: white;
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    font-family: 'Francois One', sans-serif;
     font-size: 10px;
     text-transform: uppercase;
-    /*border-color: white;*/
     background-color: black;
-}
-
-.normlinks {
-
     color: white;
 }
 
-.normlinks:hover {
+#formstyle {
 
+    background-color: #F8F8F8;
+    border: transparent;
+    box-shadow: 0px;
+}
+
+.norm-button:hover {
+
+    background-color: white;
+    color: black;
+    border-color: black;
+}
+
+.links {
+
+    font-family: 'Francois One', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    background-color: black;
     color: white;
-    text-transform: bold;
 }
 
 .links:hover {
@@ -92,7 +142,7 @@ body {
     width: 40%;
 }
 
-.divider{
+.divider {
     width:5px;
     height:auto;
     display:inline-block;

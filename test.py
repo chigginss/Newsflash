@@ -81,28 +81,28 @@ class NewsflashTests(unittest.TestCase):
         import server
         server.keyword = _mock_keyword
 
-class NewsflashTestDatabase(unittest.TestCase):
-    """Flask tests that use the database."""
+# class NewsflashTestDatabase(unittest.TestCase):
+#     """Flask tests that use the database."""
 
-    def setUp(self):
-        """Stuff to do before every test."""
+#     def setUp(self):
+#         """Stuff to do before every test."""
 
-        # Connect to test database
-        connect_to_db(app, "postgresql:///newsflashdb")
+#         # Connect to test database
+#         connect_to_db(app, "postgresql:///newsflashdb")
 
-        # Create tables and add sample data
-        db.create_all()
-        example_data()
+#         # Create tables and add sample data
+#         db.create_all()
+#         example_data()
 
-    def tearDown(self):
-        """teardown"""
+#     def tearDown(self):
+#         """teardown"""
 
-        db.session.close()
-        db.drop_all()
+#         db.session.close()
+#         db.drop_all()
 
-    def test_db(self):
-        result = self.client.get("/users")
-        self.assertIn("hellohellohello@gmail.com", result.data)
+#     def test_db(self):
+#         result = self.client.get("/users")
+#         self.assertIn("hellohellohello@gmail.com", result.data)
 
 if __name__ == "__main__":
     unittest.main()

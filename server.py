@@ -77,9 +77,12 @@ def search_term():
 
     if 'user_id' in session:
         user = User.query.get(session['user_id'])
-        user_terms = user.searches
+        if user.searches:
+            user_terms = user.searches
+        else:
+            user_terms = None
     else:
-        user_terms = None
+        user_terms = []
 
     fmt = '%B %d, %Y - %-I:%M %p'
     pacific = 'US/Pacific'

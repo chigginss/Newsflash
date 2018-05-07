@@ -14,7 +14,7 @@
                     <input class="form-control mr-sm-2" id="searchbar" type="text" name="keyword">
                      <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search"><br>
                     {% if user in session %}
-                        <input type="checkbox" id="favorite-button" name="arterm" value="favorite"> Add Search Term to Favorites<br>
+                        <input type="checkbox" id="favorite-button" name="arterm" value="favorite"><b id="smol">Add Search Term to Favorites<b><br>
                        <!--  <input type="radio" name="arterm" value="delete"> Delete Term from Favorites<br> -->
                     {% endif %}
                 </form>
@@ -31,39 +31,40 @@
                             <option value="{{ term.search_term }}">{{ term.search_term }}</option>
                           {% endfor %}
                         {% endif %}
-                       &nbsp;<div class="divider"/> <input class="btn btn-outline-success my-2 my-sm-0" type="submit"> <br>
-                       <input type="checkbox" name="arterm" value="delete"> Delete Term from Favorites<br>
+                       &nbsp;<div class="divider"/> <input class="btn btn-outline-success my-2 my-sm-0" type="submit"><br>
+                       <input type="checkbox" name="arterm" value="delete"><b id="smol">Delete from Favorite Terms<b><br>
                     </select>
                     </form>
                         {% endif %}
 
                 <h3>News at {{ddtime}}</h3>
             </div>
-
-        <br>
-        <br>
-       <br>
-     <div class="col-lg-2">
+    <br> 
+    <br>
+    <br>
+    <br> 
+    <br>
+    <div class="col-lg-2">
           <div class="panel panel-default key">
             <div class="panel-body">
-               <h5>Outlet Bias Key</h5><hr>
-                <div class="lib">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Left&nbsp;Bias</div> 
-                <div class="libcent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Slight&nbsp;Left&nbsp;Bias</div>
-                <div class="cent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No&nbsp;Bias</div>
-                <div class="rightcent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Slight&nbsp;Right&nbsp;Bias</div>
-                <div class="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Right&nbsp;Bias</div>
-                <div class="null">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bias&nbsp;Unavaliable</div> <br>
+               <h5>Outlet Bias Key</h5><hr><br>
+                <div class="lib" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Left&nbsp;Bias</div> 
+                <div class="libcent" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Slight&nbsp;Left&nbsp;Bias</div>
+                <div class="cent" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No&nbsp;Bias</div>
+                <div class="rightcent" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Slight&nbsp;Right&nbsp;Bias</div>
+                <div class="right" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Right&nbsp;Bias</div>
+                <div class="null" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bias&nbsp;Unavaliable</div> <br>
             </div>
           </div>
       </div>
 
       <div class="col-lg-4">
           <div class="panel panel-default scale">
-              <div class="panel-body"><h5>Media Outlet Popularity Scale</h5><hr>
+              <div class="panel-body"><h5>Media Outlet Popularity Scale</h5><hr><br>
                 &nbsp;&nbsp;&nbsp;
                 <span class="dot1"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span class="dot2"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span class="dot3"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3>less popular&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popular&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;most popular</h3>
+                <span class="dot3"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3>less popular&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popular&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;most popular</h3>
 
               </div>
             <div>

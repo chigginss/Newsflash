@@ -96,7 +96,7 @@ function makeCircles(response) {
 						div.transition()    
 								.duration(200)    
 								.style("opacity", .9);    
-						div .html( "TITLE: " + d.title + "<br/>AUTHOR: " + d.author.slice(0,15) +"<br/>SUMMARY: " + d.description)  
+						div .html( d.title + "<hr>" + "<b>BY:</b>" + d.author.slice(0,20) + "<hr><b>SUMMARY:</b>" + d.description)  
 								.style("left", (d3.event.pageX) + "px")   
 								.style("top", (d3.event.pageY - 28) + "px");  
 						})          
@@ -154,7 +154,7 @@ function makeCircles(response) {
 									.data(nodes)
 									.append("text")
 									.text((d) => d.title.slice(0, 35) + '...')
-									.attr('font-family', 'helvetica')
+									.attr('font-family','Nunito Sans', 'sans-serif;')
 									.attr('font-size', '11px')
 									.attr('fill', 'black')
 									.attr('text-anchor', 'middle')
@@ -168,7 +168,7 @@ function makeCircles(response) {
 									.data(nodes)
 									.append("text")
 									.text((d) => d.source)
-									.attr('font-family', 'sans-serif')
+									.attr('font-family','Nunito Sans', 'sans-serif;')
 									.attr('font-size', '12px')
 									.attr('font-weight', 'bold')
 									.attr('fill', 'black')

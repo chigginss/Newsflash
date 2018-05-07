@@ -7,6 +7,8 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,400i,600,700,800,900" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Francois+One" rel="stylesheet">
 
          <title>Newsflash</title>
          <link rel="shortcut icon" href="/static/css/favico.png" />
@@ -14,7 +16,7 @@
     <body>
         
     <header>
-    <nav class="navbar navbar-inverse navbar-fixed-top" id="navbar">
+    <nav class="navbar navbar-fixed-top" id="navbar">
       <div class="container-fluid">
             <div class="navbar-header">
 
@@ -50,8 +52,8 @@
             </div>
             <div class="modal-body">
              <form action="/updateinfo" method="post">
-                      <label>Accout Email: </label><input class="form-control mr-sm-2" type="text" name="email" required><br>
-                      <label>New Password: </label><input class="form-control mr-sm-2" type="password" name="password" required><br>
+                      <label>Accout Email: </label><input class="form-control mr-sm-2" type="text" name="email" id="formstyle" required><br>
+                      <label>New Password: </label><input class="form-control mr-sm-2" type="password" name="password" id="formstyle" required><br>
                       <input class="btn btn-outline-success my-2 my-sm-0" value="Update Information" type="submit"></br></br>
              </form>
             </div>
@@ -94,8 +96,9 @@
           </div>
           <div class="modal-body">
             <form action="/login" method="post">
-                <label>Email address</label><input class="form-control mr-sm-2" type="text" name="email" required><br>
-                <label>Password</label><input class="form-control mr-sm-2" type="password" name="password" required><br>
+                <h4>Welcome Back!</h4>
+                <input class="form-control mr-sm-2" type="text" name="email" id="formstyle" placeholder="Email Address" required>
+                <input class="form-control mr-sm-2" type="password" name="password" id="formstyle" placeholder="Password" required><br>
                 <input class="btn btn-outline-success my-2 my-sm-0" value="Login" type="submit"></br></br>
                 <small id="emailHelp" class="form-text text-muted"> <a href="/register">New User? Create Account</a> </br>
             </form>

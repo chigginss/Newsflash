@@ -214,9 +214,6 @@ let circles = groups
           let new_y = Math.max(d.radius, Math.min(height - d.radius, d.y));
           return d.y = new_y;
         })
-        if (l === NaN || l === 0) {
-              l = 1;
-            }
         .attr('transform', translate);
   }
 
@@ -294,7 +291,6 @@ function collide(alpha) {
   }
 
 }
-
 
 $('#search-form').submit(function (e) { 
     // debugger;
