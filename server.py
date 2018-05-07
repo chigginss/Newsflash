@@ -40,7 +40,7 @@ def default_view():
 
     r = requests.get("https://newsapi.org/v2/top-headlines?pageSize=30&sources=the-wall-street-journal,the-new-york-times,"+
                       "bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,"+
-                      "politico,the-economist,reuters,cnbc,engadget,nbc-news,cbs-news,abc-news,fortune&apiKey=b033aef85417499e96a7cd8148b0e7d4")
+                      "politico,the-economist,reuters,cnbc,engadget,nbc-news,cbs-news,abc-news,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
 
     top_trending_json = r.json()
 
@@ -126,7 +126,7 @@ def search_for_term():
         keyword = fav_search
     
     r = requests.get(('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy'+
-                     '&apiKey=b033aef85417499e96a7cd8148b0e7d4').format(keyword))
+                     '&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37').format(keyword))
 
     top_search_json = r.json()
 
@@ -164,7 +164,7 @@ def json_data():
 
     r = requests.get("https://newsapi.org/v2/top-headlines?pageSize=30&sources=the-wall-street-journal,the-new-york-times,"+
                       "bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,"+
-                      "politico,the-economist,reuters,cnbc,engadget,nbc-news,cbs-news,abc-news,fortune&apiKey=b033aef85417499e96a7cd8148b0e7d4")
+                      "politico,the-economist,reuters,cnbc,engadget,nbc-news,cbs-news,abc-news,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
     #removed usa-today and daily
     top_trending_json = r.json()
 
