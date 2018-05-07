@@ -10,8 +10,8 @@ from datetime import datetime
 def example_data():
     """Sample test data for database."""
 
-    user_1 = User(email="hello@gmail.com", password="1234")
-    search_1 = Search(search_term="Google")
+    user_1 = User(email="hellohellohello@gmail.com", password="1234")
+    search_1 = Search(search_term="testestest")
     outlet_1 = Outlet(outlet_name='Best News', outlet_popularity=10, outlet_bias='Right-Center')
     user_search_1 = User_Search(user_id=1, search_id=1)
 

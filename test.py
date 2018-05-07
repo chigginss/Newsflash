@@ -4,21 +4,25 @@ import unittest
 from server import app
 from model import db, connect_to_db
 from seed import example_data
-# import flask
+from flask import session
 
 
 class NewsflashTests(unittest.TestCase):
-    """Tests for my party site."""
 
     def setUp(self):
         self.client = app.test_client()
         app.config['TESTING'] = True
         app.config['SECRET_KEY'] = 'key'
-        connect_to_db(app, "postgresql:///test1")
+        connect_to_db(app, "postgresql:///newsflashdb")
+        self.client = app.test_client()
 
-    def test_homepage(self):
-        result = self.client.get("/")
-        self.assertIn("Top Trending", result.data)
+        with self.client as c:
+          with c.session_transaction() as sess:
+              sess['user_id'] = 1
+
+    # def test_homepage(self):
+    #     result = self.client.get("/")
+    #     self.assertIn("Top Trending", result.data)
 
     def test_about(self):
         result = self.client.get("/aboutnewsflash")
@@ -28,89 +32,79 @@ class NewsflashTests(unittest.TestCase):
         result = self.client.get("/register")
         self.assertIn("Welcome to Newsflash!", result.data)
 
-    def test_no_login_yet(self):
-        result = self.client.get("/")
-        self.assertIn("Login",result.data)
-        self.assertNotIn("Logout", result.data)
-
-    def test_no_login_Sign_Up(self):
-        result = self.client.get("/")
-        self.assertIn("Manage Account",result.data)
-        self.assertNotIn("Sign Up", result.data)
-
-    def test_logged_in_manage_account(self):
-        result = self.client.get("/")
-        self.assertIn("Sign Up",result.data)
-        self.assertNotIn("Manage Account", result.data)
-
-    def register_user_after(self):
-        result = self.client.get("/")
-        self.assertIn("Logout",result.data)
-        self.assertNotIn("Login", result.data)
+    def test_no_login_sign_up(self):
+        if 'user_id' not in sess:
+            result = self.client.get("/searchbykeyword")
+            self.assertIn("Sign Up",result.data)
+            self.assertNotIn("Manage Account", result.data)
 
     def test_favorite_search(self):
-        result = self.client.get("/newsbykeyword")
+        result = self.client.get("/searchbykeyword")
         self.assertIn("Search", result.data)
 
-    def test_register_works(self):
-        result = self.client.post("/register",
-                                  data={"email": "jane@jane.com",
-                                        "password":"2222"},
+    def test_fav_search_login(self):
+        if 'user_id' in sess:
+            result = self.client.get("/searchbykeyword")
+            self.assertIn("Submit", result.data)
+
+    # def test_register_works(self):
+    #     result = self.client.post("/register",
+    #                               data={"email": "chiggins@gmail.com",
+    #                                     "password":"222222"},
+    #                               follow_redirects=True)
+
+    #     result.status_code == 200
+
+    def test_login(self):
+        result = self.client.post("/login",
+                                  data={"email": "chiggins@lclark.edu"},
                                   follow_redirects=True)
-        # import pdb; pdb.set_trace()
+        self.assertNotIn("Login",result.data)
+        self.assertIn("Logout", result.data)
+
+    def test_logout(self):
+        result = self.client.post("/logout",
+                                  data={"email": "chiggins@lclark.edu"},
+                                  follow_redirects=True)
+
+        self.assertNotIn("Loggout",result.data)
+        self.assertIn("Login", result.data)
+
+    def test_update_account_works(self):
+        result = self.client.post("/update_account",
+                                  follow_redirects=True)
         result.status_code == 200
 
-class NewsflashTestDatabase(unittest.TestCase):
-    """Flask tests that use the database."""
+    def _mock_keyword(keyword):
+        return "Google"
 
-    def setUp(self):
-        """Stuff to do before every test."""
+        import server
+        server.keyword = _mock_keyword
 
-        self.client = app.test_client()
-        app.config['TESTING'] = True
-        with self.client as c:
-                with c.session_transaction() as sess:
-                    sess['user_id'] = True
+# class NewsflashTestDatabase(unittest.TestCase):
+#     """Flask tests that use the database."""
 
-        # Connect to test database
-        connect_to_db(app, "postgresql:///newsflashdb")
+#     def setUp(self):
+#         """Stuff to do before every test."""
 
-        # Create tables and add sample data
-        db.create_all()
-        example_data()
+#         # Connect to test database
+#         connect_to_db(app, "postgresql:///newsflashdb")
 
-    def tearDown(self):
-        """teardown"""
+#         # Create tables and add sample data
+#         db.create_all()
+#         example_data()
 
-        db.session.close()
-        db.drop_all()
+#     def tearDown(self):
+#         """teardown"""
 
-    def test_db(self):
-        """Test departments page."""
+#         db.session.close()
+#         db.drop_all()
 
-        result = self.client.get("/users")
-        self.assertIn("chiggins@lclark.edu", result.data)
+#     def test_db(self):
+#         if (user.email = "hellohellohello@gmail.com") and (search.search_term = "testestest") and (outlet.outlet_popularity = 10):
+#             return True
 
 if __name__ == "__main__":
     unittest.main()
-
-# =============================================================================
-# TESTS TO ADD !!!!!!!!!!!!!!!!!!!!!!!!!!
-
-#MOCKING - fake db to test for email in session for both login and logout##
-    # def test_login(self):
-    #     result = self.client.post("/login",
-    #                               data={"email": "chiggins@lclark.edu"},
-    #                               follow_redirects=True)
-    #     self.assertNotIn("Login",result.data)
-    #     self.assertIn("Logout", result.data)
-
-    # def test_logout(self):
-    #     result = self.client.post("/logout",
-    #                               data={"email": "chiggins@lclark.edu"},
-    #                               follow_redirects=True)
-
-    #     self.assertNotIn("Logged In",result.data)
-    #     self.assertIn("Logged Out", result.data)
 
 

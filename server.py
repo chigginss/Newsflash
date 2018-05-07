@@ -81,7 +81,7 @@ def search_term():
     else:
         user_terms = None
 
-    fmt = '%B %d, %Y - %-I:%M %p, %S seconds'
+    fmt = '%B %d, %Y - %-I:%M %p'
     pacific = 'US/Pacific'
     now_utc = datetime.now(timezone('UTC'))
     dtime = now_utc.astimezone(timezone(pacific))
@@ -100,8 +100,7 @@ def search_for_term():
     keyword = request.form.get('keyword')
     add_or_remove = request.form.get('arterm')
 
-    # if fav_search == None or fav_search == 'Search from Favorite Terms:':
-    #     keyword = keyword
+
     if add_or_remove == 'favorite':
         user = User.query.get(session['user_id'])
         for search in user.searches: 
@@ -188,6 +187,7 @@ def json_data():
             top_articles[i]['popularity'] = False
             top_articles[i]['bias'] = False
 
+
     return jsonify(top_articles)
 
 # =============================================================================
@@ -245,13 +245,6 @@ def register_user():
 
     email = request.form.get('email')
     password = request.form.get('password')
-
-    # if '@' or '.com' or '.edu' not in email:
-    #     flash('Please enter a valid email address')
-    #     return redirect('/register')
-    # elif len(password) > 8 and "1234567890" not in password:
-    #     flash("Please enter a password with one or more numbers")
-    #     return redirect('/register')
 
     hashed_value = generate_password_hash(password)
 

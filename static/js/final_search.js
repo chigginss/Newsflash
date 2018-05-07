@@ -239,17 +239,17 @@ let circles = groups
 
   function clustering(alpha) {
       nodes.forEach(function(d) {
-        // debugger;
         var cluster = clusters[d.cluster];
         if (cluster === d) return;
+        if (isNaN(cluster.x)) { cluster.x = 1; }
+        if (isNaN(cluster.y)) { cluster.y = 1; }
+        if (isNaN(d.x)) { d.x = 1; }
+        if (isNaN(d.y)) { d.y = 1; }
         var x = d.x - cluster.x,
             y = d.y - cluster.y,
             l = Math.sqrt(x * x + y * y),
             r = d.radius + cluster.radius;
         if (l !== r) {
-          if (l === NaN || l === 0) {
-              l = 1;
-            }
           l = (l - r) / l * alpha;
           d.x -= x *= l;
           d.y -= y *= l;
@@ -259,7 +259,7 @@ let circles = groups
       });
   }
 
-  function collide(alpha) {
+function collide(alpha) {
     var quadtree = d3.quadtree(nodes)
         .x((d) => d.x)
         .y((d) => d.y)
@@ -274,14 +274,13 @@ let circles = groups
       quadtree.visit(function(quad, x1, y1, x2, y2) {
 
         if (quad.data && (quad.data !== d)) {
+          if (isNaN(d.x)) { d.x = 1; }
+          if (isNaN(d.y)) { d.y = 1; }
           var x = d.x - quad.data.x,
               y = d.y - quad.data.y,
               l = Math.sqrt(x * x + y * y),
               r = d.radius + quad.data.radius + (d.cluster === quad.data.cluster ? padding : clusterPadding);
           if (l < r) {
-            if (l === NaN || l === 0) {
-              l = 1;
-            }
             l = (l - r) / l * alpha;
             d.x -= x *= l;
             d.y -= y *= l;
@@ -295,6 +294,7 @@ let circles = groups
   }
 
 }
+
 
 $('#search-form').submit(function (e) { 
     // debugger;
