@@ -18,7 +18,7 @@ var width = 1400,
   height = 800,
   padding = 10, 
   clusterPadding = 15, 
-  maxRadius = 140;
+  maxRadius = 120;
 
 var n = 25, 
     m = 6; 
@@ -103,7 +103,7 @@ let radiusScale = d3.scaleLinear()
             div.transition()    
                 .duration(200)    
                 .style("opacity", .9);    
-            div .html( "TITLE: " + d.title+ "<br/>AUTHOR: " + d.author.slice(0,15) +"<br/>SUMMARY: " + d.description)  
+            div .html( d.title+ "<hr>" + d.author.slice(0,20) +"<hr><b>SUMMARY:</b> " + d.description)  
                 .style("left", (d3.event.pageX) + "px")   
                 .style("top", (d3.event.pageY - 28) + "px");  
             })          
@@ -214,6 +214,9 @@ let circles = groups
           let new_y = Math.max(d.radius, Math.min(height - d.radius, d.y));
           return d.y = new_y;
         })
+        if (l === NaN || l === 0) {
+              l = 1;
+            }
         .attr('transform', translate);
   }
 
@@ -244,6 +247,9 @@ let circles = groups
             l = Math.sqrt(x * x + y * y),
             r = d.radius + cluster.radius;
         if (l !== r) {
+          if (l === NaN || l === 0) {
+              l = 1;
+            }
           l = (l - r) / l * alpha;
           d.x -= x *= l;
           d.y -= y *= l;
@@ -273,6 +279,9 @@ let circles = groups
               l = Math.sqrt(x * x + y * y),
               r = d.radius + quad.data.radius + (d.cluster === quad.data.cluster ? padding : clusterPadding);
           if (l < r) {
+            if (l === NaN || l === 0) {
+              l = 1;
+            }
             l = (l - r) / l * alpha;
             d.x -= x *= l;
             d.y -= y *= l;
@@ -299,7 +308,6 @@ $('#search-form').submit(function (e) {
     }) 
     if ($('#favorite-button:checked').length === 1) {
       $('#reload-favorite').append('<option value='+ keyword +'>'+ keyword +'</option>');
-      alert('Your term was added to favorites');
     }
     $('#search-form')[0].reset();
 });

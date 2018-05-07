@@ -17,7 +17,7 @@ var width = 1400,
   height = 800,
   padding = 10, 
   clusterPadding = 15, 
-  maxRadius = 140;
+  maxRadius = 120;
 
 var n = 25, 
     m = 5; 
@@ -205,6 +205,9 @@ function makeCircles(response) {
           let new_y = Math.max(d.radius, Math.min(height - d.radius, d.y));
           return d.y = new_y;
         })
+        if (l === NaN || l === 0) {
+              l = 1;
+            }
         .attr('transform', translate);
     }
 
@@ -235,6 +238,9 @@ function makeCircles(response) {
             l = Math.sqrt(x * x + y * y),
             r = d.radius + cluster.radius;
         if (l !== r) {
+          if (l === NaN || l === 0) {
+              l = 1;
+            }
           l = (l - r) / l * alpha;
           d.x -= x *= l;
           d.y -= y *= l;
@@ -264,6 +270,9 @@ function makeCircles(response) {
               l = Math.sqrt(x * x + y * y),
               r = d.radius + quad.data.radius + (d.cluster === quad.data.cluster ? padding : clusterPadding);
           if (l < r) {
+            if (l === NaN || l === 0) {
+              l = 1;
+            }
             l = (l - r) / l * alpha;
             d.x -= x *= l;
             d.y -= y *= l;

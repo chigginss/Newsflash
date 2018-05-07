@@ -43,7 +43,7 @@ class NewsflashTests(unittest.TestCase):
         self.assertIn("Sign Up",result.data)
         self.assertNotIn("Manage Account", result.data)
 
-     def register_user_after(self):
+    def register_user_after(self):
         result = self.client.get("/")
         self.assertIn("Logout",result.data)
         self.assertNotIn("Login", result.data)
@@ -70,10 +70,10 @@ class NewsflashTestDatabase(unittest.TestCase):
         app.config['TESTING'] = True
         with self.client as c:
                 with c.session_transaction() as sess:
-                    sess['email'] = True
+                    sess['user_id'] = True
 
         # Connect to test database
-        connect_to_db(app, "postgresql:///test1")
+        connect_to_db(app, "postgresql:///newsflashdb")
 
         # Create tables and add sample data
         db.create_all()

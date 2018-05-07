@@ -40,7 +40,7 @@ def default_view():
 
     r = requests.get("https://newsapi.org/v2/top-headlines?pageSize=30&sources=the-wall-street-journal,the-new-york-times,"+
                       "bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,"+
-                      "politico,the-economist,reuters,cnbc,engadget,nbc-news,cbs-news,abc-news,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
+                      "politico,the-economist,reuters,cnbc,engadget,nbc-news,cbs-news,abc-news,fortune&apiKey=b033aef85417499e96a7cd8148b0e7d4")
 
     top_trending_json = r.json()
 
@@ -67,40 +67,6 @@ def default_view():
     return render_template('homepage.html',
                             ddtime=ddtime,
                             content=content)
-
-# =============================================================================
-# Share Newsflash Content
-
-# @app.route('/sharenewsflash', methods=['GET'])
-# def share_coverage():
-#     """ share top coverage for this moment"""
-
-#     r = requests.get("https://newsapi.org/v2/top-headlines?pageSize=30&sources=the-wall-street-journal,the-new-york-times,"+
-#                       "bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,"+
-#                       "politico,the-economist,reuters,cnbc,engadget,nbc-news,cbs-news,abc-news,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
-
-#     top_trending_json = r.json()
-
-#     top_articles = top_trending_json['articles']
-
-#     # content = top_articles
-
-#     for article in top_articles:
-#         description = (article['description'] or " ").encode('utf-8')
-#         title = (article['title'] or " ").encode('utf-8')
-#         url = (article['url'] or " ").encode('utf-8')
-#         author = (article['author'] or " ").encode('utf-8') 
-#         publishedAt = (article['publishedAt'] or " ").encode('utf-8')
-#         source = (article['source']['name'] or " ").encode('utf-8')
-#         urlToImage = (article['urlToImage'] or " ").encode('utf-8')
-#         content = "{}, {}, {}, {}, {}, {}, {}".format(title, url, author, publishedAt, source, description, urlToImage)
-
-
-#     return render_template('share_newsflash.html',
-#                             title=title,
-#                             url=url,
-#                             source=source,
-#                             publishedAt=publishedAt)
 
 # =============================================================================
 # Search Views - form and visual 
@@ -161,7 +127,7 @@ def search_for_term():
         keyword = fav_search
     
     r = requests.get(('https://newsapi.org/v2/top-headlines?language=en&q={}&sortBy=relevancy'+
-                     '&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37').format(keyword))
+                     '&apiKey=b033aef85417499e96a7cd8148b0e7d4').format(keyword))
 
     top_search_json = r.json()
 
@@ -199,7 +165,7 @@ def json_data():
 
     r = requests.get("https://newsapi.org/v2/top-headlines?pageSize=30&sources=the-wall-street-journal,the-new-york-times,"+
                       "bbc-news,techcrunch,the-washington-post,cnn,fox-news,breitbart-news,time,wired,business-insider,"+
-                      "politico,the-economist,reuters,cnbc,engadget,nbc-news,cbs-news,abc-news,fortune&apiKey=1ec5e2d27afa46efaf95cfb4c8938f37")
+                      "politico,the-economist,reuters,cnbc,engadget,nbc-news,cbs-news,abc-news,fortune&apiKey=b033aef85417499e96a7cd8148b0e7d4")
     #removed usa-today and daily
     top_trending_json = r.json()
 
