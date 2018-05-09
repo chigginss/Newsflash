@@ -56,7 +56,7 @@ def default_view():
         publishedAt = (article['publishedAt'] or " ").encode('utf-8')
         source = (article['source']['name'] or " ").encode('utf-8')
         urlToImage = (article['urlToImage'] or " ").encode('utf-8')
-        article_one = "{} - {} - {} ".format(title, source, url)
+        article_one = "{} - {} - {}".format(title, source, url)
         article_one = unicode(article_one, 'utf-8')
         content.append(article_one)
         

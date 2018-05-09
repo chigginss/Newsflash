@@ -96,7 +96,7 @@ hr {
 .navbar {
 
     background-color: black;
-    color: white;
+    color: #ffffff;
 }
 
 .nav-button {
@@ -113,7 +113,7 @@ hr {
 
 .nav-button:hover {
 
-    background-color: white;
+    background-color: #F8F8F8;
     color: black;
     border-color: black;
 }
@@ -140,13 +140,13 @@ hr {
     font-size: 12px;
     text-transform: uppercase;
     background-color: black;
-    color: white;
+    color: #ffffff;
 }
 
 
 .submit-button:hover {
 
-    background-color: white;
+    background-color: #ffffff;
     color: black;
     border-color: black;
 }
@@ -162,7 +162,7 @@ hr {
 
 .norm-button:hover {
 
-    background-color: white;
+    background-color: #ffffff;
     color: black;
     border-color: black;
 }
@@ -173,12 +173,12 @@ hr {
     font-size: 14px;
     text-transform: uppercase;
     background-color: black;
-    color: white;
+    color: #ffffff;
 }
 
 .links:hover {
 
-    background-color: white;
+    background-color: #ffffff;
     color: black;
 }
 
@@ -309,12 +309,12 @@ hr {
 }
 
 @keyframes load_up{
-    from{opacity:0;right:0%;top:100%;}
-    to{opacity:1;right:45%;top:7.5%;}
+    from{opacity:0;left:0%;}
+    to{opacity:1;left:43%;}
     
 }@-webkit-keyframes load_up{
-    from{opacity:0;right:100%top:100%;}
-    to{opacity:1;right:45%;top:7.5%;}
+    from{opacity:0;left:100%;}
+    to{opacity:1;left:43%;}
     
 }
 

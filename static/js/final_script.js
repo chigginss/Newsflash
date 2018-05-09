@@ -96,7 +96,7 @@ function makeCircles(response) {
 						div.transition()    
 								.duration(200)    
 								.style("opacity", .9);    
-						div .html( "<b>TITLE </b>" + d.title + "<hr><b>BY </b>" + d.author.slice(0,17) +"<hr><b>SUMMARY </b>" + d.description)  
+						div .html(d.title + "<hr><b>BY </b>" + d.author.slice(0,17) +"<hr><b>SUMMARY </b>" + d.description)  
 								.style("left", (d3.event.pageX) + "px")   
 								.style("top", (d3.event.pageY - 28) + "px");  
 						})          
