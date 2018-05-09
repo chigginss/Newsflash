@@ -9,46 +9,51 @@
 <div class="container-fluid">
         <!-- <div class="row"> -->
             <div class="col-lg-6">
-                <h2>Search for News coverage by Keyword </h2><br><br>
+              <br>
+                <h1><b>Search for News by Keyword</b></h1>
+                <h4><i>Don't know what to search for? Check out top trending news first!</i></h4>
+
                 <form class="form-inline my-2 my-lg-0" action="/topsearch.json" id="search-form" method="post">
                     <input class="form-control mr-sm-2" id="searchbar" type="text" name="keyword">
-                     <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search"><br>
+                     <input class="btn submit-button" type="submit" value="Search"><br>
                     {% if user in session %}
                         <input type="checkbox" id="favorite-button" name="arterm" value="favorite"><b id="smol">Add Search Term to Favorites<b><br>
-                       <!--  <input type="radio" name="arterm" value="delete"> Delete Term from Favorites<br> -->
                     {% endif %}
-                </form>
-
-                <h3>Don't know what to search for? Check out top trending news first!</h3>
+                </form><br>
  
                   {% if user in session %}
 
-                    <form action="/topsearch.json" id="search-dropdown" class-"btn btn-default dropdown-toggle" method="post">
-                    <select id='reload-favorite' class="btn btn-default dropdown-toggle" data-toggle="dropdown" name='favorite-search' value='favorites'>
-                        {% if user_terms %}
-                            <option value="Favorite">Search from Favorite Terms:</option>
-                          {% for term in user_terms %}
-                            <option value="{{ term.search_term }}">{{ term.search_term }}</option>
-                          {% endfor %}
-                        {% endif %}
-                       &nbsp;<div class="divider"/> <input class="btn btn-outline-success my-2 my-sm-0" type="submit"><br>
-                       <input type="checkbox" name="arterm" value="delete"><b id="smol">Delete from Favorite Terms<b><br>
-                    </select>
-                    </form>
-                        {% endif %}
+                      {% if user_terms %}
+
+                        <form action="/topsearch.json" id="search-dropdown" class-"btn btn-default dropdown-toggle" method="post">
+                        <select id='reload-favorite' class="btn btn-default dropdown-toggle" data-toggle="dropdown" name='favorite-search' value='favorites'>
+                                <option value="Favorite">Search from Favorite Terms:</option>
+                              {% for term in user_terms %}
+                                <option value="{{ term.search_term }}">{{ term.search_term }}</option>
+                              {% endfor %}
+                           &nbsp;<div class="divider"/> <input class="btn submit-button" type="submit"><br>
+                           <input type="checkbox" name="arterm" value="delete"><b id="smol">Delete from Favorite Terms<b><br>
+                        </select>
+                        </form> 
+
+                      {% elif user_terms == None %}
+
+                         <h3> You do not have any favorite terms to display</h3>
+
+                      {% endif %}
+
+                  {% endif %}
 
                 <h3>News at {{ddtime}}</h3>
             </div>
     <br> 
     <br>
     <br>
-    <br> 
-    <br>
     <div class="col-lg-2">
           <div class="panel panel-default key">
             <div class="panel-body">
-               <h5>Outlet Bias Key</h5><hr><br>
-                <div class="lib" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Left&nbsp;Bias</div> 
+               <h5 class="upper">Outlet Bias Key</h5><hr><br>
+                <div class="lib" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Left&nbsp;</div> 
                 <div class="libcent" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Slight&nbsp;Left&nbsp;Bias</div>
                 <div class="cent" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No&nbsp;Bias</div>
                 <div class="rightcent" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Slight&nbsp;Right&nbsp;Bias</div>
@@ -60,11 +65,11 @@
 
       <div class="col-lg-4">
           <div class="panel panel-default scale">
-              <div class="panel-body"><h5>Media Outlet Popularity Scale</h5><hr><br>
+              <div class="panel-body"><h5 class="upper">Media Outlet Popularity Scale</h5><hr><br>
                 &nbsp;&nbsp;&nbsp;
                 <span class="dot1"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span class="dot2"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span class="dot3"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3>less popular&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popular&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;most popular</h3>
+                <span class="dot3"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3>less popular&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popular&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;most popular</h3>
 
               </div>
             <div>

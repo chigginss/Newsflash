@@ -12,20 +12,21 @@
          <title>Newsflash</title>
          <link rel="shortcut icon" href="/static/css/favico.png" />
     </head>
+<body> 
 
  <nav class="navbar navbar-fixed-top" id="navbar">
       <div class="container-fluid">
             <div class="navbar-header">
-              <div class="logo"><img src="/static/css/landing-logo1.PNG"></div>
+              <div class="logo"><img src="/static/css/landing-logo1.PNG"></div>&nbsp;&nbsp;
             </div>
             <ul class="nav navbar-nav">
-              <li><a href="/" class="links">Home</a></li>
+   <!--            <li><a href="/" class="links">Home</a></li>
               <li><a href="/searchbykeyword" class="links">Search News</a></li>
-              <li><a href="/aboutnewsflash" class="links">About</a></li>
+              <li><a href="/aboutnewsflash" class="links">About</a></li> -->
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                  <li><a href="/" class="links">Home</a></li>
                   <button type="button" class="btn nav-button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-log-in"></span> Login</button>
-                  <button type="button" class="btn nav-button" data-toggle="modal" data-target="#mySecModal"><span class="glyphicon glyphicon-user"></span> Sign Up</button>
             </ul>
         </div>
     </nav>
@@ -33,7 +34,7 @@
 <style>
 body {
 
-    background-image: url('https://media.giphy.com/media/FZzbTJyRTwPuw/giphy.gif');
+    background-image: url('/static/css/riccardo-chiarini-260264-unsplash.jpg');
     background-size: cover;
 }
 
@@ -48,8 +49,9 @@ padding-top: 5px;
     color: white;
 }
 
-h1 {
+h1,h4 {
 
+  font-family: 'Nunito Sans', sans-serif;  
   color: white;
 }
 
@@ -91,10 +93,10 @@ h1 {
     font-size: 26px;
     padding-top: 2.5px;
     padding-bottom: 2.5px;
-    font-family: 'Francois One', sans-serif;
+    font-family: 'Nunito Sans', sans-serif;
     font-size: 26px;
-    text-transform: uppercase;
-    background-color: black;
+   /* text-transform: uppercase;*/
+    background-color: transparent;
     color: white;
 }
 
@@ -105,8 +107,42 @@ h1 {
     border-color: black;
 }
 
+.land-submit-button {
+
+    font-size: 26px;
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    font-family: 'Francois One', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    background-color: black;
+    color: white;
+}
+
+.land-submit-button:hover {
+
+    background-color: white;
+    color: black;
+    border-color: black;
+}
+
+h1:hover {
+    background-color: white;
+    color: black;
+}
+
+#landformstyle {
+
+    background-color: #000000;
+    border: transparent;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
+    color: white;
+    
+}
+
 </style>
 
+<body>
 <center>
     <br>
     <br>
@@ -115,14 +151,26 @@ h1 {
     <br>
     <br>
     <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-<a href="/"><button type="button" class="btn land-button"> News Breaks In A Flash. Don't Miss It</button></a>
+<a href="/"><button type="button" class="btn land-button"><h1>News Breaks In a Flash. Don't Miss It</h1></button></a>
 </center>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+    <div class="col-lg-3 col-lg-offset-8">
+        <form action="/register" method="post">
+                <h4>Sign Up</h4>
+                <input class="form-control mr-sm-2" type="text" name="email" pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" id="landformstyle" placeholder="Email Address" required><br>
+                <input class="form-control mr-sm-2" type="password" name="password" id="landformstyle" placeholder="Password" required><br>
+                <input class="btn land-submit-button" value="Create Account" type="submit">
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

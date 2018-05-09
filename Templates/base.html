@@ -9,7 +9,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,400i,600,700,800,900" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Francois+One" rel="stylesheet">
-
          <title>Newsflash</title>
          <link rel="shortcut icon" href="/static/css/favico.png" />
     </head>
@@ -52,9 +51,10 @@
             </div>
             <div class="modal-body">
              <form action="/updateinfo" method="post">
-                      <label>Accout Email: </label><input class="form-control mr-sm-2" type="text" name="email" id="formstyle" required><br>
-                      <label>New Password: </label><input class="form-control mr-sm-2" type="password" name="password" id="formstyle" required><br>
-                      <input class="btn btn-outline-success my-2 my-sm-0" value="Update Information" type="submit"></br></br>
+                      <h4>Change Password</h4>
+                      <input class="form-control mr-sm-2" type="text" name="email" id="formstyle" placeholder="Account Email" required><br>
+                      <input class="form-control mr-sm-2" type="password" name="password" id="formstyle" placeholder="New Password" required><br>
+                      <input class="btn submit-button" value="Update Information" type="submit"></br></br>
              </form>
             </div>
             {% else %}
@@ -65,9 +65,10 @@
               </div>
               <div class="modal-body">
                 <form action="/register" method="post">
-                        <label>Email address</label><input class="form-control mr-sm-2" type="text" name="email" pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" required><br>
-                        <label>Password</label><input class="form-control mr-sm-2" type="password" name="password" required><br>
-                        <input class="btn btn-outline-success my-2 my-sm-0" value="Create Account" type="submit"></br></br>
+                        <h4>Create Account</h4>
+                        <input class="form-control mr-sm-2" type="text" name="email" pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" id="formstyle" placeholder="Email Address" required><br>
+                        <input class="form-control mr-sm-2" type="password" name="password" id="formstyle" placeholder="Password" required><br>
+                        <input class="btn submit-button" value="Create Account" type="submit">
                 </form>
               </div>
              {% endif %}
@@ -81,12 +82,13 @@
           <div class="modal-header">
             {% if 'user_id' in session %} 
             <h2 class="modal-title" id="myModalLabel">Come Back Soon!</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <a href='/logout'>Logout</a>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+            <center>
+            <img src="https://media.giphy.com/media/CufLv1T7gIPC/giphy.gif"><br><br>
+            <a href='/logout'><button type="button" class="btn submit-button">Logout</button></a><br>
           </div>
             {% else %}
              <h2 class="modal-title" id="myModalLabel">Login</h2>
@@ -97,9 +99,9 @@
           <div class="modal-body">
             <form action="/login" method="post">
                 <h4>Welcome Back!</h4>
-                <input class="form-control mr-sm-2" type="text" name="email" id="formstyle" placeholder="Email Address" required>
+                <input class="form-control mr-sm-2" type="text" name="email" id="formstyle" placeholder="Email Address" required><br>
                 <input class="form-control mr-sm-2" type="password" name="password" id="formstyle" placeholder="Password" required><br>
-                <input class="btn btn-outline-success my-2 my-sm-0" value="Login" type="submit"></br></br>
+                <input class="btn submit-button" value="Login" type="submit"></br></br>
                 <small id="emailHelp" class="form-text text-muted"> <a href="/register">New User? Create Account</a> </br>
             </form>
           </div>
