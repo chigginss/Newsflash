@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- <div class="container-fluid" id="content">
+  <div class="row"> -->
+
+    <div class="col-lg-6">
+      <br>
+      <h1><b>Top Trending News</b></h1>
+      <h4><i>The most popular news articles from the most popular media outlets</i></h4> 
+    <!--   <br> 
+      <br> 
+      <br> 
+      <br>
+      <br>
+      <br> 
+      <br> -->
+       <!--    <div class="panel panel-default key">
+      <div class="panel-body">
+              <p id="smol">Media Outlet Bias Key</p>
+              <div class="lib"></div><div class="libcent"></div><div class="cent"></div><div class="rightcent"></div><div class="right"></div><div class="null"></div>
+              <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Left&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unknown</h3>
+        </div><br>
+    </div> -->
+    <br>
+        <br>
+        <br>
+        <br>
+        
+        <a href="mailto:?subject=Current News Trending on Newsflash&body=A Sample of Trending Coverage at {{ddtime}}%0D%0A%0D%0A{{content}}%0D%0A%0D%0AVisit Newsflash.com to see what else is trending! https://localhost500"><button type="button" class="btn norm-button"><span class="glyphicon glyphicon-envelope"></span> Mail</button></a>
+
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&su=Current News Trending on Newsflash&body=A Sample of Trending Coverage at {{ddtime}}%0D%0A%0D%0A{{content}}%0D%0A%0D%0AVisit Newsflash.com to review Bias of Popularity of Media Outlets, and to see what else is trending! https://localhost500" target="_blank"><button type="button" class="btn norm-button"><span class="glyphicon glyphicon-envelope"></span> Gmail</button></a>
+
+        <div class="fb-share-button" data-href="https://www.newsflash-app.com" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.newsflash-app.com" class="fb-xfbml-parse-ignore">Share </a></div>
+
+        <h3>Displaying coverage for {{ddtime}}</h3>
+
+    </div>
+    <br> 
+    <br>
+      <div class="col-lg-2">
+          <div class="panel panel-default key">
+            <div class="panel-body">
+               <h5 class="upper">Media Outlet Bias Key</h5><hr><br>
+                <div class="lib" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Left</div> 
+                <div class="libcent" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leaning&nbsp;Left</div>
+                <div class="cent" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None</div>
+                <div class="rightcent" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leaning&nbsp;Right</div>
+                <div class="right" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Right</div>
+                <div class="null" id="smol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unknown</div> <br>
+            </div>
+          </div>
+      </div>
+
+
+      <div class="col-lg-4">
+          <div class="panel panel-default scale">
+              <div class="panel-body"><h5 class="upper">Media Outlet Popularity Scale</h5><hr><br>
+                &nbsp;&nbsp;&nbsp;
+                <span class="dot1"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="dot2"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="dot3"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3>less popular&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popular&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;most popular</h3>
+
+              </div>
+            <div>
+        </div>
+      </div>
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="static/js/final_script.js"></script>
+
+{% endblock %}

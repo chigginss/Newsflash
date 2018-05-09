@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="mailto:someone@example.com" method="post" enctype="text/plain">
+Name:<br>
+<input type="text"><br>
+E-mail:<br>
+<div type="text" name='comment'>
+<input type="text" name="comment"><br><br>
+<input type="submit" value="Send">
+<!-- <input type="reset" value="Reset"> -->
+</form>
+
+<a href={{url}}>{{ title }}</a><br>
+<a href="mailto:?subject=look at this website&body=Hey check out what is trending on Newsflash: {{title}}|{{source}}|{{publishedAt}}|{{url}}">Share current top trending content with your friends</a>
+
+{% endblock %}
