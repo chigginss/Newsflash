@@ -1,3 +1,17 @@
 # Newsflash
-Hackbright Project -
-A snapshot of whats trending now.
+
+Newsflash displays the most popular news breaking right now in a D3.js visual. It organizes trending stories by the popularity and bias of the respective media outlet. Newsflash allows you to learn more about where your news comes from. You can see what each outlet is posting about, how different biased outlets talk about the same coverge, and how popular certain outlets are. Additionally, users can search for trending coverage around a certain topic, and save these search terms. Newsflash visualizes data from NewsAPI, and combines this data with metrics from AllSides and Alexa's top 500 websites.
+
+# Tech 
+
+Backend: Python 2.7, Flask, SQLAlchemy, Postgresql
+Frontend: Javascript (D3, Ajax, Jquery), Jinja, HTML 5, CSS
+API: NewsAPI
+
+# Features 
+
+Top Trending news for the current time, complete with Bias and Scale keys. Titles are links to the respective outlet
+Search for news coverage by a keyword, brand or name.
+Allows users to create an account, log-in, favorite search terms, and share coverage through mail.
+
+# About the Developer 
