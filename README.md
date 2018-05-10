@@ -4,9 +4,9 @@ Newsflash displays the most popular news breaking right now in a D3.js visual. I
 
 # Tech 
 
-Backend: Python 2.7, Flask, SQLAlchemy, Postgresql
-Frontend: Javascript (D3, Ajax, Jquery), Jinja, HTML 5, CSS
-API: NewsAPI
+- Backend: Python 2.7, Flask, SQLAlchemy, Postgresql
+- Frontend: Javascript (D3, Ajax, Jquery), Jinja, HTML 5, CSS
+- API: NewsAPI
 
 Make sure you are using Python 2.7 and create a virtualenv to install requirements.txt. 
 
@@ -20,4 +20,4 @@ You will need to make your own NewsAPI account and APIKey in order to use the D3
 
 # About the Developer 
 
-Cierra Higgins is located in the SF Bay Area. For more information, please see her LinkedIn
+Cierra Higgins is software engineer located in the SF bay area.
