@@ -18,6 +18,9 @@ You will need to make your own NewsAPI account and APIKey in order to use the D3
 - Search for news coverage by a keyword, brand or name.
 - Allows users to create an account, log-in, favorite search terms, and share coverage through mail.
 
+Homepage 
+[I'm an inline-style link](https://github.com/chigginss/Newsflash/blob/master/static/css/homepage.JPG)
+
 # About the Developer 
 
 Cierra Higgins is software engineer located in the SF bay area.
