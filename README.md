@@ -16,22 +16,22 @@ You will need to make your own NewsAPI account and APIKey in order to use the D3
 - Search for news coverage by a keyword, brand or name.
 - Allows users to create an account, log-in, favorite search terms, and share coverage through mail.
 
-###Landing 
+### Landing 
 ![alt text](https://github.com/chigginss/Newsflash/blob/master/static/css/landing.JPG)
 
-###Homepage 
+### Homepage 
 ![alt text](https://github.com/chigginss/Newsflash/blob/master/static/css/homepage.JPG)
 
-###Register
+### Register
 ![alt text](https://github.com/chigginss/Newsflash/blob/master/static/css/accountreg.JPG)
 
-###Login
+### Login
 ![alt text](https://github.com/chigginss/Newsflash/blob/master/static/css/login.JPG)
 
-###Search for News (logged out)
+### Search for News (logged out)
 ![alt text](https://github.com/chigginss/Newsflash/blob/master/static/css/search.JPG)
 
-###Search for News (logged in)
+### Search for News (logged in)
 ![alt text](https://github.com/chigginss/Newsflash/blob/master/static/css/loginsearch.JPG)
 
 # About the Developer 
