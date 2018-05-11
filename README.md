@@ -12,7 +12,9 @@ You will need to make your own NewsAPI account and APIKey in order to use the D3
 
 # Features 
 
-- View Top Trending news for the current time, complete with a key for Bias and Scale. Titles are links to the respective outlet and will open in a new tab.
+- View Top Trending news for the current time, complete with a key for Bias and Scale. 
+- Titles are links to the respective outlet and will open in a new tab.
+- Hover over an article to see the full title, author and summary in a tooltip.
 - Search for news coverage by a keyword, brand or name.
 - Allows users to create an account, log-in, favorite search terms, and share coverage through mail.
 
