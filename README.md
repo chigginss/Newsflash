@@ -4,9 +4,7 @@ Newsflash displays the most popular news breaking right now in a D3.js visual. I
 
 # Tech 
 
-- Backend: Python 2.7, Flask, SQLAlchemy, Postgresql
-- Frontend: Javascript (D3, Ajax, Jquery), Bootstrap, Jinja, HTML 5, CSS
-- API: NewsAPI
+Newsflash is built on a Flask server with a PostgreSQL database. The front end template is created uses HTML, CSS, Bootstrap and Jinja2. Javascript's JQuery and AJAX interact with the backend. The visuals were created with D3.js, using JSON data from NewsAPI and the database, which is combined on my server using Python and SQLAlchemy. Server routes are tested using the Python unittest module.
 
 Make sure you are using Python 2.7 and create a virtualenv to install requirements.txt. 
 
@@ -18,22 +16,22 @@ You will need to make your own NewsAPI account and APIKey in order to use the D3
 - Search for news coverage by a keyword, brand or name.
 - Allows users to create an account, log-in, favorite search terms, and share coverage through mail.
 
-Landing 
+###Landing 
 ![alt text](https://github.com/chigginss/Newsflash/blob/master/static/css/landing.JPG)
 
-Homepage 
+###Homepage 
 ![alt text](https://github.com/chigginss/Newsflash/blob/master/static/css/homepage.JPG)
 
-Register
+###Register
 ![alt text](https://github.com/chigginss/Newsflash/blob/master/static/css/accountreg.JPG)
 
-Login
+###Login
 ![alt text](https://github.com/chigginss/Newsflash/blob/master/static/css/login.JPG)
 
-Search for News (logged out)
+###Search for News (logged out)
 ![alt text](https://github.com/chigginss/Newsflash/blob/master/static/css/search.JPG)
 
-Search for News (logged in)
+###Search for News (logged in)
 ![alt text](https://github.com/chigginss/Newsflash/blob/master/static/css/loginsearch.JPG)
 
 # About the Developer 
