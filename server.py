@@ -10,8 +10,6 @@ import pytz
 import os
 import requests
 
-# API_KEY = os.environ['API_KEY']
-
 app = Flask(__name__)
 
 app.secret_key = 'ABC'
